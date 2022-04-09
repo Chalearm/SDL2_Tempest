@@ -27,6 +27,6 @@ if [[ ${OS} == "Mac" ]]; then
 ./$1
 fi
 if [[ ${OS} == "Linux" ]]; then
-export LD_LIBRARY_PATH=${pwd}
+export LD_LIBRARY_PATH=`pwd`
 ./$1
 fi
