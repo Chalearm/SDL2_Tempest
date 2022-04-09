@@ -7,7 +7,7 @@ else
 	UNAME_S := $(shell uname -s)
 	ifeq ($(UNAME_S),Linux)
 		LIBINC = SDL2
-		LIBSDLIMG = SDL_image
+		LIBSDLIMG = SDL2_image
 	endif
 	ifeq ($(UNAME_S),Darwin)
 		LIBINC = SDL2-2.0.0
