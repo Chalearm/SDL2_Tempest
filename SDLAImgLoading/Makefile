@@ -1,0 +1,23 @@
+
+LIBINC=SDL2
+ifeq ($(OS),Windows_NT)
+		echo "Windows!"
+else
+	UNAME_S := $(shell uname -s)
+	ifeq ($(UNAME_S),Linux)
+		LIBINC = SDL2
+	endif
+	ifeq ($(UNAME_S),Darwin)
+		LIBINC = SDL2-2.0.0
+	endif
+endif
+
+
+SDLAImgLoading: libgame.so SDLAImgLoading.cpp game.o 
+	g++ -L . SDLAImgLoading.cpp -o SDLAImgLoading -lgame
+game.o : game.cpp game.h
+	g++ -c -o game.o game.cpp
+	g++ -shared -fPIC -o libgame.so game.o -l $(LIBINC)
+
+clean:
+	rm game.o libgame.so SDLAImgLoading
