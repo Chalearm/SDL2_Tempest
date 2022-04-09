@@ -54,7 +54,7 @@ bool game::init()
         	m_pTexture = SDL_CreateTextureFromSurface(m_pRenderer,pTempSurface);
         	SDL_FreeSurface(pTempSurface);
          	// load the animal
-        	pTempSurface = SDL_LoadBMP("./anAnimal.bmp");
+        	pTempSurface = IMG_Load("./anAnimal1.png");
         	m_pAnimalTexture = SDL_CreateTextureFromSurface(m_pRenderer,pTempSurface);
         	SDL_FreeSurface(pTempSurface);
 
