@@ -1,17 +1,14 @@
 
 LIBINC=SDL2
-EXTRA_ENVIRONMENT_SET=echo
 ifeq ($(OS),Windows_NT)
 		echo "Windows!"
 else
 	UNAME_S := $(shell uname -s)
 	ifeq ($(UNAME_S),Linux)
 		LIBINC = SDL2
-		EXTRA_ENVIRONMENT_SET=LD_LIBRARY_PATH=${pwd};export LD_LIBRARY_PATH;@echo "Built!";
 	endif
 	ifeq ($(UNAME_S),Darwin)
 		LIBINC = SDL2-2.0.0
-		EXTRA_ENVIRONMENT_SET=@echo "Built!";
 	endif
 endif
 
