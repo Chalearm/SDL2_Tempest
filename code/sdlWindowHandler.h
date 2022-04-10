@@ -29,7 +29,7 @@ public:
 
     SDLWindowHandler(const std::string &windowTitle = "Tempest Game",const int &windowWidth = 640, const int &windowHeight = 480);
     ~SDLWindowHandler();
-    void setTheActivist(std::shared_ptr<gameObject> &anObj);
+    void setTheActivist(std::shared_ptr<gameObject> anObj);
     void setNewWindowTitle(const std::string &windowTitle = "Tempest Game");
     void init();
     void render();

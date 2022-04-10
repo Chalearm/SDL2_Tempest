@@ -116,7 +116,7 @@ std::shared_ptr<SDLRenderer> SDLWindowHandler::getRenderer()
 {
 	return m_pRenderer;
 }
-void SDLWindowHandler::setTheActivist(std::shared_ptr<gameObject>& anObj)
+void SDLWindowHandler::setTheActivist(std::shared_ptr<gameObject> anObj)
 {
 	m_gameActivist = anObj;
 }

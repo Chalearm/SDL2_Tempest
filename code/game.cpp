@@ -33,8 +33,7 @@ bool game::init()
 	m_pAnimal->init();
 	m_pAnimal->setSourceRect(0,0,128,82);
 	m_pAnimal->setDestinationRect(0,0,128,82);
-	std::shared_ptr<gameObject> aCastTypeRef = std::dynamic_pointer_cast<gameObject>(m_pAnimal);
-	m_gameWindow.setTheActivist(aCastTypeRef);
+	m_gameWindow.setTheActivist(m_pAnimal);
 	m_isRunning = m_gameWindow.isInitiated();
 	return m_isRunning;
 }
