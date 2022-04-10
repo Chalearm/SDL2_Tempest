@@ -20,9 +20,9 @@ endif
 $(TARGETAPP): $(TARGETAPP).cpp game.o 
 	g++ -L . $(TARGETAPP).cpp -o $(TARGETAPP) -lgame
 	${EXTRA_ENVIRONMENT_SET}
-game.o : game.cpp game.h sdlObject.o sdlWindowHandler.o
+game.o : game.cpp game.h sdlObject.o sdlWindowHandler.o gameObject.o
 	g++ -c -o game.o game.cpp
-	g++ -L . -shared -fPIC -o libgame.so game.o -l $(LIBINC) -l sdlWindowHandler -l sdlObject
+	g++ -L . -shared -fPIC -o libgame.so game.o -l $(LIBINC) -l sdlWindowHandler -l sdlObject -lgameObject
 sdlWindowHandler.o : sdlWindowHandler.cpp sdlWindowHandler.h sdlRenderer.o gameObject.o
 	g++ -c -o sdlWindowHandler.o sdlWindowHandler.cpp
 	g++ -L . -shared -fPIC -o libsdlWindowHandler.so sdlWindowHandler.o -lsdlRenderer -lgameObject -l $(LIBINC)

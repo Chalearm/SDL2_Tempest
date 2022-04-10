@@ -8,7 +8,7 @@ m_titleMessage(windowTitle),
 m_windowWidth(windowWidth),
 m_windowheight(windowHeight),
 m_isAbleToRun(false),
-m_gameActivist(nullptr)
+m_gameActivist(std::make_shared<gameObject>())
 {}
 
 SDLWindowHandler::~SDLWindowHandler()

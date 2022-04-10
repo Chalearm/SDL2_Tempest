@@ -6,13 +6,13 @@ class gameObject
 private: 
 public:
 	gameObject();
-	virtual ~gameObject() = 0;
+	virtual ~gameObject();
 
-	virtual void init() = 0;
-	virtual void render() = 0;
-	virtual void update() = 0;
-	virtual void handleEvents() = 0;
-	virtual void clean() = 0;
+	virtual void init();
+	virtual void render();
+	virtual void update();
+	virtual void handleEvents();
+	virtual void clean();
 };
 
 #endif /* define (__GAMEOBJECT__) */
