@@ -7,15 +7,8 @@
 	SDL_Rect m_destinationAnimalRectangle; // another rectangle
 */
 game::game():
-m_pWindow(nullptr),
-m_pRenderer(nullptr),
-m_isRunning(false),
-m_pTexture(nullptr),
-m_sourceRectangle(),
-m_destinationRectangle(),
-m_pAnimalTexture(nullptr),
-m_sourceAnimalRectangle(),
-m_destinationAnimalRectangle(),
+m_gameWindow(),
+m_anAnimal(),
 rd(),
 gen(rd()),
 m_animalFlipVal(0)
