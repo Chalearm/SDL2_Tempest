@@ -1,4 +1,5 @@
 
+TARGETAPP=main
 LIBINC=SDL2
 LIBSDLIMG=SDL2_image-2.0.0
 ifeq ($(OS),Windows_NT)
@@ -16,12 +17,12 @@ else
 endif
 
 
-SDLAImgLoading: SDLAImgLoading.cpp game.o 
-	g++ -L . SDLAImgLoading.cpp -o SDLAImgLoading -lgame
+$(TARGETAPP): $(TARGETAPP).cpp game.o 
+	g++ -L . $(TARGETAPP).cpp -o $(TARGETAPP) -lgame
 	${EXTRA_ENVIRONMENT_SET}
 game.o : game.cpp game.h
 	g++ -c -o game.o game.cpp
 	g++ -shared -fPIC -o libgame.so game.o -l $(LIBINC) -l $(LIBSDLIMG)
 
 clean:
-	rm game.o libgame.so SDLAImgLoading
+	rm game.o libgame.so $(TARGETAPP)
