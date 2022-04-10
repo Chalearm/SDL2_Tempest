@@ -30,7 +30,7 @@ bool SDLRenderer::createRenderer(SDL_Window *pWindow)
     bool ret = false;
     if (pWindow != nullptr)
     {
-        m_pRenderer.reset(SDL_CreateRenderer(pWindow, -1, 0));        
+        m_pRenderer = std::unique_ptr<SDL_Renderer, SDLRendererDestroyer>(SDL_CreateRenderer(pWindow, -1, 0));        
         if (m_pRenderer)
         {
             ret = true;

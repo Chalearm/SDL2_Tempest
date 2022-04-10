@@ -19,6 +19,8 @@ private:
 	SDL_Rect m_destinationRectangle; // another rectangle
     int m_flipOption; // 0 = none, 1 horizontal, 2 vertical
     std::string m_filePath;
+
+    int randomVal;
 public:
 
     SDLObject(const std::string &filePath);
@@ -29,6 +31,8 @@ public:
     void handleEvents();
     void clean();
 
+    void setRandomVal(const int randVal);
+    void setRenderer(const std::shared_ptr<SDLRenderer> &aRenderer);
     void setSourceRect(const int &x,const int &y,const int &w,const int &h);
     void setDestinationRect(const int &x,const int &y,const int &w,const int &h);
 };

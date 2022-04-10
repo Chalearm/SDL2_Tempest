@@ -19,7 +19,7 @@ private:
     };
 
     std::unique_ptr<SDL_Window, SDLWindowDestroyer> m_pWindow;
-    SDLRenderer m_pRenderer;
+    std::shared_ptr<SDLRenderer>  m_pRenderer;
 	std::string m_titleMessage;
 	int m_windowWidth;
 	int m_windowheight;
@@ -36,6 +36,8 @@ public:
     void update();
     void handleEvents();
     void clean();
+    bool isInitiated();
+    std::shared_ptr<SDLRenderer> getRenderer();
 };
 
 

@@ -3,7 +3,7 @@
 
 SDLWindowHandler::SDLWindowHandler(const std::string &windowTitle,const int &windowWidth, const int &windowHeight):
 m_pWindow(nullptr),
-m_pRenderer(),
+m_pRenderer(new SDLRenderer()),
 m_titleMessage(windowTitle),
 m_windowWidth(windowWidth),
 m_windowheight(windowHeight),
@@ -36,8 +36,8 @@ void SDLWindowHandler::init()
          // if succeeded create our window
         m_pWindow.reset(SDL_CreateWindow(m_titleMessage.c_str(),SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,m_windowWidth,m_windowheight,SDL_WINDOW_SHOWN));
         // if the window creation succeeded create our renderer
-        m_isAbleToRun = m_pRenderer.createRenderer(m_pWindow.get());
-
+        m_isAbleToRun = m_pRenderer->createRenderer(m_pWindow.get());
+/*
 		if ((m_gameActivist) && (m_isAbleToRun))
 		{
 			m_gameActivist->init();
@@ -46,6 +46,7 @@ void SDLWindowHandler::init()
 		{
 			// Do nothing
 		}
+		*/
     }
     else
     {
@@ -61,7 +62,7 @@ void SDLWindowHandler::render()
 {
 	if (m_isAbleToRun)
 	{
-	    m_pRenderer.renderClear();
+	    m_pRenderer->renderClear();
 		if (m_gameActivist)
 		{
 			m_gameActivist->render();
@@ -70,7 +71,7 @@ void SDLWindowHandler::render()
 		{
 			// Do nothing
 		}
-	    m_pRenderer.renderPresent();
+	    m_pRenderer->renderPresent();
 	}
 	else
 	{
@@ -105,6 +106,15 @@ void SDLWindowHandler::handleEvents()
 	{
 		// Do nothing
 	}
+}
+
+bool SDLWindowHandler::isInitiated()
+{
+	return m_isAbleToRun;
+}
+std::shared_ptr<SDLRenderer> SDLWindowHandler::getRenderer()
+{
+	return m_pRenderer;
 }
 void SDLWindowHandler::setTheActivist(std::shared_ptr<gameObject>& anObj)
 {
