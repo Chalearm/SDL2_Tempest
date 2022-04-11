@@ -7,7 +7,7 @@
 	SDL_Rect m_destinationAnimalRectangle; // another rectangle
 */
 game::game():
-m_gameWindow(),
+m_gameWindow("Tempest !!!"),
 m_pAnimal(std::make_shared<SDLObject>("./anAnimal1.png")),
 rd(),
 gen(rd()),
