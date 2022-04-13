@@ -8,7 +8,7 @@
 */
 game::game():
 m_gameWindow("Tempest !!!"),
-m_pAnimal(std::make_shared<SDLObject>("./anAnimal1.png")),
+m_pAnimal(std::make_shared<gameObject>()),
 rd(),
 gen(rd()),
 m_animalFlipVal(0)
@@ -30,12 +30,14 @@ bool game::init()
 {
 	m_gameWindow.init();
 
-	std::shared_ptr<SDLObject> gameObj = std::make_shared<SDLObject>("./anAnimal1.png");
-	gameObj->setRenderer(m_gameWindow.getRenderer());
-	gameObj->init();
-	gameObj->setSourceRect(0,0,128,82);
-	gameObj->setDestinationRect(0,0,128,82);
-	m_pAnimal = gameObj;
+	{
+		std::shared_ptr<SDLObject> gameObj = std::make_shared<SDLObject>("./anAnimal1.png");
+		gameObj->setRenderer(m_gameWindow.getRenderer());
+		gameObj->init();
+		gameObj->setSourceRect(0,0,128,82);
+		gameObj->setDestinationRect(0,0,128,82);
+		m_pAnimal = gameObj;
+    }
 	m_gameWindow.setTheActivist(m_pAnimal);
 	m_isRunning = m_gameWindow.isInitiated();
 	return m_isRunning;
@@ -48,7 +50,7 @@ void game::render()
 void game::update()
 {
 	int randXVal = randomFn(9000,-900)/100;
-	std::shared_ptr<SDLObject> gameObj = dynamic_pointer_cast<SDLObject>(m_pAnimal);
+	std::shared_ptr<SDLObject> gameObj(dynamic_pointer_cast<SDLObject>(m_pAnimal));
 	gameObj->setRandomVal(randXVal);
 	m_gameWindow.update();
 

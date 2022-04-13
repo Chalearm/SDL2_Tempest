@@ -35,6 +35,7 @@ public:
     SDLRenderer& operator=(SDLRenderer &obj);
     SDL_Texture* createTextureFromSurface(SDL_Surface* surface);
     void renderCopyEx(SDL_Texture* texture,const SDL_Rect* srcrect, const SDL_Rect* dstrect, const double angle, const SDL_Point* center, const SDL_RendererFlip flip);
+    void renderCopy(SDL_Texture* texture,const SDL_Rect* srcrect, const SDL_Rect* dstrect);
     int SDLSetRenderDrawColor(const unsigned char &r,const unsigned char &g,const unsigned char &b,const unsigned char &a);
     int SDLRenderDrawLine(const int &x1,const int &y1,const int &x2,const int &y2);
 

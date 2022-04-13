@@ -94,3 +94,14 @@ void SDLRenderer::renderCopyEx(SDL_Texture* texture,const SDL_Rect* srcrect, con
         // Do nothing
     }
 }
+void SDLRenderer::renderCopy(SDL_Texture* texture,const SDL_Rect* srcrect, const SDL_Rect* dstrect)
+{
+    if (m_pRenderer)
+    {
+        SDL_RenderCopy(m_pRenderer.get(), texture, srcrect, dstrect);
+    }
+    else
+    {
+        // Do nothing
+    }
+}

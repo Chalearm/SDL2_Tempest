@@ -33,6 +33,15 @@ void SDLWindowHandler::init()
 	m_isAbleToRun = false;  // sdl could not initialize
     if (SDL_Init(SDL_INIT_EVERYTHING) >= 0)
     {
+
+    	if ( IMG_Init(IMG_INIT_PNG) )
+    	{
+
+    	}    	
+    	if (TTF_Init())
+    	{
+
+    	}
          // if succeeded create our window
         m_pWindow.reset(SDL_CreateWindow(m_titleMessage.c_str(),SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,m_windowWidth,m_windowheight,SDL_WINDOW_SHOWN));
         // if the window creation succeeded create our renderer
@@ -55,6 +64,8 @@ void SDLWindowHandler::init()
 }
 void SDLWindowHandler::clean()
 {
+	TTF_Quit();
+	IMG_Quit();
 	SDL_Quit();
 }
 
