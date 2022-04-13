@@ -2,38 +2,48 @@
 #include "sdlObject.h"
 
 SDLObject::SDLObject(const std::string &filePath):
-m_pRenderer(),
 m_pTexture(nullptr),
+m_pRenderer(),
 m_sourceRectangle(),
 m_destinationRectangle(),
 m_flipOption(0),
 m_filePath(filePath)
 {}
 
-SDLObject::~SDLObject()
+SDLObject::SDLObject(const SDLObject& obj):
+m_pTexture(nullptr),
+m_pRenderer(),
+m_sourceRectangle(obj.m_sourceRectangle),
+m_destinationRectangle(obj.m_destinationRectangle),
+m_flipOption(obj.m_flipOption),
+m_filePath(obj.m_filePath)
 {
-	if (m_pTexture != nullptr)
+	setRenderer(obj.m_pRenderer);
+	if (m_filePath != "")
 	{
-        SDL_DestroyTexture(m_pTexture);
-        m_pTexture = nullptr;
+		init();
 	}
 	else
 	{
 		// Do nothing
 	}
 }
+SDLObject::~SDLObject()
+{}
+
 void SDLObject::init()
-{
-	SDL_Surface* pTempSurface = IMG_Load(m_filePath.c_str());
-	if ((pTempSurface != nullptr) && (m_pRenderer.get() != nullptr))
-	{	
-		m_pTexture = m_pRenderer->createTextureFromSurface(pTempSurface);
-     	SDL_FreeSurface(pTempSurface);
+{        
+	std::unique_ptr<SDL_Surface, SDLDestroyer> pTempSurface(IMG_Load(m_filePath.c_str()));
+	if (m_pRenderer && pTempSurface)
+	{
+        // the new SDL_Texture variable
+        m_pTexture.reset(m_pRenderer->createTextureFromSurface(pTempSurface.get()));	
 	}
 	else
 	{
-		// Do nothing
+		// do nothing
 	}
+
 }
 
 void SDLObject::render()
@@ -51,7 +61,15 @@ void SDLObject::render()
 		    flipVal = SDL_FLIP_NONE;
 		break;
 	}
-	m_pRenderer->renderCopyEx(m_pTexture,&m_sourceRectangle,&m_destinationRectangle,0,0, flipVal);
+
+	m_pRenderer->SDLSetRenderDrawColor( 0, 0, 255, SDL_ALPHA_OPAQUE);
+	m_pRenderer->renderClear();
+	m_pRenderer->SDLSetRenderDrawColor( 0, 0, 0, SDL_ALPHA_OPAQUE);
+	m_pRenderer->SDLRenderDrawLine( 320, 200, 300, 240);
+	m_pRenderer->SDLRenderDrawLine(300, 240, 340, 240);
+	m_pRenderer->SDLRenderDrawLine(340, 240, 320, 200);
+	m_pRenderer->SDLRenderDrawLine(0, 240, 320, 200);
+	m_pRenderer->renderCopyEx(m_pTexture.get(),&m_sourceRectangle,&m_destinationRectangle,0,0, flipVal);
 }
 void SDLObject::setRenderer(const std::shared_ptr<SDLRenderer> &aRenderer)
 {

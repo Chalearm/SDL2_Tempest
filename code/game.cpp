@@ -29,10 +29,13 @@ int game::randomFn(int max,int min)
 bool game::init()
 {
 	m_gameWindow.init();
-	m_pAnimal->setRenderer(m_gameWindow.getRenderer());
-	m_pAnimal->init();
-	m_pAnimal->setSourceRect(0,0,128,82);
-	m_pAnimal->setDestinationRect(0,0,128,82);
+
+	std::shared_ptr<SDLObject> gameObj = std::make_shared<SDLObject>("./anAnimal1.png");
+	gameObj->setRenderer(m_gameWindow.getRenderer());
+	gameObj->init();
+	gameObj->setSourceRect(0,0,128,82);
+	gameObj->setDestinationRect(0,0,128,82);
+	m_pAnimal = gameObj;
 	m_gameWindow.setTheActivist(m_pAnimal);
 	m_isRunning = m_gameWindow.isInitiated();
 	return m_isRunning;
@@ -45,7 +48,8 @@ void game::render()
 void game::update()
 {
 	int randXVal = randomFn(9000,-900)/100;
-	m_pAnimal->setRandomVal(randXVal);
+	std::shared_ptr<SDLObject> gameObj = dynamic_pointer_cast<SDLObject>(m_pAnimal);
+	gameObj->setRandomVal(randXVal);
 	m_gameWindow.update();
 
 }

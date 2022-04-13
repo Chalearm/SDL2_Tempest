@@ -14,7 +14,7 @@ class game
 private:
 	bool m_isRunning;
 	SDLWindowHandler m_gameWindow;
-	std::shared_ptr<SDLObject> m_pAnimal;
+	std::shared_ptr<gameObject> m_pAnimal;
 
 	// random fundion
 	std::random_device rd;

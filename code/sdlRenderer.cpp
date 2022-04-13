@@ -74,6 +74,14 @@ SDL_Texture* SDLRenderer::createTextureFromSurface(SDL_Surface* surface)
 {
     return SDL_CreateTextureFromSurface(m_pRenderer.get(), surface);
 }
+int SDLRenderer::SDLSetRenderDrawColor(const unsigned char &r,const unsigned char &g,const unsigned char &b,const unsigned char &a)
+{
+    return SDL_SetRenderDrawColor(m_pRenderer.get(),r,g,b,a);
+}
+int SDLRenderer::SDLRenderDrawLine(const int &x1,const int &y1,const int &x2,const int &y2)
+{
+    return SDL_RenderDrawLine(m_pRenderer.get(),x1,y1,x2,y2);
+}
 
 void SDLRenderer::renderCopyEx(SDL_Texture* texture,const SDL_Rect* srcrect, const SDL_Rect* dstrect, const double angle, const SDL_Point* center, const SDL_RendererFlip flip)
 {

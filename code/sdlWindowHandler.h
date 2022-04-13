@@ -14,7 +14,14 @@ private:
     {
         void operator()(SDL_Window* w) const
         {
-            SDL_DestroyWindow(w);
+        	if (w != nullptr)
+        	{
+        		SDL_DestroyWindow(w);
+        	}
+        	else
+        	{
+        		// Do nothing
+        	}
         }
     };
 

@@ -12,9 +12,34 @@
 class SDLObject : public gameObject
 {
 private:
-
+    struct SDLDestroyer
+    {
+        void operator()(SDL_Texture* w) const
+        {
+            if (w != nullptr)
+            {
+                SDL_DestroyTexture(w);
+            }
+            else
+            {
+                // Do nothing
+            }          
+        }        
+        void operator()(SDL_Surface* w) const
+        {
+            if (w != nullptr)
+            {
+                SDL_FreeSurface(w);
+            }
+            else
+            {
+                // Do nothing
+            }          
+        }
+    };
+    std::unique_ptr<SDL_Texture, SDLDestroyer> m_pTexture; // the new SDL_Texture variable
     std::shared_ptr<SDLRenderer> m_pRenderer;
-	SDL_Texture* m_pTexture; // the new SDL_Texture variable
+
 	SDL_Rect m_sourceRectangle; // the first rectangle
 	SDL_Rect m_destinationRectangle; // another rectangle
     int m_flipOption; // 0 = none, 1 horizontal, 2 vertical
@@ -23,13 +48,17 @@ private:
     int randomVal;
 public:
 
-    SDLObject(const std::string &filePath);
+    SDLObject(const std::string &filePath = "");
     ~SDLObject();
+
+    SDLObject(const SDLObject& obj);
     void init();
     void render();
     void update();
     void handleEvents();
     void clean();
+
+    void drawFont(const std::string &msg);
 
     void setRandomVal(const int randVal);
     void setRenderer(const std::shared_ptr<SDLRenderer> &aRenderer);
