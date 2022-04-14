@@ -1,11 +1,6 @@
 
 #include "game.h"
-/*
-	// createing an SDL texture
-	SDL_Texture* m_pAnimalTexture; // the new sDL_Texture variable
-	SDL_Rect m_sourceAnimalRectangle; // the first rectangle
-	SDL_Rect m_destinationAnimalRectangle; // another rectangle
-*/
+
 game::game():
 m_pWindow(nullptr),
 m_pRenderer(nullptr),
@@ -70,11 +65,9 @@ bool game::init()
 
 
            SDL_Color foreground = { 255, 255, 0 };
-           SDL_Surface* text_surf = TTF_RenderText_Solid(m_font,"I think I", foreground);
+           SDL_Surface* text_surf = TTF_RenderText_Solid(m_font,"I ThInk I Jui AAA NN aaa bcdefg", foreground);
            m_pTxtMsgTexture = SDL_CreateTextureFromSurface(m_pRenderer, text_surf);
            SDL_FreeSurface(text_surf);
-
-
 
 
             // set to black // this function expects Red, Green, Blue and 
@@ -111,7 +104,7 @@ void game::render()
 {
 	SDL_RenderClear(m_pRenderer);   // clear the renderer to the draw color
 	// render a loaded texture
-    SDL_Rect rectText = {100,100,150,40};
+    SDL_Rect rectText = {100,100,250,30};
     SDL_RenderCopy(m_pRenderer, m_pTexture, &m_sourceRectangle, &m_destinationRectangle);
     SDL_RenderCopy(m_pRenderer, m_pTxtMsgTexture, 0, &rectText);
     SDL_RenderCopy(m_pRenderer, m_pAnimalTexture, &m_sourceAnimalRectangle, &m_destinationAnimalRectangle);
@@ -174,7 +167,6 @@ void game::runGame()
     {
         handleEvents();
         render();
-
         update();
 	}
 	// clear
