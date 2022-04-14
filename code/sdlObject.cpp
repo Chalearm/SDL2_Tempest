@@ -4,29 +4,27 @@
 SDLObject::SDLObject(const std::string &filePath, const bool isLoadedText):
 m_pTexture(nullptr),
 m_pMsgTexture(nullptr),
-m_pRenderer(),
 m_pChildObj(),
 m_sourceRectangle(),
 m_destinationRectangle(),
 m_flipOption(0),
 m_filePath(filePath),
-m_aLoadedFont(nullptr),
+//m_aLoadedFont(nullptr),
 m_isFont(isLoadedText),
 randomVal(0)
 {}
 
 SDLObject::SDLObject(const SDLObject& obj):
 m_pTexture(nullptr),
-m_pRenderer(nullptr),
 m_sourceRectangle(obj.m_sourceRectangle),
 m_destinationRectangle(obj.m_destinationRectangle),
 m_flipOption(obj.m_flipOption),
 m_filePath(obj.m_filePath),
-m_aLoadedFont(nullptr),
+//m_aLoadedFont(nullptr),
 m_isFont(obj.m_isFont),
 randomVal(obj.randomVal)
 {
-	setRenderer(obj.m_pRenderer);
+	//setRenderer(obj.m_pRenderer);
 	if (m_filePath != "")
 	{
 		init();
@@ -42,11 +40,12 @@ SDLObject::~SDLObject()
 
 void SDLObject::init()
 {    
+	/*
 	if (m_pRenderer)
 	{
 		if (m_isFont)
 		{
-			m_aLoadedFont = std::unique_ptr<TTF_Font,SDLDestroyer> (TTF_OpenFont("./Hersheys.ttf", 24));
+			//m_aLoadedFont = std::unique_ptr<TTF_Font,SDLDestroyer> (TTF_OpenFont("./Hersheys.ttf", 24));
 		}
 		else
 		{
@@ -55,31 +54,22 @@ void SDLObject::init()
 		if (pTempSurface)
 		{
 	        // the new SDL_Texture variable
-	        m_pTexture.reset(m_pRenderer->createTextureFromSurface(pTempSurface.get()));	
+	        m_pTexture.reset(SDL_CreateTextureFromSurface(m_pRenderer.get(), pTempSurface.get()));	
+
 		}
 		else
 		{
 			// do nothing
 		}
 		SDL_Color White = {255, 255, 255};
-		// for font
-		/*
-		pTempSurface.reset(TTF_RenderText_Solid(m_aLoadedFont.get(), "I love you so much", White));
-	    if (m_pRenderer && pTempSurface)
-		{
-	        // the new SDL_Texture variable
-	        m_pMsgTexture.reset(m_pRenderer->createTextureFromSurface(pTempSurface.get()));	
-		}
-		else
-		{
-			// do nothing
-		}
-		*/
+	 
 	}
 	else
 	{
 		// do nothing
 	}
+	*/
+
 }
 
 void SDLObject::render()
@@ -97,10 +87,14 @@ void SDLObject::render()
 		    flipVal = SDL_FLIP_NONE;
 		break;
 	}
+	//if (m_pRenderer)
+	{
+		/*
 
-	m_pRenderer->SDLSetRenderDrawColor( 0, 0, 255, SDL_ALPHA_OPAQUE);
- 	m_pRenderer->renderClear();
-	m_pRenderer->SDLSetRenderDrawColor( 0, 0, 0, SDL_ALPHA_OPAQUE);
+		SDL_SetRenderDrawColor(m_pRenderer.get(),0,0,255,SDL_ALPHA_OPAQUE);
+	 	SDL_RenderClear(m_pRenderer.get());  
+		SDL_SetRenderDrawColor(m_pRenderer.get(),0,0,0,SDL_ALPHA_OPAQUE);
+		*/
 /*
 SDL_Rect Message_rect; //create a rect
 Message_rect.x = 30;  //controls the rect's x coordinate 
@@ -121,17 +115,20 @@ Message_rect.h = 40; // controls the height of the rect
 // and coordinate of your texture
 m_pRenderer->renderCopy(m_pMsgTexture.get(), nullptr, &Message_rect);
 */
+		/*
 
-	m_pRenderer->SDLRenderDrawLine( 320, 200, 300, 240);
-	m_pRenderer->SDLRenderDrawLine(300, 240, 340, 240);
-	m_pRenderer->SDLRenderDrawLine(340, 240, 320, 200);
-	m_pRenderer->SDLRenderDrawLine(0, 240, 320, 200);
-	m_pRenderer->renderCopyEx(m_pTexture.get(),&m_sourceRectangle,&m_destinationRectangle,0,0, flipVal);
-}
-void SDLObject::setRenderer(const std::shared_ptr<SDLRenderer> &aRenderer)
-{
-	m_pRenderer = aRenderer;
-}
+	SDL_RenderDrawLine(m_pRenderer.get(),320,200,300,240);
+	SDL_RenderDrawLine(m_pRenderer.get(),300, 240, 340, 240);
+	SDL_RenderDrawLine(m_pRenderer.get(),340, 240, 320, 200);
+	SDL_RenderDrawLine(m_pRenderer.get(),0, 240, 320, 200);
+    SDL_RenderCopyEx(m_pRenderer.get(),m_pTexture.get(),&m_sourceRectangle,&m_destinationRectangle,0,0, flipVal);
+    */
+	}
+	//else
+	{
+		// Do nothing
+	}
+} 
 void SDLObject::update()
 {
 

@@ -5,7 +5,7 @@
 #include <iostream>
 #include <random>
 #include "gameObject.h"
-#include "sdlWindowHandler.h"
+#include "sdlHandler.h"
 #include "sdlObject.h"
 using namespace std;
 
@@ -13,7 +13,7 @@ class game
 {
 private:
 	bool m_isRunning;
-	SDLWindowHandler m_gameWindow;
+	SDLHandler m_gameWindow;
 	std::shared_ptr<gameObject> m_pAnimal;
 
 	// random fundion

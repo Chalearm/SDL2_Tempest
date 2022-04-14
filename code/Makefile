@@ -23,21 +23,21 @@ endif
 $(TARGETAPP): $(TARGETAPP).cpp game.o 
 	g++ -L . $(TARGETAPP).cpp -o $(TARGETAPP) -lgame
 	${EXTRA_ENVIRONMENT_SET}
-game.o : game.cpp game.h sdlObject.o sdlWindowHandler.o gameObject.o
+game.o : game.cpp game.h sdlObject.o sdlHandler.o gameObject.o
 	g++ -c -o game.o game.cpp
-	g++ -L . -shared -fPIC -o libgame.so game.o -l $(LIBINC) -l sdlWindowHandler -l sdlObject -lgameObject
-sdlWindowHandler.o : sdlWindowHandler.cpp sdlWindowHandler.h sdlRenderer.o gameObject.o
-	g++ -c -o sdlWindowHandler.o sdlWindowHandler.cpp
-	g++ -L . -shared -fPIC -o libsdlWindowHandler.so sdlWindowHandler.o -lsdlRenderer -lgameObject -l $(LIBINC) -l $(LIBSDLTTF) -l $(LIBSDLIMG) 
-sdlObject.o : sdlObject.cpp sdlObject.h sdlRenderer.o gameObject.o
+	g++ -L . -shared -fPIC -o libgame.so game.o -l sdlHandler -l sdlObject -lgameObject
+sdlHandler.o : sdlHandler.cpp sdlHandler.h gameObject.o sdlDrawnObj.o
+	g++ -c -o sdlHandler.o sdlHandler.cpp
+	g++ -L . -shared -fPIC -o libsdlHandler.so sdlHandler.o -lgameObject -l $(LIBINC) -lsdlDrawnObj
+sdlDrawnObj.o : sdlDrawnObj.cpp sdlDrawnObj.h
+	g++ -c -o sdlDrawnObj.o sdlDrawnObj.cpp
+	g++ -I . -L . -shared -fPIC -o libsdlDrawnObj.so sdlDrawnObj.o -l $(LIBSDLIMG) -l $(LIBSDLTTF) -l $(LIBINC)
+sdlObject.o : sdlObject.cpp sdlObject.h gameObject.o
 	g++ -c -o sdlObject.o sdlObject.cpp
-	g++ -I . -L . -shared -fPIC -o libsdlObject.so sdlObject.o -lsdlRenderer -l $(LIBSDLIMG) -l $(LIBSDLTTF) -lgameObject -l $(LIBINC)
+	g++ -I . -L . -shared -fPIC -o libsdlObject.so sdlObject.o -lgameObject -l $(LIBINC)
 gameObject.o : gameObject.cpp gameObject.h
 	g++ -c -o gameObject.o gameObject.cpp
 	g++ -shared -fPIC -o libgameObject.so gameObject.o
-sdlRenderer.o : sdlRenderer.cpp sdlRenderer.h
-	g++ -c -o sdlRenderer.o sdlRenderer.cpp
-	g++ -shared -fPIC -o libsdlRenderer.so sdlRenderer.o -l $(LIBINC)
 
 clean:
 	rm *.o *.so $(TARGETAPP)

@@ -29,17 +29,18 @@ int game::randomFn(int max,int min)
 bool game::init()
 {
 	m_gameWindow.init();
-
+/*
 	{
 		std::shared_ptr<SDLObject> gameObj = std::make_shared<SDLObject>("./anAnimal1.png");
-		gameObj->setRenderer(m_gameWindow.getRenderer());
+		//gameObj->setRenderer(m_gameWindow.getRenderer());
 		gameObj->init();
 		gameObj->setSourceRect(0,0,128,82);
 		gameObj->setDestinationRect(0,0,128,82);
 		m_pAnimal = gameObj;
     }
 	m_gameWindow.setTheActivist(m_pAnimal);
-	m_isRunning = m_gameWindow.isInitiated();
+	*/
+	m_isRunning = m_gameWindow.isAbleToRun();
 	return m_isRunning;
 }
 
@@ -50,33 +51,17 @@ void game::render()
 void game::update()
 {
 	int randXVal = randomFn(9000,-900)/100;
-	std::shared_ptr<SDLObject> gameObj(dynamic_pointer_cast<SDLObject>(m_pAnimal));
-	gameObj->setRandomVal(randXVal);
+//	std::shared_ptr<SDLObject> gameObj(dynamic_pointer_cast<SDLObject>(m_pAnimal));
+//	gameObj->setRandomVal(randXVal);
 	m_gameWindow.update();
 
 }
 
 void game::handleEvents()
 {
-    SDL_Event event;
-    if (SDL_PollEvent(&event))
-    {
-    	switch (event.type)
-    	{
-    		case SDL_QUIT:
-    		    m_isRunning = false;
-    		break;
-    		case SDL_KEYDOWN:
-    		    m_isRunning = false;
-    		break;
-    		default:
-    		break;
-    	}
-    }
-    else
-    {
-    	// Do nothing
-    }
+	m_gameWindow.handleEvents();
+	m_isRunning = m_gameWindow.isAbleToRun();
+	
 }
 
 void game::clean()
