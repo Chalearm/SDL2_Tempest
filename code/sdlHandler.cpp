@@ -195,7 +195,6 @@ std::shared_ptr<gameObj> SDLHandler::loadImage(const std::string &path, int &id)
 	{
 		m_sdlDrawnObjList[id]->loadImage(path);
 		aGameobj = m_sdlDrawnObjList[id];
-	//	aGameobj = dynamic_pointer_cast<gameObj>(m_sdlDrawnObjList[id]);
 	}
 	else
 	{
@@ -203,13 +202,27 @@ std::shared_ptr<gameObj> SDLHandler::loadImage(const std::string &path, int &id)
 	}
 	return aGameobj;
 }
-
 void SDLHandler::renderClear()
 {
 	SDLDrawnObj::renderClear();	
 }
 
+void SDLHandler::drawLine(const int& x1, const int& y1, const int& x2, const int& y2)
+{
+	SDL_RenderDrawLine(SDLDrawnObj::s_pRenderer.get(),x1,y1,x2,y2);
+}
+
 void SDLHandler::setRenderDrawColor(const unsigned char &r,const unsigned char &g,const unsigned char &b,const unsigned char &a)
 {
     SDL_SetRenderDrawColor(SDLDrawnObj::s_pRenderer.get(),r,g,b,a);
+}
+
+void SDLHandler::drawRectangle(const int& x1, const int& y1, const int& w, const int& h)
+{
+	int x2 = x1 + w - 1;
+	int y2 = y1 + h - 1;
+	SDL_RenderDrawLine(SDLDrawnObj::s_pRenderer.get(),x1,y1,x2,y1);
+	SDL_RenderDrawLine(SDLDrawnObj::s_pRenderer.get(),x2,y1,x2,y2);
+	SDL_RenderDrawLine(SDLDrawnObj::s_pRenderer.get(),x2,y2,x1,y2);
+	SDL_RenderDrawLine(SDLDrawnObj::s_pRenderer.get(),x1,y2,x1,y1);
 }

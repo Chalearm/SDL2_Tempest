@@ -22,7 +22,7 @@ private:
 	int m_windowheight;
 	bool m_isAbleToRun;
 	std::shared_ptr<gameState> m_gameActivist;
-    
+
 protected:
     SDLHandler(const std::string &windowTitle = "Tempest Game",const int &windowWidth = 640, const int &windowHeight = 480);
     static std::shared_ptr<SDLHandler> theSdlHandler;
@@ -57,7 +57,10 @@ public:
     void drawText(const int &textId, const int &x, const int &y, const int& w, const int& h);
     void drawImg(const int &imgId, const int &x, const int &y, const int& w, const int& h);
     */
+    //void setPenColor(const unsigned char& r, const unsigned char& g, const unsigned char& b, const unsigned char& a);
+    void drawLine(const int& x1, const int& y1, const int& x2, const int& y2);
 
+    void drawRectangle(const int& x1, const int& y1, const int& w, const int& h);
 
 };
 

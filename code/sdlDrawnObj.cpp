@@ -61,7 +61,7 @@ void SDLDrawnObj::renderClear()
     }
     else
     {
-    // Do nothing
+        // Do nothing
     } 
 }
 void SDLDrawnObj::renderPresent()
@@ -199,7 +199,6 @@ void SDLDrawnObj::loadImage(const std::string &path)
         {
             // the new SDL_Texture variable
             m_aTexture.reset(SDL_CreateTextureFromSurface(s_pRenderer.get(), pTempSurface.get()),SDLDestroyer());
-           // std::cout<<__FUNCTION__<<" "<<__LINE__<<" s_pRenderer:"<<s_pRenderer.get()<< " m_aTexture :"<<m_aTexture.get()<<" filename:"<<path<<" \n";
 
         }
         else

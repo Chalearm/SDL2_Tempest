@@ -17,6 +17,10 @@ private:
     std::shared_ptr<SDLHandler> m_sdlSimpleLib;
     std::vector<std::shared_ptr<SDLObject> > m_sdlObjList;
     int randomVal;
+
+    int m_lvSelectValue;
+
+    void levelSelectionDisplay();
 public:
 
     menuGame();
