@@ -7,27 +7,36 @@
 #include <SDL2/SDL.h>
 #include "sdlDestroyer.h"
 #include "sdlDrawnObj.h"
-#include "gameObject.h"
+#include "gameState.h"
+#include "gameObj.h"
 
-class SDLHandler : public gameObject
+class SDLHandler : public gameState
 {
 private:
 
     std::shared_ptr<SDL_Window> m_pWindow;
-    std::vector<SDLDrawnObj> m_sdlDrawnObjList;
+    std::vector<std::shared_ptr<SDLDrawnObj> > m_sdlDrawnObjList;
 
 	std::string m_titleMessage;
 	int m_windowWidth;
 	int m_windowheight;
 	bool m_isAbleToRun;
-	std::shared_ptr<gameObject> m_gameActivist;
-
-
+	std::shared_ptr<gameState> m_gameActivist;
+    
+protected:
+    SDLHandler(const std::string &windowTitle = "Tempest Game",const int &windowWidth = 640, const int &windowHeight = 480);
+    static std::shared_ptr<SDLHandler> theSdlHandler;
 public:
 
-    SDLHandler(const std::string &windowTitle = "Tempest Game",const int &windowWidth = 640, const int &windowHeight = 480);
+    /*
+    *  It should not be cloneable.
+    */
+    //SDLHandler(const SDLHandler &obj) = delete;
     ~SDLHandler();
-    void setTheActivist(std::shared_ptr<gameObject> anObj);
+
+  //  void operator=(const SDLHandler &) = delete;
+    static std::shared_ptr<SDLHandler> GetInstance(const std::string &windowTitle = "Tempest Game",const int &windowWidth = 640, const int &windowHeight = 480);
+    void setTheActivist(std::shared_ptr<gameState> anObj);
     void setNewWindowTitle(const std::string &windowTitle = "Tempest Game");
     void init();
     void render();
@@ -38,8 +47,10 @@ public:
 
 
    // std::shared_ptr<SDL_Renderer> getRenderer();
+    void setRenderDrawColor(const unsigned char &r,const unsigned char &g,const unsigned char &b,const unsigned char &a);
 
-    int loadImage(const std::string &path);
+    std::shared_ptr<gameObj> loadImage(const std::string &path, int &id);
+    void renderClear();
     /*
     int addText(const std::string &text,const unsigned char &r,const unsigned char &g, const unsigned char &b);
 

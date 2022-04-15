@@ -7,11 +7,13 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
 #include "sdlDestroyer.h"
-class SDLDrawnObj
+#include "gameObj.h"
+class SDLDrawnObj : public gameObj
 {
 private:
     SDL_Rect m_sourceRect;
     SDL_Rect m_destRect;
+    SDL_Color m_txtColor; 
     SDL_RendererFlip m_flipVal;
     double m_angle;
     std::shared_ptr<SDL_Texture> m_aTexture;
@@ -33,9 +35,17 @@ public:
     SDLDrawnObj();
     SDLDrawnObj(const SDLDrawnObj& obj);
     ~SDLDrawnObj();
+    SDLDrawnObj& operator=(const SDLDrawnObj& obj);
     void setShownDimension(const int& x = 0, const int& y = 0, const int& w = 0, const int& h = 0);
     void setDrawPosition(const int& x = 0, const int& y = 0, const int& w = 0, const int& h = 0);
     void loadImage(const std::string &path);
+    void loadParameter(const std::string &txt = "",const int& opt = 0);
+    void setText(const std::string &msg);
+    void setAngel(const double& ang = 0.0);
     void drawImg();
+    void drawImgEx();
+    void rotateFromCurrentPos(const double& deltaAng = 0.0);
+    void moveFromCurrentPos(const int& deltaX = 0,const int& deltaY = 0);
+
 };
 #endif /* define (__SDLDRAWNOBJ__) */

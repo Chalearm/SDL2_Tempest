@@ -1,30 +1,22 @@
-
 #include "sdlObject.h"
 
 SDLObject::SDLObject(const std::string &filePath, const bool isLoadedText):
-m_pTexture(nullptr),
-m_pMsgTexture(nullptr),
+SDLDrawnObj(),
+m_objectId(-1),
+m_sdlSimpleLib(),
 m_pChildObj(),
-m_sourceRectangle(),
-m_destinationRectangle(),
-m_flipOption(0),
 m_filePath(filePath),
-//m_aLoadedFont(nullptr),
-m_isFont(isLoadedText),
 randomVal(0)
 {}
 
 SDLObject::SDLObject(const SDLObject& obj):
-m_pTexture(nullptr),
-m_sourceRectangle(obj.m_sourceRectangle),
-m_destinationRectangle(obj.m_destinationRectangle),
-m_flipOption(obj.m_flipOption),
+SDLDrawnObj(obj),
+m_objectId(-1),
+m_sdlSimpleLib(obj.m_sdlSimpleLib),
+m_pChildObj(obj.m_pChildObj),
 m_filePath(obj.m_filePath),
-//m_aLoadedFont(nullptr),
-m_isFont(obj.m_isFont),
 randomVal(obj.randomVal)
 {
-	//setRenderer(obj.m_pRenderer);
 	if (m_filePath != "")
 	{
 		init();
@@ -40,40 +32,21 @@ SDLObject::~SDLObject()
 
 void SDLObject::init()
 {    
-	/*
-	if (m_pRenderer)
+	if (m_sdlSimpleLib)
 	{
-		if (m_isFont)
-		{
-			//m_aLoadedFont = std::unique_ptr<TTF_Font,SDLDestroyer> (TTF_OpenFont("./Hersheys.ttf", 24));
-		}
-		else
-		{
-		}
-		std::unique_ptr<SDL_Surface, SDLDestroyer> pTempSurface(IMG_Load(m_filePath.c_str()));
-		if (pTempSurface)
-		{
-	        // the new SDL_Texture variable
-	        m_pTexture.reset(SDL_CreateTextureFromSurface(m_pRenderer.get(), pTempSurface.get()));	
+		//loadImage(m_filePath);
+	//	SDLDrawnObj::operator=(m_sdlSimpleLib->loadImage(m_filePath,m_objectId));
 
-		}
-		else
-		{
-			// do nothing
-		}
-		SDL_Color White = {255, 255, 255};
-	 
 	}
 	else
 	{
-		// do nothing
+		// Do nothing
 	}
-	*/
-
 }
 
 void SDLObject::render()
 {
+	/*
 	SDL_RendererFlip flipVal = SDL_FLIP_NONE;
 	switch (m_flipOption )
 	{
@@ -86,6 +59,19 @@ void SDLObject::render()
 		default:
 		    flipVal = SDL_FLIP_NONE;
 		break;
+	}
+*/
+	if (m_sdlSimpleLib)
+	{
+		m_sdlSimpleLib->setRenderDrawColor(0,0,255,255);
+		m_sdlSimpleLib->renderClear();
+		m_sdlSimpleLib->setRenderDrawColor(0,255,255,255);
+		//m_sdlSimpleLib->drawObj(m_objectId);
+        drawImgEx();
+	}
+	else
+	{
+		// Do nothing
 	}
 	//if (m_pRenderer)
 	{
@@ -132,7 +118,8 @@ m_pRenderer->renderCopy(m_pMsgTexture.get(), nullptr, &Message_rect);
 void SDLObject::update()
 {
 
-	m_sourceRectangle.x = 128*int(((SDL_GetTicks()/100)%6));
+//	m_sourceRectangle.x = 128*int(((SDL_GetTicks()/100)%6));
+	/*
 		if (randomVal > 0) // non SDL_FLIP
 	{
 		m_flipOption = 0;
@@ -141,12 +128,23 @@ void SDLObject::update()
 	{
 		m_flipOption = 1;
 	}
-
+*/
 	// move the coorinate to choose the next frame of an image 
-	m_sourceRectangle.x = 128*int(((SDL_GetTicks()/100)%6));
-	m_destinationRectangle.x = (m_destinationRectangle.x + randomVal*(SDL_GetTicks()%101/100) )%640;
-	m_destinationRectangle.y = (m_destinationRectangle.y + randomVal*(SDL_GetTicks()%101/100) )%480;
+	int newXval = 128*int(((clock()/100)%6));
+    int newXVal2 = (randomVal*(clock()%101/100) )%640;
+    int newYVal2 = (randomVal*(clock()%101/100) )%640;
+//	m_destinationRectangle.x = 
+//	m_destinationRectangle.y = (m_destinationRectangle.y + randomVal*(SDL_GetTicks()%101/100) )%480;
+
+	moveFromCurrentPos(newXVal2,newYVal2);
+	setShownDimension(newXval, 0, 128, 72);
+
 }
+void SDLObject::setRandValue(const int& val)
+{
+    randomVal = val; 
+}
+
 void SDLObject::handleEvents()
 {
 
@@ -155,22 +153,13 @@ void SDLObject::clean()
 {
 
 }
-
-void SDLObject::setRandomVal(const int randVal)
+/*
+void SDLObject::setGeometry(const int& x,const int& y, const int& w,const int& h)
 {
-	randomVal = randVal;
+	m_gameObj->setShownDimension(x, y, w, h);
 }
-void SDLObject::setSourceRect(const int &x,const int &y,const int &w,const int &h)
+*/
+void SDLObject::setSDLHandler(const std::shared_ptr<SDLHandler> &obj)
 {
-	m_sourceRectangle.x = x;
-	m_sourceRectangle.y = y;
-	m_sourceRectangle.w = w;
-	m_sourceRectangle.h = h;
-}
-void SDLObject::setDestinationRect(const int &x,const int &y,const int &w,const int &h)
-{
-	m_destinationRectangle.x = x;
-	m_destinationRectangle.y = y;
-	m_destinationRectangle.w = w;
-	m_destinationRectangle.h = h;
+	m_sdlSimpleLib = obj;
 }

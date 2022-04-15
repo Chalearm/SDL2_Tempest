@@ -10,7 +10,7 @@ bool SDLDrawnObj::loadFont(const std::string &fontPath,const int &fontSize)
     bool ret = false;
     if ((fontPath != "") && (fontSize > 0))
     {
-        //SDLDrawnObj::s_aLoadedFont.reset((TTF_OpenFont("./Hersheys.ttf", 24),SDLDestroyer())); 
+        SDLDrawnObj::s_aLoadedFont.reset(TTF_OpenFont("./Hersheys.ttf", 24),SDLDestroyer()); 
         ret = (s_aLoadedFont.get() != nullptr);
     }
     else
@@ -66,8 +66,16 @@ void SDLDrawnObj::renderClear()
 }
 void SDLDrawnObj::renderPresent()
 {
-
+    if (s_pRenderer)
+    {
+        SDL_RenderPresent(s_pRenderer.get());
+    }
+    else
+    {
+        // Do nothing
+    } 
 }
+
 bool SDLDrawnObj::isAbleToRender()
 {
     return (s_pRenderer.get() != nullptr);
@@ -76,6 +84,7 @@ bool SDLDrawnObj::isAbleToRender()
 SDLDrawnObj::SDLDrawnObj():
 m_sourceRect(),
 m_destRect(),
+m_txtColor(),
 m_flipVal(SDL_FLIP_NONE),
 m_angle(0.0),
 m_aTexture()
@@ -88,6 +97,7 @@ SDLDrawnObj::~SDLDrawnObj()
 SDLDrawnObj::SDLDrawnObj(const SDLDrawnObj& obj):
 m_sourceRect(obj.m_sourceRect),
 m_destRect(obj.m_destRect),
+m_txtColor(obj.m_txtColor),
 m_flipVal(obj.m_flipVal),
 m_angle(obj.m_angle),
 m_aTexture(obj.m_aTexture)
@@ -107,6 +117,73 @@ void SDLDrawnObj::setDrawPosition(const int& x, const int& y, const int& w, cons
     m_destRect.w = w;
     m_destRect.h = h;
 }
+
+void SDLDrawnObj::setAngel(const double& ang)
+{
+    m_angle = ang;
+}
+
+void SDLDrawnObj::rotateFromCurrentPos(const double& deltaAng)
+{
+    m_angle += deltaAng;
+
+}
+//void SDLDrawnObj::setTextAndColor(const std::string &msg, const unsigned char& r, const unsigned char& g, const unsigned char& b)
+void SDLDrawnObj::setText(const std::string &msg)
+{
+   // SDL_Color foreground = { r, g, b };
+   // m_txtColor = foreground;
+    if ((msg != "") && isAbleToRender())
+    {
+        std::unique_ptr<SDL_Surface, SDLDestroyer> pTempSurface(TTF_RenderText_Solid(s_aLoadedFont.get(), msg.c_str(), m_txtColor));
+        if (pTempSurface)
+        {
+            // the new SDL_Texture variable
+            m_aTexture.reset(SDL_CreateTextureFromSurface(s_pRenderer.get(), pTempSurface.get()),SDLDestroyer());
+        }
+        else
+        {
+            // Do nothing
+        }
+    }
+    else
+    {
+        // Do nothing
+    }
+}
+
+SDLDrawnObj& SDLDrawnObj::operator=(const SDLDrawnObj& obj)
+{
+    if (&obj != this)
+    {
+        m_sourceRect = obj.m_sourceRect;
+        m_destRect = obj.m_destRect;
+        m_txtColor = obj.m_txtColor;
+        m_flipVal = obj.m_flipVal;
+        m_angle = obj.m_angle;
+        m_aTexture = obj.m_aTexture;
+    }
+    else
+    {
+        // Do nothing
+    }
+    return *this;
+}
+void SDLDrawnObj::loadParameter(const std::string &txt,const int& opt)
+{
+    if (opt == 0)
+    {
+        loadImage(txt);
+    }
+    else if (opt == 1)
+    {
+        setText(txt);
+    }
+    else
+    {
+        // Do nothing
+    }
+}
 void SDLDrawnObj::loadImage(const std::string &path)
 {
     if ((path != "") && isAbleToRender())
@@ -115,7 +192,8 @@ void SDLDrawnObj::loadImage(const std::string &path)
         if (pTempSurface)
         {
             // the new SDL_Texture variable
-            m_aTexture.reset(SDL_CreateTextureFromSurface(s_pRenderer.get(), pTempSurface.get()),SDLDestroyer());  
+            m_aTexture.reset(SDL_CreateTextureFromSurface(s_pRenderer.get(), pTempSurface.get()),SDLDestroyer());
+           // std::cout<<__FUNCTION__<<" "<<__LINE__<<" s_pRenderer:"<<s_pRenderer.get()<< " m_aTexture :"<<m_aTexture.get()<<" filename:"<<path<<" \n";
 
         }
         else
@@ -134,6 +212,24 @@ void SDLDrawnObj::drawImg()
     if (isAbleToRender() && m_aTexture)
     {
         SDL_RenderCopy(s_pRenderer.get(), m_aTexture.get(), &m_sourceRect, &m_destRect);
+    }
+    else
+    {
+        // Do nothing
+    }
+}
+
+void SDLDrawnObj::moveFromCurrentPos(const int& deltaX,const int& deltaY)
+{
+    m_destRect.x += deltaX;
+    m_destRect.y += deltaY;
+}
+
+void SDLDrawnObj::drawImgEx()
+{
+    if (isAbleToRender() && m_aTexture)
+    {
+        SDL_RenderCopyEx(s_pRenderer.get(), m_aTexture.get(), &m_sourceRect, &m_destRect,0,0,m_flipVal);
     }
     else
     {

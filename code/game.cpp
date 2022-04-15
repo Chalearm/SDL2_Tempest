@@ -7,8 +7,8 @@
 	SDL_Rect m_destinationAnimalRectangle; // another rectangle
 */
 game::game():
-m_gameWindow("Tempest !!!"),
-m_pAnimal(std::make_shared<gameObject>()),
+theSdlHandler(SDLHandler::GetInstance("Tempest!!!")),
+m_pAnimal(std::make_shared<gameState>()),
 rd(),
 gen(rd()),
 m_animalFlipVal(0)
@@ -28,40 +28,37 @@ int game::randomFn(int max,int min)
 
 bool game::init()
 {
-	m_gameWindow.init();
-/*
-	{
-		std::shared_ptr<SDLObject> gameObj = std::make_shared<SDLObject>("./anAnimal1.png");
-		//gameObj->setRenderer(m_gameWindow.getRenderer());
-		gameObj->init();
-		gameObj->setSourceRect(0,0,128,82);
-		gameObj->setDestinationRect(0,0,128,82);
-		m_pAnimal = gameObj;
-    }
-	m_gameWindow.setTheActivist(m_pAnimal);
-	*/
-	m_isRunning = m_gameWindow.isAbleToRun();
+	theSdlHandler->init();		
+	std::shared_ptr<SDLObject> gameObj = std::make_shared<SDLObject>("./anAnimal1.png");
+	gameObj->setSDLHandler(theSdlHandler);
+	gameObj->loadParameter("./anAnimal1.png");
+    gameObj->setShownDimension(0,0,128,82);
+    gameObj->setDrawPosition(0,0,128,82);
+	gameObj->init();
+	m_pAnimal = gameObj;
+	theSdlHandler->setTheActivist(m_pAnimal);
+	m_isRunning = theSdlHandler->isAbleToRun();
 	return m_isRunning;
 }
 
 void game::render()
 {
-	m_gameWindow.render();
+	theSdlHandler->render();
 }
 void game::update()
 {
-	int randXVal = randomFn(9000,-900)/100;
-//	std::shared_ptr<SDLObject> gameObj(dynamic_pointer_cast<SDLObject>(m_pAnimal));
-//	gameObj->setRandomVal(randXVal);
-	m_gameWindow.update();
+	int randXVal = randomFn(900,-900)/100;
+    std::shared_ptr<SDLObject> gameObj(dynamic_pointer_cast<SDLObject>(m_pAnimal));
+    gameObj->setRandValue(randXVal);
+	theSdlHandler->update();
 
 }
 
 void game::handleEvents()
 {
-	m_gameWindow.handleEvents();
-	m_isRunning = m_gameWindow.isAbleToRun();
-	
+	theSdlHandler->handleEvents();
+	m_isRunning = theSdlHandler->isAbleToRun();
+
 }
 
 void game::clean()

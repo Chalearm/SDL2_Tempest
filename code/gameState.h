@@ -1,12 +1,12 @@
-#ifndef __GAMEOBJECT__
-#define __GAMEOBJECT__
+#ifndef __GAMESTATE__
+#define __GAMESTATE__
  
-class gameObject
+class gameState
 {
 private: 
 public:
-	gameObject();
-	virtual ~gameObject();
+	gameState();
+	virtual ~gameState();
 
 	virtual void init();
 	virtual void render();
@@ -15,4 +15,4 @@ public:
 	virtual void clean();
 };
 
-#endif /* define (__GAMEOBJECT__) */
+#endif /* define (__GAMESTATE__) */

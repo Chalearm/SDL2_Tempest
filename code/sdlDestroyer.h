@@ -43,7 +43,7 @@ struct SDLDestroyer
     }    
     void operator()(TTF_Font* w) const
     {
-            TTF_CloseFont(w);    
+        TTF_CloseFont(w);    
     }        
     void operator()(SDL_Renderer* w) const
     {

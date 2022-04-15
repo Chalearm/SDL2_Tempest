@@ -3,44 +3,34 @@
  
 #include <iostream>
 #include <cstring>
-#include <SDL2/SDL.h>
-#include "sdlDestroyer.h"
-#include "gameObject.h"
+#include <ctime>
+#include "sdlHandler.h"
+#include "gameState.h"
+#include "sdlDrawnObj.h"
 
 
-class SDLObject : public gameObject
+class SDLObject : public gameState, public SDLDrawnObj
 {
 private:
 
-    std::unique_ptr<SDL_Texture, SDLDestroyer> m_pTexture; // the new SDL_Texture variable
-    std::unique_ptr<SDL_Texture, SDLDestroyer> m_pMsgTexture; // the new SDL_Texture variable
- 
-    std::shared_ptr<gameObject> m_pChildObj;
-
-	SDL_Rect m_sourceRectangle; // the first rectangle
-	SDL_Rect m_destinationRectangle; // another rectangle
-    int m_flipOption; // 0 = none, 1 horizontal, 2 vertical
+    int m_objectId;
+    std::shared_ptr<SDLHandler> m_sdlSimpleLib;
+    std::shared_ptr<gameState> m_pChildObj;
     std::string m_filePath;
-  //  std::unique_ptr<TTF_Font,SDLDestroyer> m_aLoadedFont;
-    bool m_isFont;
     int randomVal;
 public:
 
     SDLObject(const std::string &filePath = "", const bool isLoadedText=false);
+    SDLObject(const SDLObject& obj);
     ~SDLObject();
 
-    SDLObject(const SDLObject& obj);
     void init();
     void render();
     void update();
     void handleEvents();
     void clean();
-
-    void drawFont(const std::string &msg);
-
-    void setRandomVal(const int randVal);
-    void setSourceRect(const int &x,const int &y,const int &w,const int &h);
-    void setDestinationRect(const int &x,const int &y,const int &w,const int &h);
+    void setSDLHandler(const std::shared_ptr<SDLHandler> &obj);
+    void setRandValue(const int& val = 0);
 };
 
 

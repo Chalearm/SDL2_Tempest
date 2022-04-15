@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <random>
-#include "gameObject.h"
+#include "gameState.h"
 #include "sdlHandler.h"
 #include "sdlObject.h"
 using namespace std;
@@ -13,8 +13,8 @@ class game
 {
 private:
 	bool m_isRunning;
-	SDLHandler m_gameWindow;
-	std::shared_ptr<gameObject> m_pAnimal;
+	std::shared_ptr<SDLHandler> theSdlHandler;
+	std::shared_ptr<gameState> m_pAnimal;
 
 	// random fundion
 	std::random_device rd;

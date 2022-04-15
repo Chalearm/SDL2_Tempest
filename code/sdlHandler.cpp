@@ -1,5 +1,7 @@
+#include <iostream>
 #include "sdlHandler.h"
 
+std::shared_ptr<SDLHandler> SDLHandler::theSdlHandler = nullptr;
 
 SDLHandler::SDLHandler(const std::string &windowTitle,const int &windowWidth, const int &windowHeight):
 m_pWindow(),
@@ -8,12 +10,26 @@ m_titleMessage(windowTitle),
 m_windowWidth(windowWidth),
 m_windowheight(windowHeight),
 m_isAbleToRun(false),
-m_gameActivist(std::make_shared<gameObject>())
+m_gameActivist(std::make_shared<gameState>())
 {}
 
 SDLHandler::~SDLHandler()
 {
 	clean();
+}
+
+std::shared_ptr<SDLHandler> SDLHandler::GetInstance(const std::string &windowTitle,const int &windowWidth, const int &windowHeight)
+{
+	if (theSdlHandler.get() == nullptr)
+	{
+		//SDLHandler aSDLHandler(windowTitle,windowWidth,windowHeight);
+		theSdlHandler.reset(new SDLHandler(windowTitle,windowWidth,windowHeight));
+	}
+	else
+	{
+		// Do nothing
+	}
+	return theSdlHandler;
 }
 
 void SDLHandler::setNewWindowTitle(const std::string &windowTitle)
@@ -37,16 +53,9 @@ void SDLHandler::init()
     }
     else if (SDLDrawnObj::initImgAndTff() >= 0)
     {
-
          // if succeeded create our window
         m_pWindow.reset(SDL_CreateWindow(m_titleMessage.c_str(),SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,m_windowWidth,m_windowheight,SDL_WINDOW_SHOWN),SDLDestroyer());
 		SDLDrawnObj::loadFont("./Hersheys.ttf",24);
-/*
-		if ((m_gameActivist) && (m_isAbleToRun))
-		{
-			m_gameActivist->init();
-		}
-		*/
     }
     else
     {
@@ -71,9 +80,10 @@ void SDLHandler::clean()
 
 void SDLHandler::render()
 {
-	if (m_isAbleToRun)
+	if (isAbleToRun())
 	{    
 		SDLDrawnObj::renderClear();		
+		//setRenderDrawColor(222,33,45,255);
 		if (m_gameActivist)
 		{
 			m_gameActivist->render();
@@ -82,6 +92,7 @@ void SDLHandler::render()
 		{
 			// Do nothing
 		}
+	//	setRenderDrawColor(222,33,45,255);
         SDLDrawnObj::renderPresent();
 
 	}
@@ -90,9 +101,10 @@ void SDLHandler::render()
 		// Do nothing
 	}
 }
+
 void SDLHandler::update()
 {
-	if ((m_gameActivist) && (m_isAbleToRun))
+	if ((m_gameActivist) && (isAbleToRun()))
 	{
 		m_gameActivist->update();
 	}
@@ -103,7 +115,7 @@ void SDLHandler::update()
 }
 void SDLHandler::handleEvents()
 {
-	if (m_isAbleToRun)
+	if (isAbleToRun())
 	{
 	    SDL_Event event;
 	    if (SDL_PollEvent(&event))
@@ -145,44 +157,42 @@ bool SDLHandler::isAbleToRun()
 	return m_isAbleToRun;
 }
 
-void SDLHandler::setTheActivist(std::shared_ptr<gameObject> anObj)
+void SDLHandler::setTheActivist(std::shared_ptr<gameState> anObj)
 {
 	m_gameActivist = anObj;
 }
 
-int SDLHandler::loadImage(const std::string &path)
+std::shared_ptr<gameObj> SDLHandler::loadImage(const std::string &path, int &id)
 {
+	std::shared_ptr<SDLDrawnObj> aGameobj = std::make_shared<SDLDrawnObj>();
 	if (path != "")
 	{
-		m_sdlDrawnObjList.push_back(SDLDrawnObj());
-		m_sdlDrawnObjList[m_sdlDrawnObjList.size() - 1].loadImage(path);
-			
+		m_sdlDrawnObjList.push_back(std::make_shared<SDLDrawnObj>());	
+		id = (m_sdlDrawnObjList.size() - 1);
 	}
 	else
 	{
 		// Do nothing
 	}
-	return (m_sdlDrawnObjList.size() - 1);
+	if (id > -1)
+	{
+		m_sdlDrawnObjList[id]->loadImage(path);
+		aGameobj = m_sdlDrawnObjList[id];
+	//	aGameobj = dynamic_pointer_cast<gameObj>(m_sdlDrawnObjList[id]);
+	}
+	else
+	{
+		// Do nothing
+	}
+	return aGameobj;
 }
 
-/*
-
-void SDLHandler::drawImg(const int &imgId, const int &x, const int &y, const int& w, const int& h)
+void SDLHandler::renderClear()
 {
-	
-	if ((imgId < m_textureList.size()) && (imgId > -1)) 
-	{
-		std::shared_ptr<SDL_Texture> aTexture = m_textureList[imgId];
-		SDL_Rect destRect = {x,y,w,h};
-        SDL_RenderCopy(m_pRenderer.get(), aTexture.get(), nullptr, &destRect);
-	}
-	else
-	{
-		// Do nothing
-	}
-	
+	SDLDrawnObj::renderClear();	
 }
-    int addText(const std::string &text,const unsigned char &r,const unsigned char &g, const unsigned char &b);
 
-    void drawText(const int &textId, const int &x, const int &y, const int& w, const int& h);
-    */
+void SDLHandler::setRenderDrawColor(const unsigned char &r,const unsigned char &g,const unsigned char &b,const unsigned char &a)
+{
+    SDL_SetRenderDrawColor(SDLDrawnObj::s_pRenderer.get(),r,g,b,a);
+}
