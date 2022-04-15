@@ -66,6 +66,14 @@ void SDLHandler::init()
         // if the window creation succeeded create our renderer
         SDLDrawnObj::createRenderer(m_pWindow);
         m_isAbleToRun = SDLDrawnObj::isAbleToRender();
+        if (m_gameActivist)
+		{
+			m_gameActivist->init();
+		}
+		else
+		{
+			// Do nothing
+		}
     }
     else
     {
@@ -113,10 +121,11 @@ void SDLHandler::update()
 		// Do nothing
 	}
 }
-void SDLHandler::handleEvents()
+void SDLHandler::handleEvents(const unsigned char& keyPress)
 {
 	if (isAbleToRun())
 	{
+		unsigned char keyboardValue = 0;
 	    SDL_Event event;
 	    if (SDL_PollEvent(&event))
 	    {
@@ -126,7 +135,15 @@ void SDLHandler::handleEvents()
 	    		    m_isAbleToRun = false;
 	    		break;
 	    		case SDL_KEYDOWN:
-	    		    m_isAbleToRun = false;
+	    		    switch(event.key.keysym.sym)
+	    		    {
+	    		    	case SDLK_ESCAPE:
+	    		    	    m_isAbleToRun = false;
+	    		    	break;
+	    		    	default:
+	    		    	    keyboardValue = event.key.keysym.sym;
+	    		    	break;
+	    		    }
 	    		break;
 	    		default:
 	    		break;
@@ -139,7 +156,7 @@ void SDLHandler::handleEvents()
 
 		if (m_gameActivist)
 		{
-			m_gameActivist->handleEvents();
+			m_gameActivist->handleEvents(keyboardValue);
 		}
 		else
 		{

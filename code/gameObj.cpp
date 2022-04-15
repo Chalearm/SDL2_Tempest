@@ -22,6 +22,13 @@ void gameObj::setShownDimension(const int& x, const int& y, const int& w, const 
     UNUSED(w);
     UNUSED(h);
 }
+
+void gameObj::setColor(const unsigned char& r,const unsigned char& g,const unsigned char& b)
+{
+    UNUSED(r);
+    UNUSED(g);
+    UNUSED(b);
+}
 void gameObj::setDrawPosition(const int& x, const int& y, const int& w, const int& h)
 {
     UNUSED(x);

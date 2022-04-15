@@ -22,9 +22,12 @@ endif
 
 $(TARGETAPP): $(TARGETAPP).cpp game.o 
 	g++ -L . $(TARGETAPP).cpp -o $(TARGETAPP) -lgame
-game.o : game.cpp game.h sdlObject.o sdlHandler.o gameState.o
+game.o : game.cpp game.h menuGame.o sdlHandler.o gameState.o
 	g++ -c -o game.o game.cpp
-	g++ -L . -shared -fPIC -o libgame.so game.o -l sdlHandler -l sdlObject -lgameState
+	g++ -L . -shared -fPIC -o libgame.so game.o -l sdlHandler -l menuGame -lgameState
+menuGame.o : menuGame.cpp menuGame.h gameState.o sdlHandler.o sdlObject.o
+	g++ -c -o menuGame.o menuGame.cpp
+	g++ -I . -L . -shared -fPIC -o libmenuGame.so menuGame.o -lgameState -lsdlHandler -lsdlObject
 sdlObject.o : sdlObject.cpp sdlObject.h gameState.o sdlHandler.o sdlDrawnObj.o
 	g++ -c -o sdlObject.o sdlObject.cpp
 	g++ -I . -L . -shared -fPIC -o libsdlObject.so sdlObject.o -lgameState -lsdlHandler -lsdlDrawnObj

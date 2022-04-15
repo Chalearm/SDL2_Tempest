@@ -13,10 +13,10 @@ class SDLObject : public gameState, public SDLDrawnObj
 {
 private:
 
-    int m_objectId;
     std::shared_ptr<SDLHandler> m_sdlSimpleLib;
     std::shared_ptr<gameState> m_pChildObj;
     std::string m_filePath;
+    int m_loadedOpt;
     int randomVal;
 public:
 
@@ -24,10 +24,11 @@ public:
     SDLObject(const SDLObject& obj);
     ~SDLObject();
 
+    void loadParameter(const std::string &txt = "",const int& opt = 0);
     void init();
     void render();
     void update();
-    void handleEvents();
+    void handleEvents(const unsigned char& keyPress = 0);
     void clean();
     void setSDLHandler(const std::shared_ptr<SDLHandler> &obj);
     void setRandValue(const int& val = 0);

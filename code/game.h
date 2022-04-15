@@ -6,7 +6,7 @@
 #include <random>
 #include "gameState.h"
 #include "sdlHandler.h"
-#include "sdlObject.h"
+#include "menuGame.h"
 using namespace std;
 
 class game
@@ -14,7 +14,7 @@ class game
 private:
 	bool m_isRunning;
 	std::shared_ptr<SDLHandler> theSdlHandler;
-	std::shared_ptr<gameState> m_pAnimal;
+	std::shared_ptr<gameState> m_menuGame;
 
 	// random fundion
 	std::random_device rd;

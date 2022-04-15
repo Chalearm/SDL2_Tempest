@@ -41,7 +41,7 @@ public:
     void init();
     void render();
     void update();
-    void handleEvents();
+    void handleEvents(const unsigned char& keyPress = 0);
     void clean();
     bool isAbleToRun(); 
 

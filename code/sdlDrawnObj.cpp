@@ -184,6 +184,12 @@ void SDLDrawnObj::loadParameter(const std::string &txt,const int& opt)
         // Do nothing
     }
 }
+
+void SDLDrawnObj::setColor(const unsigned char& r,const unsigned char& g,const unsigned char& b)
+{
+    SDL_Color color1 = {r,g,b};
+    m_txtColor = color1;
+}
 void SDLDrawnObj::loadImage(const std::string &path)
 {
     if ((path != "") && isAbleToRender())

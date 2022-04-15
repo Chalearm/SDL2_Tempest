@@ -1,4 +1,5 @@
 #include "gameState.h"
+#define UNUSED(expr) do { (void)(expr); } while (0)
 gameState::gameState()
 {}
 
@@ -14,8 +15,10 @@ void gameState::render()
 void gameState::update()
 {}
 
-void gameState::handleEvents()
-{}
+void gameState::handleEvents(const unsigned char& keyPress)
+{
+	UNUSED(keyPress);
+}
 
 void gameState::clean()
 {}

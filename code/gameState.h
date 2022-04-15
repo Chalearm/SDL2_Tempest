@@ -11,7 +11,7 @@ public:
 	virtual void init();
 	virtual void render();
 	virtual void update();
-	virtual void handleEvents();
+	virtual void handleEvents(const unsigned char& keyPress = 0);
 	virtual void clean();
 };
 

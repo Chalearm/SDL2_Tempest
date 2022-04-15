@@ -2,24 +2,24 @@
 
 SDLObject::SDLObject(const std::string &filePath, const bool isLoadedText):
 SDLDrawnObj(),
-m_objectId(-1),
 m_sdlSimpleLib(),
 m_pChildObj(),
 m_filePath(filePath),
+m_loadedOpt(0),
 randomVal(0)
 {}
 
 SDLObject::SDLObject(const SDLObject& obj):
 SDLDrawnObj(obj),
-m_objectId(-1),
 m_sdlSimpleLib(obj.m_sdlSimpleLib),
 m_pChildObj(obj.m_pChildObj),
 m_filePath(obj.m_filePath),
+m_loadedOpt(obj.m_loadedOpt),
 randomVal(obj.randomVal)
 {
-	if (m_filePath != "")
+	if (obj.m_filePath != "")
 	{
-		init();
+		loadParameter(obj.m_filePath,obj.m_loadedOpt);
 	}
 	else
 	{
@@ -30,6 +30,19 @@ SDLObject::~SDLObject()
 {
 }
 
+void SDLObject::loadParameter(const std::string &txt,const int& opt)
+{
+	if (txt != "")
+	{
+		m_filePath = txt;
+		m_loadedOpt = opt;
+		SDLDrawnObj::loadParameter(txt,opt);
+	}
+	else
+	{
+		// Do nothing
+	}
+}
 void SDLObject::init()
 {    
 	if (m_sdlSimpleLib)
@@ -63,8 +76,7 @@ void SDLObject::render()
 */
 	if (m_sdlSimpleLib)
 	{
-		m_sdlSimpleLib->setRenderDrawColor(0,0,255,255);
-		m_sdlSimpleLib->renderClear();
+
 		m_sdlSimpleLib->setRenderDrawColor(0,255,255,255);
 		//m_sdlSimpleLib->drawObj(m_objectId);
         drawImgEx();
@@ -130,14 +142,15 @@ void SDLObject::update()
 	}
 */
 	// move the coorinate to choose the next frame of an image 
+	/*
 	int newXval = 128*int(((clock()/100)%6));
     int newXVal2 = (randomVal*(clock()%101/100) )%640;
     int newYVal2 = (randomVal*(clock()%101/100) )%640;
-//	m_destinationRectangle.x = 
-//	m_destinationRectangle.y = (m_destinationRectangle.y + randomVal*(SDL_GetTicks()%101/100) )%480;
 
 	moveFromCurrentPos(newXVal2,newYVal2);
 	setShownDimension(newXval, 0, 128, 72);
+
+	*/
 
 }
 void SDLObject::setRandValue(const int& val)
@@ -145,7 +158,7 @@ void SDLObject::setRandValue(const int& val)
     randomVal = val; 
 }
 
-void SDLObject::handleEvents()
+void SDLObject::handleEvents(const unsigned char& keyPress)
 {
 
 }

@@ -1,19 +1,17 @@
 
 #include "game.h"
-/*
-	// createing an SDL texture
-	SDL_Texture* m_pAnimalTexture; // the new sDL_Texture variable
-	SDL_Rect m_sourceAnimalRectangle; // the first rectangle
-	SDL_Rect m_destinationAnimalRectangle; // another rectangle
-*/
+
 game::game():
 theSdlHandler(SDLHandler::GetInstance("Tempest!!!")),
-m_pAnimal(std::make_shared<gameState>()),
+m_menuGame(),
 rd(),
 gen(rd()),
 m_animalFlipVal(0)
 {
-
+    std::shared_ptr<menuGame> gameObj = std::make_shared<menuGame>();
+	gameObj->setSDLHandler(theSdlHandler);
+	m_menuGame = gameObj;
+	theSdlHandler->setTheActivist(m_menuGame);
 }
 
 game::~game()
@@ -29,14 +27,7 @@ int game::randomFn(int max,int min)
 bool game::init()
 {
 	theSdlHandler->init();		
-	std::shared_ptr<SDLObject> gameObj = std::make_shared<SDLObject>("./anAnimal1.png");
-	gameObj->setSDLHandler(theSdlHandler);
-	gameObj->loadParameter("./anAnimal1.png");
-    gameObj->setShownDimension(0,0,128,82);
-    gameObj->setDrawPosition(0,0,128,82);
-	gameObj->init();
-	m_pAnimal = gameObj;
-	theSdlHandler->setTheActivist(m_pAnimal);
+
 	m_isRunning = theSdlHandler->isAbleToRun();
 	return m_isRunning;
 }
@@ -48,7 +39,10 @@ void game::render()
 void game::update()
 {
 	int randXVal = randomFn(900,-900)/100;
-    std::shared_ptr<SDLObject> gameObj(dynamic_pointer_cast<SDLObject>(m_pAnimal));
+	/*
+
+    */
+    std::shared_ptr<menuGame> gameObj(dynamic_pointer_cast<menuGame>(m_menuGame));
     gameObj->setRandValue(randXVal);
 	theSdlHandler->update();
 
