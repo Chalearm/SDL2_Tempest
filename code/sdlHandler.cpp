@@ -5,7 +5,7 @@ std::shared_ptr<SDLHandler> SDLHandler::theSdlHandler = nullptr;
 
 SDLHandler::SDLHandler(const std::string &windowTitle,const int &windowWidth, const int &windowHeight):
 m_pWindow(),
-m_sdlDrawnObjList(),
+//m_sdlDrawnObjList(),
 m_titleMessage(windowTitle),
 m_windowWidth(windowWidth),
 m_windowheight(windowHeight),
@@ -178,7 +178,7 @@ void SDLHandler::setTheActivist(std::shared_ptr<gameState> anObj)
 {
 	m_gameActivist = anObj;
 }
-
+/*
 std::shared_ptr<gameObj> SDLHandler::loadImage(const std::string &path, int &id)
 {
 	std::shared_ptr<SDLDrawnObj> aGameobj = std::make_shared<SDLDrawnObj>();
@@ -202,6 +202,7 @@ std::shared_ptr<gameObj> SDLHandler::loadImage(const std::string &path, int &id)
 	}
 	return aGameobj;
 }
+*/
 void SDLHandler::renderClear()
 {
 	SDLDrawnObj::renderClear();	
@@ -212,9 +213,10 @@ void SDLHandler::drawLine(const int& x1, const int& y1, const int& x2, const int
 	SDL_RenderDrawLine(SDLDrawnObj::s_pRenderer.get(),x1,y1,x2,y2);
 }
 
-void SDLHandler::setRenderDrawColor(const unsigned char &r,const unsigned char &g,const unsigned char &b,const unsigned char &a)
+void SDLHandler::setRenderDrawColor(const color& aColor)
 {
-    SDL_SetRenderDrawColor(SDLDrawnObj::s_pRenderer.get(),r,g,b,a);
+	SDL_Color tempColor = aColor.getSDLCol();
+    SDL_SetRenderDrawColor(SDLDrawnObj::s_pRenderer.get(),tempColor.r,tempColor.g,tempColor.b,tempColor.a);
 }
 
 void SDLHandler::drawRectangle(const int& x1, const int& y1, const int& w, const int& h)

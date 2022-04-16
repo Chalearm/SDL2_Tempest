@@ -2,18 +2,21 @@
 
 menuGame::menuGame():
 m_sdlSimpleLib(),
-m_sdlObjList(),
-m_lvSelectValue(0)
+m_sdlObjTable(),
+m_oldLvSelectValue(LABEL_LV1),
+m_lvSelectValue(LABEL_LV1),
+m_currentStage(MainMenu)
 {
 
 }
 
 menuGame::menuGame(const menuGame& obj):
 m_sdlSimpleLib(obj.m_sdlSimpleLib),
-m_sdlObjList(obj.m_sdlObjList)
-{
-
-}
+m_sdlObjTable(obj.m_sdlObjTable),
+m_oldLvSelectValue(obj.m_oldLvSelectValue),
+m_lvSelectValue(obj.m_lvSelectValue),
+m_currentStage(obj.m_currentStage)
+{}
 
 menuGame::~menuGame()
 {
@@ -22,13 +25,18 @@ menuGame::~menuGame()
 
 void menuGame::init()
 {
+    /*
+
+enum MainMenuObj {BACKGROUND_IMG,LABEL_TEMPEST,LABEL_EXIT,LABEL_LV1,LABEL_LV2,LABEL_LV3,ANIMAL};
+
+    */
     {
         std::shared_ptr<SDLObject> gameObj(std::make_shared<SDLObject>());
         gameObj->setSDLHandler(m_sdlSimpleLib);
         gameObj->loadParameter("./space.png");
         gameObj->setShownDimension(0,0,640,480);
         gameObj->setDrawPosition(0,0,640,480);
-        m_sdlObjList.push_back(gameObj); 
+        m_sdlObjTable[BACKGROUND_IMG] = gameObj;
     }
 
     {
@@ -37,76 +45,92 @@ void menuGame::init()
         gameObj->loadParameter("./anAnimal1.png");
         gameObj->setShownDimension(0,0,128,82);
         gameObj->setDrawPosition(0,0,128,82);
-        m_sdlObjList.push_back(gameObj); 
+        m_sdlObjTable[ANIMAL] = gameObj;
     }
 
     {
         std::shared_ptr<SDLObject> gameObj(std::make_shared<SDLObject>());
         gameObj->setSDLHandler(m_sdlSimpleLib);
-        gameObj->setColor(255,255,0);
         gameObj->loadParameter("Tempest",1);
+        gameObj->setColor(COLORSET[YELLOW]);
         gameObj->setShownDimension(0,0,400,50);
         gameObj->setDrawPosition(120,60,400,50);
-        m_sdlObjList.push_back(gameObj);   
+        m_sdlObjTable[LABEL_TEMPEST] = gameObj;
     }
     
     {
         std::shared_ptr<SDLObject> gameObj(std::make_shared<SDLObject>());
         gameObj->setSDLHandler(m_sdlSimpleLib);
-        gameObj->setColor(255,100,0);
         gameObj->loadParameter("Press ESC to exit",1);
+        gameObj->setColor(COLORSET[ORANGE]);
         gameObj->setShownDimension(0,0,200,40);
         gameObj->setDrawPosition(20,10,200,40);
-        m_sdlObjList.push_back(gameObj);   
+        m_sdlObjTable[LABEL_EXIT] = gameObj;
     }
     {
         std::shared_ptr<SDLObject> gameObj(std::make_shared<SDLObject>());
         gameObj->setSDLHandler(m_sdlSimpleLib);
-        gameObj->setColor(0,120,0);
         gameObj->loadParameter("Level 1",1);
+        gameObj->setColor(COLORSET[DARK_GREEN]);
         gameObj->setShownDimension(0,0,200,40);
         gameObj->setDrawPosition(40,340,160,40);
-        m_sdlObjList.push_back(gameObj);
+        m_sdlObjTable[LABEL_LV1] = gameObj;
     }
     {
         std::shared_ptr<SDLObject> gameObj(std::make_shared<SDLObject>());
         gameObj->setSDLHandler(m_sdlSimpleLib);
-        gameObj->setColor(0,120,0);
         gameObj->loadParameter("Level 2",1);
+        gameObj->setColor(COLORSET[DARK_GREEN]);
         gameObj->setShownDimension(0,0,200,40);
         gameObj->setDrawPosition(240,340,160,40);
-        m_sdlObjList.push_back(gameObj);      
+        m_sdlObjTable[LABEL_LV2] = gameObj;   
     }
     {
         std::shared_ptr<SDLObject> gameObj(std::make_shared<SDLObject>());
         gameObj->setSDLHandler(m_sdlSimpleLib);
-        gameObj->setColor(0,120,0);
         gameObj->loadParameter("Level 3",1);
+        gameObj->setColor(COLORSET[DARK_GREEN]);
         gameObj->setShownDimension(0,0,200,40);
         gameObj->setDrawPosition(440,340,160,40);
-        m_sdlObjList.push_back(gameObj);      
+        m_sdlObjTable[LABEL_LV3] = gameObj;     
     }
 
 }
 
 void menuGame::render()
 {
+    switch(m_currentStage)
+    {
+        case MainMenu:
+            mainMenuDisplay();
+        break;
+        default:
+        break;
+    }
+}
+
+void menuGame::mainMenuDisplay()
+{
     if (m_sdlSimpleLib)
     {        
-        m_sdlSimpleLib->setRenderDrawColor(0,0,255,255);
+        m_sdlSimpleLib->setRenderDrawColor(COLORSET[BLUE]);
         m_sdlSimpleLib->renderClear();
     }
-    for(int i = 0; i < m_sdlObjList.size(); i++) 
+
+    std::map<MainMenuObj,std::shared_ptr<SDLObject> >::iterator it;
+    for(it = m_sdlObjTable.begin(); it != m_sdlObjTable.end(); it++) 
     {
-        m_sdlObjList[i]->render();
+        it->second->render();
     }
         
     if (m_sdlSimpleLib)
     {        
         levelSelectionDisplay();
         // Select Level
-        m_sdlSimpleLib->setRenderDrawColor(255,255,0,255);
-        m_sdlSimpleLib->drawRectangle(20 + 200*m_lvSelectValue,150,190,190);
+        m_sdlObjTable[m_oldLvSelectValue]->setColor(COLORSET[DARK_GREEN]);
+        m_sdlObjTable[m_lvSelectValue]->setColor(COLORSET[YELLOW]);
+        m_sdlSimpleLib->setRenderDrawColor(COLORSET[YELLOW]);
+        m_sdlSimpleLib->drawRectangle(20 + 200*(m_lvSelectValue - LABEL_LV1),150,190,190);
     }
 }
 
@@ -114,13 +138,30 @@ void menuGame::levelSelectionDisplay()
 {
     const int yStart = 170;
     const int yStartLv1 = yStart + 25;
-    m_sdlSimpleLib->setRenderDrawColor(0,0,255,255);
+    if (m_lvSelectValue == LABEL_LV1)
+    m_sdlSimpleLib->setRenderDrawColor(COLORSET[YELLOW]);
+    else
+    m_sdlSimpleLib->setRenderDrawColor(COLORSET[BLUE]);
     m_sdlSimpleLib->drawRectangle(40,yStart,150,150);
+
+    if (m_lvSelectValue == LABEL_LV2)
+    m_sdlSimpleLib->setRenderDrawColor(COLORSET[YELLOW]);
+    else
+    m_sdlSimpleLib->setRenderDrawColor(COLORSET[BLUE]);
     m_sdlSimpleLib->drawRectangle(240,yStart,150,150);
+
+    if (m_lvSelectValue == LABEL_LV3)
+    m_sdlSimpleLib->setRenderDrawColor(COLORSET[YELLOW]);
+    else
+    m_sdlSimpleLib->setRenderDrawColor(COLORSET[BLUE]);
     m_sdlSimpleLib->drawRectangle(440,yStart,150,150);
 
     // Lv 1.
-    m_sdlSimpleLib->setRenderDrawColor(30,200,30,255);
+
+    if (m_lvSelectValue == LABEL_LV1)
+    m_sdlSimpleLib->setRenderDrawColor(COLORSET[YELLOW]);
+    else
+    m_sdlSimpleLib->setRenderDrawColor(COLORSET[RED]);
     // rectangle outside
     m_sdlSimpleLib->drawRectangle(65, yStartLv1,100,100);
     // rectangle inside
@@ -139,8 +180,6 @@ void menuGame::levelSelectionDisplay()
     m_sdlSimpleLib->drawLine(65, yStartLv1 + 35, 105, yStartLv1 + 56);
     m_sdlSimpleLib->drawLine(65, yStartLv1 + 70, 105, yStartLv1 + 63);
 
-
-
     m_sdlSimpleLib->drawLine(165, yStartLv1 + 35, 125, yStartLv1 + 56);
     m_sdlSimpleLib->drawLine(165, yStartLv1 + 70, 125, yStartLv1 + 63);
     // Lv 2.
@@ -151,12 +190,14 @@ void menuGame::levelSelectionDisplay()
 
 void menuGame::update()
 {
-    for(int i = 0; i < m_sdlObjList.size(); i++) 
+
+    std::map<MainMenuObj,std::shared_ptr<SDLObject> >::iterator it;
+    for(it = m_sdlObjTable.begin(); it != m_sdlObjTable.end(); it++) 
     {
-        if (i == 1)
+        if (it->first == ANIMAL)
         {
 
-            std::shared_ptr<gameObj> aGameObj = m_sdlObjList[i];
+            std::shared_ptr<gameObj> aGameObj = m_sdlObjTable[ANIMAL];
             int newXval = 128*int(((clock()/100)%6));
             int newXVal2 = (randomVal*(clock()%101/100) )%640;
             int newYVal2 = (randomVal*(clock()%101/100) )%640;
@@ -164,7 +205,7 @@ void menuGame::update()
             aGameObj->moveFromCurrentPos(newXVal2,newYVal2);
             aGameObj->setShownDimension(newXval, 0, 128, 72);
         }
-        m_sdlObjList[i]->update();
+        it->second->update();
     }
 }
 void menuGame::handleEvents(const unsigned char& keyPress)
@@ -173,21 +214,53 @@ void menuGame::handleEvents(const unsigned char& keyPress)
     switch(keyPress)
     {
         case 79:  //right arrow
-            m_lvSelectValue = (++m_lvSelectValue);
+            goNextLv();
         break;
         case 80:  // left arrow  
-           m_lvSelectValue = (--m_lvSelectValue);
+            goBackLv();
         break;
         case 13:  // enter
         break;
     }
-    if (m_lvSelectValue > 2) m_lvSelectValue = 0;
-    else if (m_lvSelectValue < 0) m_lvSelectValue = 2;
 
-
-    for(int i = 0; i < m_sdlObjList.size(); i++) 
+    std::map<MainMenuObj,std::shared_ptr<SDLObject> >::iterator it;
+    for(it = m_sdlObjTable.begin(); it != m_sdlObjTable.end(); it++) 
     {
-        m_sdlObjList[i]->handleEvents(keyPress);
+        it->second->handleEvents();
+    }
+}
+
+void menuGame::goNextLv()
+{
+    m_oldLvSelectValue = m_lvSelectValue;
+    switch(m_lvSelectValue)
+    {
+        case LABEL_LV1:
+            m_lvSelectValue = LABEL_LV2;
+        break;
+        case LABEL_LV2:
+            m_lvSelectValue = LABEL_LV3;
+        break;
+        default:
+            m_lvSelectValue = LABEL_LV1;
+        break;
+    }
+}
+
+void menuGame::goBackLv()
+{
+    m_oldLvSelectValue = m_lvSelectValue;
+    switch(m_lvSelectValue)
+    {
+        case LABEL_LV3:
+            m_lvSelectValue = LABEL_LV2;
+        break;
+        case LABEL_LV2:
+            m_lvSelectValue = LABEL_LV1;
+        break;
+        default:
+            m_lvSelectValue = LABEL_LV3;
+        break;
     }
 }
 void menuGame::clean()
@@ -201,8 +274,9 @@ void menuGame::setSDLHandler(const std::shared_ptr<SDLHandler> &obj)
 void menuGame::setRandValue(const int& val)
 {
     randomVal = val;
-    for(int i = 0; i < m_sdlObjList.size(); i++) 
+    std::map<MainMenuObj,std::shared_ptr<SDLObject> >::iterator it;
+    for(it = m_sdlObjTable.begin(); it != m_sdlObjTable.end(); it++) 
     {
-        m_sdlObjList[i]->setRandValue(val);
+        it->second->setRandValue(val);
     }
 }

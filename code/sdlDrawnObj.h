@@ -8,12 +8,14 @@
 #include <SDL2/SDL_image.h>
 #include "sdlDestroyer.h"
 #include "gameObj.h"
+#include "color.h"
+
 class SDLDrawnObj : public gameObj
 {
 private:
     SDL_Rect m_sourceRect;
     SDL_Rect m_destRect;
-    SDL_Color m_txtColor; 
+    color m_txtColor; 
     SDL_RendererFlip m_flipVal;
     double m_angle;
     std::shared_ptr<SDL_Texture> m_aTexture;
@@ -42,7 +44,7 @@ public:
     void loadParameter(const std::string &txt = "",const int& opt = 0);
     void setText(const std::string &msg);
     void setAngel(const double& ang = 0.0);
-    void setColor(const unsigned char& r=255,const unsigned char& g=255,const unsigned char& b=255);
+    void setColor(const color& aColor);
     void drawImg();
     void drawImgEx();
     void rotateFromCurrentPos(const double& deltaAng = 0.0);

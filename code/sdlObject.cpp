@@ -77,7 +77,7 @@ void SDLObject::render()
 	if (m_sdlSimpleLib)
 	{
 
-		m_sdlSimpleLib->setRenderDrawColor(0,255,255,255);
+		//m_sdlSimpleLib->setRenderDrawColor(0,255,255,255);
 		//m_sdlSimpleLib->drawObj(m_objectId);
         drawImgEx();
 	}

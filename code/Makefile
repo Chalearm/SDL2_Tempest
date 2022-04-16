@@ -20,29 +20,35 @@ else
 endif
 
 
-$(TARGETAPP): $(TARGETAPP).cpp game.o 
-	g++ -L . $(TARGETAPP).cpp -o $(TARGETAPP) -lgame
-game.o : game.cpp game.h menuGame.o sdlHandler.o gameState.o
+$(TARGETAPP): $(TARGETAPP).cpp game.o color.o
+	g++ -L . $(TARGETAPP).cpp -o $(TARGETAPP) -lgame -lcolor
+game.o : game.cpp game.h menuGame.o sdlHandler.o gameState.o color.o
 	g++ -c -o game.o game.cpp
-	g++ -L . -shared -fPIC -o libgame.so game.o -l sdlHandler -l menuGame -lgameState
-menuGame.o : menuGame.cpp menuGame.h gameState.o sdlHandler.o sdlObject.o
-	g++ -c -o menuGame.o menuGame.cpp
-	g++ -I . -L . -shared -fPIC -o libmenuGame.so menuGame.o -lgameState -lsdlHandler -lsdlObject
+	g++ -L . -shared -fPIC -o libgame.so game.o -l sdlHandler -l menuGame -lgameState -lcolor
+menuGame.o : menuGame.cpp menuGame.h gameState.o sdlHandler.o sdlObject.o gameMessage.o color.o
+	g++ -c -o menuGame.o menuGame.cpp 
+	g++ -I . -L . -shared -fPIC -o libmenuGame.so menuGame.o -lgameState -lsdlHandler -lsdlObject -lgameMessage -lcolor
 sdlObject.o : sdlObject.cpp sdlObject.h gameState.o sdlHandler.o sdlDrawnObj.o
 	g++ -c -o sdlObject.o sdlObject.cpp
 	g++ -I . -L . -shared -fPIC -o libsdlObject.so sdlObject.o -lgameState -lsdlHandler -lsdlDrawnObj
-sdlHandler.o : sdlHandler.cpp sdlHandler.h gameState.o sdlDrawnObj.o gameObj.o
+sdlHandler.o : sdlHandler.cpp sdlHandler.h gameState.o sdlDrawnObj.o gameObj.o color.o
 	g++ -c -o sdlHandler.o sdlHandler.cpp
-	g++ -L . -shared -fPIC -o libsdlHandler.so sdlHandler.o -lgameState -l $(LIBINC) -lsdlDrawnObj -lgameObj
-sdlDrawnObj.o : sdlDrawnObj.cpp sdlDrawnObj.h gameObj.o
+	g++ -L . -shared -fPIC -o libsdlHandler.so sdlHandler.o -lgameState -l $(LIBINC) -lsdlDrawnObj -lgameObj -lcolor
+sdlDrawnObj.o : sdlDrawnObj.cpp sdlDrawnObj.h gameObj.o color.o
 	g++ -c -o sdlDrawnObj.o sdlDrawnObj.cpp
-	g++ -I . -L . -shared -fPIC -o libsdlDrawnObj.so sdlDrawnObj.o -l $(LIBSDLIMG) -l $(LIBSDLTTF) -l $(LIBINC) -lgameObj
+	g++ -I . -L . -shared -fPIC -o libsdlDrawnObj.so sdlDrawnObj.o -l $(LIBSDLIMG) -l $(LIBSDLTTF) -l $(LIBINC) -lgameObj -lcolor
 gameState.o : gameState.cpp gameState.h
 	g++ -c -o gameState.o gameState.cpp
 	g++ -shared -fPIC -o libgameState.so gameState.o
 gameObj.o : gameObj.cpp gameObj.h
 	g++ -c -o gameObj.o gameObj.cpp
-	g++ -shared -fPIC -o libgameObj.so gameObj.o
+	g++ -I . -L . -shared -fPIC -o libgameObj.so gameObj.o 
+gameMessage.o : gameMessage.cpp gameMessage.h
+	g++ -c -o gameMessage.o gameMessage.cpp
+	g++ -shared -fPIC -o libgameMessage.so gameMessage.o
+color.o : color.cpp color.h
+	g++ -c -o color.o color.cpp
+	g++ -shared -fPIC -o libcolor.so color.o -l $(LIBINC)
 
 clean:
 	rm *.o *.so $(TARGETAPP)

@@ -3,29 +3,39 @@
  
 #include <iostream>
 #include <cstring>
-#include <vector>
+#include <map>
 #include <ctime>
+#include "gameMessage.h"
 #include "sdlHandler.h"
 #include "gameState.h"
 #include "sdlObject.h"
+#include "gameDataType.h"
+#include "gameConstance.h"
 
-
-class menuGame : public gameState
+class menuGame : public gameState, public gameMessage
 {
 private:
 
     std::shared_ptr<SDLHandler> m_sdlSimpleLib;
-    std::vector<std::shared_ptr<SDLObject> > m_sdlObjList;
+    std::map<MainMenuObj,std::shared_ptr<SDLObject> > m_sdlObjTable;
     int randomVal;
 
-    int m_lvSelectValue;
 
+    MainMenuObj m_oldLvSelectValue;
+    MainMenuObj m_lvSelectValue;
+    GameScene m_currentStage;
+
+    void mainMenuDisplay();
     void levelSelectionDisplay();
+
+    void goNextLv();
+    void goBackLv();
 public:
 
     menuGame();
     menuGame(const menuGame& obj);
     ~menuGame();
+
 
     void init();
     void render();
@@ -34,6 +44,8 @@ public:
     void clean();
     void setSDLHandler(const std::shared_ptr<SDLHandler> &obj);
     void setRandValue(const int& val = 0);
+
+
 };
 
 

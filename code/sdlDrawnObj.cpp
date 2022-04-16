@@ -1,4 +1,3 @@
-#include <iostream>
 #include "sdlDrawnObj.h"
 
 // static variable
@@ -89,10 +88,9 @@ m_flipVal(SDL_FLIP_NONE),
 m_angle(0.0),
 m_aTexture()
 {}
-SDLDrawnObj::~SDLDrawnObj()
-{
 
-}
+SDLDrawnObj::~SDLDrawnObj()
+{}
 
 SDLDrawnObj::SDLDrawnObj(const SDLDrawnObj& obj):
 m_sourceRect(obj.m_sourceRect),
@@ -131,11 +129,11 @@ void SDLDrawnObj::rotateFromCurrentPos(const double& deltaAng)
 //void SDLDrawnObj::setTextAndColor(const std::string &msg, const unsigned char& r, const unsigned char& g, const unsigned char& b)
 void SDLDrawnObj::setText(const std::string &msg)
 {
-   // SDL_Color foreground = { r, g, b };
+    SDL_Color foreground = m_txtColor.getSDLCol();
    // m_txtColor = foreground;
     if ((msg != "") && isAbleToRender())
     {
-        std::unique_ptr<SDL_Surface, SDLDestroyer> pTempSurface(TTF_RenderText_Solid(s_aLoadedFont.get(), msg.c_str(), m_txtColor));
+        std::unique_ptr<SDL_Surface, SDLDestroyer> pTempSurface(TTF_RenderText_Solid(s_aLoadedFont.get(), msg.c_str(),foreground));
         if (pTempSurface)
         {
             // the new SDL_Texture variable
@@ -185,10 +183,19 @@ void SDLDrawnObj::loadParameter(const std::string &txt,const int& opt)
     }
 }
 
-void SDLDrawnObj::setColor(const unsigned char& r,const unsigned char& g,const unsigned char& b)
+void SDLDrawnObj::setColor(const color& aColor)
 {
-    SDL_Color color1 = {r,g,b};
-    m_txtColor = color1;
+    m_txtColor = aColor;
+    if (m_aTexture)
+    {
+       SDL_Color tempColor = aColor.getSDLCol();
+       SDL_SetTextureColorMod(m_aTexture.get(), tempColor.r, tempColor.g, tempColor.b );
+       SDL_SetTextureAlphaMod(m_aTexture.get(), tempColor.a);
+    }
+    else
+    {
+        // Do nothing
+    }
 }
 void SDLDrawnObj::loadImage(const std::string &path)
 {

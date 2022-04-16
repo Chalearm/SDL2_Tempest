@@ -9,13 +9,14 @@
 #include "sdlDrawnObj.h"
 #include "gameState.h"
 #include "gameObj.h"
+#include "color.h"
 
 class SDLHandler : public gameState
 {
 private:
 
     std::shared_ptr<SDL_Window> m_pWindow;
-    std::vector<std::shared_ptr<SDLDrawnObj> > m_sdlDrawnObjList;
+   // std::vector<std::shared_ptr<SDLDrawnObj> > m_sdlDrawnObjList;
 
 	std::string m_titleMessage;
 	int m_windowWidth;
@@ -47,7 +48,7 @@ public:
 
 
    // std::shared_ptr<SDL_Renderer> getRenderer();
-    void setRenderDrawColor(const unsigned char &r,const unsigned char &g,const unsigned char &b,const unsigned char &a);
+    void setRenderDrawColor(const color& aColor);
 
     std::shared_ptr<gameObj> loadImage(const std::string &path, int &id);
     void renderClear();
