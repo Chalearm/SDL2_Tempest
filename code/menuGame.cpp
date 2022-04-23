@@ -136,13 +136,14 @@ void menuGame::mainMenuDisplay()
 
 void menuGame::levelSelectionDisplay()
 {
+    const int xStart = 40;
     const int yStart = 170;
     const int yStartLv1 = yStart + 25;
     if (m_lvSelectValue == LABEL_LV1)
     m_sdlSimpleLib->setRenderDrawColor(COLORSET[YELLOW]);
     else
     m_sdlSimpleLib->setRenderDrawColor(COLORSET[BLUE]);
-    m_sdlSimpleLib->drawRectangle(40,yStart,150,150);
+    m_sdlSimpleLib->drawRectangle(xStart,yStart,150,150);
 
     if (m_lvSelectValue == LABEL_LV2)
     m_sdlSimpleLib->setRenderDrawColor(COLORSET[YELLOW]);
@@ -155,9 +156,19 @@ void menuGame::levelSelectionDisplay()
     else
     m_sdlSimpleLib->setRenderDrawColor(COLORSET[BLUE]);
     m_sdlSimpleLib->drawRectangle(440,yStart,150,150);
+//walkPath(const point<T>& p1, const point<T>& p2, const point<T>& p3, const point<T>& p4);
+    /*
+enum pointType {X,Y};
+enum lineType {P1,P2};
+enum WalkPathType {LLEFT,LEDGE,LRIGHT};
 
+    */
     // Lv 1.
-
+walkPath<double> aPath(point<double>(1,2),
+                       point<double>(1.324,2),
+                       point<double>(1,2),
+                       point<double>(1,2));
+//std::cout<<aPath[LEDGE][P1][X]<<" ";
     if (m_lvSelectValue == LABEL_LV1)
     m_sdlSimpleLib->setRenderDrawColor(COLORSET[YELLOW]);
     else
@@ -166,6 +177,8 @@ void menuGame::levelSelectionDisplay()
     m_sdlSimpleLib->drawRectangle(65, yStartLv1,100,100);
     // rectangle inside
     m_sdlSimpleLib->drawRectangle(105,yStartLv1 + 50,20,20);
+
+    
     m_sdlSimpleLib->drawLine(65, yStartLv1, 105, yStartLv1 + 50);
     m_sdlSimpleLib->drawLine(65, yStartLv1+ 100, 105, yStartLv1 + 70);
     m_sdlSimpleLib->drawLine(165, yStartLv1+ 100, 125, yStartLv1 + 70);

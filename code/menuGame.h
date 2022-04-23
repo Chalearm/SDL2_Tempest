@@ -11,6 +11,7 @@
 #include "sdlObject.h"
 #include "gameDataType.h"
 #include "gameConstance.h"
+#include "walkPath.h"
 
 class menuGame : public gameState, public gameMessage
 {
@@ -24,9 +25,12 @@ private:
     MainMenuObj m_oldLvSelectValue;
     MainMenuObj m_lvSelectValue;
     GameScene m_currentStage;
+    walkPath<double> m_aPath;
 
     void mainMenuDisplay();
     void levelSelectionDisplay();
+
+    //void drawLvSelection(constexpr int& xStart = 0, constexpr int& yStart = 0,);
 
     void goNextLv();
     void goBackLv();

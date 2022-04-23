@@ -1,5 +1,20 @@
 #include "color.h"
 
+std::map<GameColor,color> color::create_ColorMap()
+{
+	std::map<GameColor,color> m;
+	m[WHITE] = color();
+	m[BLUE] = color(0,0,255,255);
+	m[RED] = color(255,0,0,255);
+	m[GREEN] = color(0,255,0,255);
+	m[DARK_GREEN] = color(0,70,0,255);
+	m[YELLOW] = color(255,255,0,255);
+	m[ORANGE] = color(255,165,0,255);
+	m[LIGHT_GREY] = color(192,192,192,255);
+	m[MAGENTA] = color(255,0,255,255);
+	return m;
+}
+
 color::color(const unsigned char& r,const unsigned char& g,const unsigned char& b,const unsigned char& a):
 m_sdlColor(),
 m_gradientRed(0),
@@ -21,6 +36,10 @@ m_gradientBlue(obj.m_gradientBlue),
 m_gradientAlpha(obj.m_gradientAlpha)
 {}
 
+bool color::operator==(const color& obj)
+{
+	return ((m_sdlColor.r = obj.m_sdlColor.r) && (m_sdlColor.g = obj.m_sdlColor.g) && (m_sdlColor.b = obj.m_sdlColor.b) && (m_sdlColor.a = obj.m_sdlColor.a));
+}
 color& color::operator=(const color& obj)
 {
 	if (this != &obj)

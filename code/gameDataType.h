@@ -1,8 +1,11 @@
 #ifndef __GAMEDATATYPE__
 #define __GAMEDATATYPE__
-#include <iostream> 
 
 // Data type define
+enum pointType {X,Y};
+enum lineType {P1,P2};
+enum WalkPathType {LLEFT,LEDGE,LRIGHT};
+
 enum GameScene {MainMenu, Level1, Level2, Level3};
 
 enum SelectionType {DATA_GAMESCENE};
