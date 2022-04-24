@@ -17,8 +17,8 @@ public:
 	aLine<T>& operator=(const aLine<T>& obj);
     bool operator==(const aLine<T>& obj);
     point<T> operator[](const lineType& val) const;
-    aLine<T> operator*(const T& val);
-    aLine<T> operator+(const point<T>& val);
+    aLine<T> operator*(const T& val)const;
+    aLine<T> operator+(const point<T>& val)const;
     T slope();
 };
 
@@ -38,7 +38,7 @@ aLine<T>::~aLine<T>()
 {}
 
 template <class T>
-aLine<T> aLine<T>::operator*(const T& val)
+aLine<T> aLine<T>::operator*(const T& val) const
 {
 	return aLine<T>((*this)[P1]*val,(*this)[P2]*val);
 }
@@ -62,7 +62,7 @@ point<T> aLine<T>::operator[](const lineType& val) const
 }
 
 template<class T>
-aLine<T> aLine<T>::operator+(const point<T>& val)
+aLine<T> aLine<T>::operator+(const point<T>& val)const
 {
 	return aLine<T>(m_p1+val,m_p2+val);
 }

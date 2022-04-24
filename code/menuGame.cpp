@@ -6,9 +6,240 @@ m_sdlSimpleLib(),
 m_sdlObjTable(),
 m_oldLvSelectValue(LABEL_LV1),
 m_lvSelectValue(LABEL_LV1),
-m_currentStage(MainMenu)
+m_currentStage(MainMenu),
+m_thelv1Path(),
+m_thelv2Path(),
+m_thelv3Path()
 {
 
+m_thelv1Path.push_back(walkPath<double>(
+                point<double>(40,60),
+                point<double>(0,0),
+                point<double>(25,0),
+                point<double>(45,60)));
+m_thelv1Path.push_back(walkPath<double>(
+                point<double>(45,60),
+                point<double>(25,0),
+                point<double>(50,0),
+                point<double>(50,60)));
+m_thelv1Path.push_back(walkPath<double>(
+                point<double>(50,60),
+                point<double>(50,0),
+                point<double>(75,0),
+                point<double>(55,60)));
+m_thelv1Path.push_back(walkPath<double>(
+                point<double>(55,60),
+                point<double>(75,0),
+                point<double>(100,0),
+                point<double>(60,60)));
+
+m_thelv1Path.push_back(walkPath<double>(
+                point<double>(60,60),
+                point<double>(100,0),
+                point<double>(100,25),
+                point<double>(60,65)));
+m_thelv1Path.push_back(walkPath<double>(
+                point<double>(60,65),
+                point<double>(100,25),
+                point<double>(100,50),
+                point<double>(60,70)));
+m_thelv1Path.push_back(walkPath<double>(
+                point<double>(60,70),
+                point<double>(100,50),
+                point<double>(100,75),
+                point<double>(60,75)));
+m_thelv1Path.push_back(walkPath<double>(
+                point<double>(60,75),
+                point<double>(100,75),
+                point<double>(100,100),
+                point<double>(60,80)));
+
+m_thelv1Path.push_back(walkPath<double>(
+                point<double>(60,80),
+                point<double>(100,100),
+                point<double>(75,100),
+                point<double>(55,80)));
+m_thelv1Path.push_back(walkPath<double>(
+                point<double>(55,80),
+                point<double>(75,100),
+                point<double>(50,100),
+                point<double>(50,80)));
+m_thelv1Path.push_back(walkPath<double>(
+                point<double>(50,80),
+                point<double>(50,100),
+                point<double>(25,100),
+                point<double>(45,80)));
+m_thelv1Path.push_back(walkPath<double>(
+                point<double>(45,80),
+                point<double>(25,100),
+                point<double>(0,100),
+                point<double>(40,80)));
+
+
+m_thelv1Path.push_back(walkPath<double>(
+                point<double>(40,80),
+                point<double>(0,100),
+                point<double>(0,75),
+                point<double>(40,75)));
+m_thelv1Path.push_back(walkPath<double>(
+                point<double>(40,75),
+                point<double>(0,75),
+                point<double>(0,50),
+                point<double>(40,70)));
+m_thelv1Path.push_back(walkPath<double>(
+                point<double>(40,70),
+                point<double>(0,50),
+                point<double>(0,25),
+                point<double>(40,65)));
+m_thelv1Path.push_back(walkPath<double>(
+                point<double>(40,65),
+                point<double>(0,25),
+                point<double>(0,0),
+                point<double>(40,60)));
+
+
+// level 2
+
+m_thelv2Path.push_back(walkPath<double>(
+                point<double>(37.5,50),
+                point<double>(0,50),
+                point<double>(12.5,25),
+                point<double>(40.625,43.75)));
+m_thelv2Path.push_back(walkPath<double>(
+                point<double>(40.625,43.75),
+                point<double>(12.5,25),
+                point<double>(25,0),
+                point<double>(43.75,37.5)));
+m_thelv2Path.push_back(walkPath<double>(
+                point<double>(43.75,37.5),
+                point<double>(25,0),
+                point<double>(50,0),
+                point<double>(50,37.5)));
+m_thelv2Path.push_back(walkPath<double>(
+                point<double>(50,37.5),
+                point<double>(50,0),
+                point<double>(75,0),
+                point<double>(56.25,37.5)));
+
+
+m_thelv2Path.push_back(walkPath<double>(
+                point<double>(56.25,37.5),
+                point<double>(75,0),
+                point<double>(87.5,25),
+                point<double>(59.375,43.75)));
+m_thelv2Path.push_back(walkPath<double>(
+                point<double>(59.375,43.75),
+                point<double>(87.5,25),
+                point<double>(100,50),
+                point<double>(62.5,50)));
+m_thelv2Path.push_back(walkPath<double>(
+                point<double>(62.5,50),
+                point<double>(100,50),
+                point<double>(87.5,75),
+                point<double>(59.375,56.25)));
+m_thelv2Path.push_back(walkPath<double>(
+                point<double>(59.375,56.25),
+                point<double>(87.5,75),
+                point<double>(75,100),
+                point<double>(56.25,62.5)));
+m_thelv2Path.push_back(walkPath<double>(
+                point<double>(56.25,62.5),
+                point<double>(75,100),
+                point<double>(50,100),
+                point<double>(50,62.5)));
+m_thelv2Path.push_back(walkPath<double>(
+                point<double>(50,62.5),
+                point<double>(50,100),
+                point<double>(25,100),
+                point<double>(43.75,62.5)));
+
+m_thelv2Path.push_back(walkPath<double>(
+                point<double>(43.75,62.5),
+                point<double>(25,100),
+                point<double>(12.5,75),
+                point<double>(40.625,56.25)));
+m_thelv2Path.push_back(walkPath<double>(
+                point<double>(40.625,56.25),
+                point<double>(12.5,75),
+                point<double>(0,50),
+                point<double>(37.5,50)));
+
+
+m_thelv3Path.push_back(walkPath<double>(
+                point<double>(37.5,50),
+                point<double>(0,50),
+                point<double>(0,25),
+                point<double>(37.5,43.75)));
+m_thelv3Path.push_back(walkPath<double>(
+                point<double>(37.5,43.75),
+                point<double>(0,25),
+                point<double>(12.5,12.5),
+                point<double>(40.625,40.625)));
+m_thelv3Path.push_back(walkPath<double>(
+                point<double>(40.625,40.625),
+                point<double>(12.5,12.5),
+                point<double>(25.0,0),
+                point<double>(43.75,37.5)));
+m_thelv3Path.push_back(walkPath<double>(
+                point<double>(43.75,37.5),
+                point<double>(25.0,0),
+                point<double>(50,0),
+                point<double>(50,37.5)));
+m_thelv3Path.push_back(walkPath<double>(
+                point<double>(50,37.5),
+                point<double>(50,0),
+                point<double>(75,0),
+                point<double>(56.25,37.5)));
+m_thelv3Path.push_back(walkPath<double>(
+                point<double>(56.25,37.5),
+                point<double>(75,0),
+                point<double>(87.5,12.5),
+                point<double>(59.375,40.625)));
+m_thelv3Path.push_back(walkPath<double>(
+                point<double>(59.375,40.625),
+                point<double>(87.5,12.5),
+                point<double>(100,25),
+                point<double>(62.5,43.75)));
+m_thelv3Path.push_back(walkPath<double>(
+                point<double>(62.5,43.75),
+                point<double>(100,25),
+                point<double>(100,50),
+                point<double>(62.5,50)));
+
+
+
+m_thelv3Path.push_back(walkPath<double>(
+                point<double>(62.5,50),
+                point<double>(100,50),
+                point<double>(100,75),
+                point<double>(62.5,56.25)));
+
+m_thelv3Path.push_back(walkPath<double>(
+                point<double>(62.5,56.25),
+                point<double>(100,75),
+                point<double>(87.5,87.5),
+                point<double>(59.375,59.375)));
+
+m_thelv3Path.push_back(walkPath<double>(
+                point<double>(59.375,59.375),
+                point<double>(87.5,87.5),
+                point<double>(75,100),
+                point<double>(56.25,62.5)));
+ 
+/*
+
+               
+m_thelv3Path.push_back(walkPath<double>(
+                point<double>(56.25,62.5),
+                point<double>(87.5,87.5),
+                point<double>(75,100),
+                point<double>(53.125,65.625)));
+
+
+                */
+                
+
+                
 }
 
 menuGame::menuGame(const menuGame& obj):
@@ -110,6 +341,32 @@ void menuGame::render()
     }
 }
 
+void menuGame::drawWalkPath(const std::vector<walkPath<double> >& obj,const point<double>& refPoint,const double &scaleVal)
+{
+    for(int i = 0; i < obj.size(); i++)
+    {
+        // scale 1.0
+        walkPath<double> aPieceofAPath;
+        if (scaleVal != 1.0)
+        {
+            aPieceofAPath = (obj[i]*scaleVal).translate(refPoint);
+        }
+        else
+        {
+            aPieceofAPath = obj[i].translate(refPoint);
+        }
+
+        m_sdlSimpleLib->drawLine(aPieceofAPath[LLEFT]);
+        m_sdlSimpleLib->drawLine(aPieceofAPath[LEDGE]);
+
+
+        m_sdlSimpleLib->drawLine(static_cast<int>(aPieceofAPath[LLEFT][P1][X]),
+                                 static_cast<int>(aPieceofAPath[LLEFT][P1][Y]), 
+                                 static_cast<int>(aPieceofAPath[LRIGHT][P2][X]),
+                                 static_cast<int>(aPieceofAPath[LRIGHT][P2][Y]));
+    }
+}
+
 void menuGame::mainMenuDisplay()
 {
     if (m_sdlSimpleLib)
@@ -135,222 +392,44 @@ void menuGame::mainMenuDisplay()
     }
 }
 
+
+void menuGame::setSelectedLvColorAndCondition(const MainMenuObj &aCondition,const color &deselectCol, const color &selectColr)
+{
+    if (m_lvSelectValue == aCondition)
+    {
+        m_sdlSimpleLib->setRenderDrawColor(selectColr);
+    }
+    else
+    {
+        m_sdlSimpleLib->setRenderDrawColor(deselectCol);
+    }
+}
+
 void menuGame::levelSelectionDisplay()
 {
     const int xStart = 40;
     const int yStart = 170;
     const int yStartLv1 = yStart + 25;
-    if (m_lvSelectValue == LABEL_LV1)
-    m_sdlSimpleLib->setRenderDrawColor(COLORSET[YELLOW]);
-    else
-    m_sdlSimpleLib->setRenderDrawColor(COLORSET[BLUE]);
+    setSelectedLvColorAndCondition(LABEL_LV1,COLORSET[BLUE],COLORSET[YELLOW]);
     m_sdlSimpleLib->drawRectangle(xStart,yStart,150,150);
 
-    if (m_lvSelectValue == LABEL_LV2)
-    m_sdlSimpleLib->setRenderDrawColor(COLORSET[YELLOW]);
-    else
-    m_sdlSimpleLib->setRenderDrawColor(COLORSET[BLUE]);
+    setSelectedLvColorAndCondition(LABEL_LV2,COLORSET[BLUE],COLORSET[YELLOW]);
     m_sdlSimpleLib->drawRectangle(240,yStart,150,150);
 
-    if (m_lvSelectValue == LABEL_LV3)
-    m_sdlSimpleLib->setRenderDrawColor(COLORSET[YELLOW]);
-    else
-    m_sdlSimpleLib->setRenderDrawColor(COLORSET[BLUE]);
+    setSelectedLvColorAndCondition(LABEL_LV3,COLORSET[BLUE],COLORSET[YELLOW]);
     m_sdlSimpleLib->drawRectangle(440,yStart,150,150);
 
     // Lv 1.
-std::vector<walkPath<double> > thelv1Path;
-thelv1Path.push_back(walkPath<double>(
-                point<double>(40,60),
-                point<double>(0,0),
-                point<double>(25,0),
-                point<double>(45,60)));
-thelv1Path.push_back(walkPath<double>(
-                point<double>(45,60),
-                point<double>(25,0),
-                point<double>(50,0),
-                point<double>(50,60)));
-thelv1Path.push_back(walkPath<double>(
-                point<double>(50,60),
-                point<double>(50,0),
-                point<double>(75,0),
-                point<double>(55,60)));
-thelv1Path.push_back(walkPath<double>(
-                point<double>(55,60),
-                point<double>(75,0),
-                point<double>(100,0),
-                point<double>(60,60)));
-
-thelv1Path.push_back(walkPath<double>(
-                point<double>(60,60),
-                point<double>(100,0),
-                point<double>(100,25),
-                point<double>(60,65)));
-thelv1Path.push_back(walkPath<double>(
-                point<double>(60,65),
-                point<double>(100,25),
-                point<double>(100,50),
-                point<double>(60,70)));
-thelv1Path.push_back(walkPath<double>(
-                point<double>(60,70),
-                point<double>(100,50),
-                point<double>(100,75),
-                point<double>(60,75)));
-thelv1Path.push_back(walkPath<double>(
-                point<double>(60,75),
-                point<double>(100,75),
-                point<double>(100,100),
-                point<double>(60,80)));
-
-thelv1Path.push_back(walkPath<double>(
-                point<double>(60,80),
-                point<double>(100,100),
-                point<double>(75,100),
-                point<double>(55,80)));
-thelv1Path.push_back(walkPath<double>(
-                point<double>(55,80),
-                point<double>(75,100),
-                point<double>(50,100),
-                point<double>(50,80)));
-thelv1Path.push_back(walkPath<double>(
-                point<double>(50,80),
-                point<double>(50,100),
-                point<double>(25,100),
-                point<double>(45,80)));
-thelv1Path.push_back(walkPath<double>(
-                point<double>(45,80),
-                point<double>(25,100),
-                point<double>(0,100),
-                point<double>(40,80)));
-
-
-thelv1Path.push_back(walkPath<double>(
-                point<double>(40,80),
-                point<double>(0,100),
-                point<double>(0,75),
-                point<double>(40,75)));
-thelv1Path.push_back(walkPath<double>(
-                point<double>(40,75),
-                point<double>(0,75),
-                point<double>(0,50),
-                point<double>(40,70)));
-thelv1Path.push_back(walkPath<double>(
-                point<double>(40,70),
-                point<double>(0,50),
-                point<double>(0,25),
-                point<double>(40,65)));
-thelv1Path.push_back(walkPath<double>(
-                point<double>(40,65),
-                point<double>(0,25),
-                point<double>(0,0),
-                point<double>(40,60)));
-    if (m_lvSelectValue == LABEL_LV1)
-    m_sdlSimpleLib->setRenderDrawColor(COLORSET[YELLOW]);
-    else
-    m_sdlSimpleLib->setRenderDrawColor(COLORSET[RED]);
-
-for(int i=0; i < thelv1Path.size(); i++)
-{
-    // scale 1.0
-    walkPath<double> aPieceofAPath = (thelv1Path[i]*1.0).translate(point<double>(xStart + 25,yStartLv1));
-
-    m_sdlSimpleLib->drawLine(aPieceofAPath[LLEFT]);
-    m_sdlSimpleLib->drawLine(aPieceofAPath[LEDGE]);
-
-
-    m_sdlSimpleLib->drawLine(static_cast<int>(aPieceofAPath[LLEFT][P1][X]),
-                             static_cast<int>(aPieceofAPath[LLEFT][P1][Y]), 
-                             static_cast<int>(aPieceofAPath[LRIGHT][P2][X]),
-                             static_cast<int>(aPieceofAPath[LRIGHT][P2][Y]));
-}
+    setSelectedLvColorAndCondition(LABEL_LV1,COLORSET[RED],COLORSET[YELLOW]);
+    drawWalkPath(m_thelv1Path,point<double>(xStart + 25,yStartLv1));
     // Lv 2.
-
-std::vector<walkPath<double> > thelv2Path;
-thelv2Path.push_back(walkPath<double>(
-                point<double>(37.5,50),
-                point<double>(0,50),
-                point<double>(12.5,25),
-                point<double>(40.625,43.75)));
-thelv2Path.push_back(walkPath<double>(
-                point<double>(40.625,43.75),
-                point<double>(12.5,25),
-                point<double>(25,0),
-                point<double>(43.75,37.5)));
-thelv2Path.push_back(walkPath<double>(
-                point<double>(43.75,37.5),
-                point<double>(25,0),
-                point<double>(50,0),
-                point<double>(50,37.5)));
-thelv2Path.push_back(walkPath<double>(
-                point<double>(50,37.5),
-                point<double>(50,0),
-                point<double>(75,0),
-                point<double>(56.25,37.5)));
-
-
-thelv2Path.push_back(walkPath<double>(
-                point<double>(56.25,37.5),
-                point<double>(75,0),
-                point<double>(87.5,25),
-                point<double>(59.375,43.75)));
-thelv2Path.push_back(walkPath<double>(
-                point<double>(59.375,43.75),
-                point<double>(87.5,25),
-                point<double>(100,50),
-                point<double>(62.5,50)));
-thelv2Path.push_back(walkPath<double>(
-                point<double>(62.5,50),
-                point<double>(100,50),
-                point<double>(87.5,75),
-                point<double>(59.375,56.25)));
-thelv2Path.push_back(walkPath<double>(
-                point<double>(59.375,56.25),
-                point<double>(87.5,75),
-                point<double>(75,100),
-                point<double>(56.25,62.5)));
-thelv2Path.push_back(walkPath<double>(
-                point<double>(56.25,62.5),
-                point<double>(75,100),
-                point<double>(50,100),
-                point<double>(50,62.5)));
-thelv2Path.push_back(walkPath<double>(
-                point<double>(50,62.5),
-                point<double>(50,100),
-                point<double>(25,100),
-                point<double>(43.75,62.5)));
-
-thelv2Path.push_back(walkPath<double>(
-                point<double>(43.75,62.5),
-                point<double>(25,100),
-                point<double>(12.5,75),
-                point<double>(40.625,56.25)));
-thelv2Path.push_back(walkPath<double>(
-                point<double>(40.625,56.25),
-                point<double>(12.5,75),
-                point<double>(0,50),
-                point<double>(37.5,50)));
-
-    if (m_lvSelectValue == LABEL_LV2)
-    m_sdlSimpleLib->setRenderDrawColor(COLORSET[YELLOW]);
-    else
-    m_sdlSimpleLib->setRenderDrawColor(COLORSET[RED]);
-
-for(int i=0; i < thelv2Path.size(); i++)
-{
-    // scale 1.0
-    walkPath<double> aPieceofAPath = (thelv2Path[i]*1.0).translate(point<double>(xStart + 225,yStartLv1));
-
-    m_sdlSimpleLib->drawLine(aPieceofAPath[LLEFT]);
-    m_sdlSimpleLib->drawLine(aPieceofAPath[LEDGE]);
-
-
-    m_sdlSimpleLib->drawLine(static_cast<int>(aPieceofAPath[LLEFT][P1][X]),
-                             static_cast<int>(aPieceofAPath[LLEFT][P1][Y]), 
-                             static_cast<int>(aPieceofAPath[LRIGHT][P2][X]),
-                             static_cast<int>(aPieceofAPath[LRIGHT][P2][Y]));
-}
-
+    setSelectedLvColorAndCondition(LABEL_LV2,COLORSET[RED],COLORSET[YELLOW]);
+    drawWalkPath(m_thelv2Path,point<double>(xStart + 225,yStartLv1));
     // Lv 3.
+    setSelectedLvColorAndCondition(LABEL_LV3,COLORSET[RED],COLORSET[YELLOW]);
+    drawWalkPath(m_thelv3Path,point<double>(xStart + 425,yStartLv1));
+
+
 
 }
 

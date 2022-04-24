@@ -20,10 +20,10 @@ public:
 	walkPath(const walkPath<T>& obj);
 	walkPath(const std::map<WalkPathType,aLine<T> > &obj);
 	walkPath<T>& operator=(const walkPath<T> &obj);
-    walkPath<T> operator*(const T& val);
+    walkPath<T> operator*(const T& val)const;
 	bool operator==(const walkPath<T> &obj);
 	aLine<T> operator[](const WalkPathType &val)const;
-	walkPath<T> translate(const point<T>& aRefPoint);
+	walkPath<T> translate(const point<T>& aRefPoint)const;
 
 };
 
@@ -42,13 +42,13 @@ m_lRight(lr)
 {}
 
 template<class T>
-walkPath<T> walkPath<T>::translate(const point<T>& aRefPoint)
+walkPath<T> walkPath<T>::translate(const point<T>& aRefPoint)const
 {
 	return walkPath<T>(m_lLeft + aRefPoint, m_lEdge + aRefPoint, m_lRight + aRefPoint);
 }
 
 template<class T>
-walkPath<T> walkPath<T>::operator*(const T& val)
+walkPath<T> walkPath<T>::operator*(const T& val)const
 {
     return 	walkPath<T>(m_lLeft*val, m_lEdge*val, m_lRight*val);	
 }
