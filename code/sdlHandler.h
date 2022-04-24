@@ -10,6 +10,8 @@
 #include "gameState.h"
 #include "gameObj.h"
 #include "color.h"
+#include "gameDataType.h"
+#include "aLine.h"
 
 class SDLHandler : public gameState
 {
@@ -60,6 +62,7 @@ public:
     */
     //void setPenColor(const unsigned char& r, const unsigned char& g, const unsigned char& b, const unsigned char& a);
     void drawLine(const int& x1, const int& y1, const int& x2, const int& y2);
+    void drawLine(const aLine<double>& line );
 
     void drawRectangle(const int& x1, const int& y1, const int& w, const int& h);
 

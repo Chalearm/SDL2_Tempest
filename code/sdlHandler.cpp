@@ -218,7 +218,14 @@ void SDLHandler::setRenderDrawColor(const color& aColor)
 	SDL_Color tempColor = aColor.getSDLCol();
     SDL_SetRenderDrawColor(SDLDrawnObj::s_pRenderer.get(),tempColor.r,tempColor.g,tempColor.b,tempColor.a);
 }
+void SDLHandler::drawLine(const aLine<double>& line)
+{
+	drawLine(static_cast<int>(line[P1][X]),
+             static_cast<int>(line[P1][Y]), 
+             static_cast<int>(line[P2][X]),
+             static_cast<int>(line[P2][Y]));
 
+}
 void SDLHandler::drawRectangle(const int& x1, const int& y1, const int& w, const int& h)
 {
 	int x2 = x1 + w - 1;

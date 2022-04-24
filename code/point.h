@@ -18,7 +18,8 @@ public:
     point<T> operator/(const T val);
 	point<T>& operator+=(const point<T>& obj);
     point<T>& operator-=(const point<T>& obj);
-    T operator[](const pointType val);
+    point<T> operator*(const T& val);
+    T operator[](const pointType val)const;
     bool operator==(const point<T>& obj);
     T dybydx();
 
@@ -73,8 +74,15 @@ point<T> point<T>::operator-(const point<T>& obj)
 {
 	return point<T>(m_x-obj.m_x,m_y-obj.m_y);
 }
+
 template <class T>
-T point<T>::operator[](const pointType val)
+point<T> point<T>::operator*(const T& val)
+{
+	return point<T>(m_x*val,m_y*val);
+}
+
+template <class T>
+T point<T>::operator[](const pointType val)const
 {
 	T ret = m_x;
     switch(val)

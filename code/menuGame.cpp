@@ -1,3 +1,4 @@
+#include <vector>
 #include "menuGame.h"
 
 menuGame::menuGame():
@@ -164,37 +165,110 @@ enum WalkPathType {LLEFT,LEDGE,LRIGHT};
 
     */
     // Lv 1.
-walkPath<double> aPath(point<double>(1,2),
-                       point<double>(1.324,2),
-                       point<double>(1,2),
-                       point<double>(1,2));
+std::vector<walkPath<double> > aPath;
+aPath.push_back(walkPath<double>(
+                point<double>(40,60),
+                point<double>(0,0),
+                point<double>(25,0),
+                point<double>(45,60)));
+aPath.push_back(walkPath<double>(
+                point<double>(45,60),
+                point<double>(25,0),
+                point<double>(50,0),
+                point<double>(50,60)));
+aPath.push_back(walkPath<double>(
+                point<double>(50,60),
+                point<double>(50,0),
+                point<double>(75,0),
+                point<double>(55,60)));
+aPath.push_back(walkPath<double>(
+                point<double>(55,60),
+                point<double>(75,0),
+                point<double>(100,0),
+                point<double>(60,60)));
+
+aPath.push_back(walkPath<double>(
+                point<double>(60,60),
+                point<double>(100,0),
+                point<double>(100,25),
+                point<double>(60,65)));
+aPath.push_back(walkPath<double>(
+                point<double>(60,65),
+                point<double>(100,25),
+                point<double>(100,50),
+                point<double>(60,70)));
+aPath.push_back(walkPath<double>(
+                point<double>(60,70),
+                point<double>(100,50),
+                point<double>(100,75),
+                point<double>(60,75)));
+aPath.push_back(walkPath<double>(
+                point<double>(60,75),
+                point<double>(100,75),
+                point<double>(100,100),
+                point<double>(60,80)));
+
+aPath.push_back(walkPath<double>(
+                point<double>(60,80),
+                point<double>(100,100),
+                point<double>(75,100),
+                point<double>(55,80)));
+aPath.push_back(walkPath<double>(
+                point<double>(55,80),
+                point<double>(75,100),
+                point<double>(50,100),
+                point<double>(50,80)));
+aPath.push_back(walkPath<double>(
+                point<double>(50,80),
+                point<double>(50,100),
+                point<double>(25,100),
+                point<double>(45,80)));
+aPath.push_back(walkPath<double>(
+                point<double>(45,80),
+                point<double>(25,100),
+                point<double>(0,100),
+                point<double>(40,80)));
+
+
+aPath.push_back(walkPath<double>(
+                point<double>(40,80),
+                point<double>(0,100),
+                point<double>(0,75),
+                point<double>(40,75)));
+aPath.push_back(walkPath<double>(
+                point<double>(40,75),
+                point<double>(0,75),
+                point<double>(0,50),
+                point<double>(40,70)));
+aPath.push_back(walkPath<double>(
+                point<double>(40,70),
+                point<double>(0,50),
+                point<double>(0,25),
+                point<double>(40,65)));
+aPath.push_back(walkPath<double>(
+                point<double>(40,65),
+                point<double>(0,25),
+                point<double>(0,0),
+                point<double>(40,60)));
 //std::cout<<aPath[LEDGE][P1][X]<<" ";
     if (m_lvSelectValue == LABEL_LV1)
     m_sdlSimpleLib->setRenderDrawColor(COLORSET[YELLOW]);
     else
     m_sdlSimpleLib->setRenderDrawColor(COLORSET[RED]);
-    // rectangle outside
-    m_sdlSimpleLib->drawRectangle(65, yStartLv1,100,100);
-    // rectangle inside
-    m_sdlSimpleLib->drawRectangle(105,yStartLv1 + 50,20,20);
 
-    
-    m_sdlSimpleLib->drawLine(65, yStartLv1, 105, yStartLv1 + 50);
-    m_sdlSimpleLib->drawLine(65, yStartLv1+ 100, 105, yStartLv1 + 70);
-    m_sdlSimpleLib->drawLine(165, yStartLv1+ 100, 125, yStartLv1 + 70);
-    m_sdlSimpleLib->drawLine(165, yStartLv1, 125, yStartLv1 + 50);
+for(int i=0; i < aPath.size(); i++)
+{
+    walkPath<double> aPieceofAPath = (aPath[i]*1.0).translate(point<double>(xStart + 25,yStartLv1));
 
-    m_sdlSimpleLib->drawLine(111, yStartLv1 + 50, 95, yStartLv1);
-    m_sdlSimpleLib->drawLine(118, yStartLv1 + 50, 125, yStartLv1);
+    m_sdlSimpleLib->drawLine(aPieceofAPath[LLEFT]);
+    m_sdlSimpleLib->drawLine(aPieceofAPath[LEDGE]);
 
-    m_sdlSimpleLib->drawLine(111, yStartLv1 + 70, 95, yStartLv1 + 100);
-    m_sdlSimpleLib->drawLine(118, yStartLv1 + 70, 125, yStartLv1 + 100);
 
-    m_sdlSimpleLib->drawLine(65, yStartLv1 + 35, 105, yStartLv1 + 56);
-    m_sdlSimpleLib->drawLine(65, yStartLv1 + 70, 105, yStartLv1 + 63);
-
-    m_sdlSimpleLib->drawLine(165, yStartLv1 + 35, 125, yStartLv1 + 56);
-    m_sdlSimpleLib->drawLine(165, yStartLv1 + 70, 125, yStartLv1 + 63);
+    m_sdlSimpleLib->drawLine(static_cast<int>(aPieceofAPath[LLEFT][P1][X]),
+                             static_cast<int>(aPieceofAPath[LLEFT][P1][Y]), 
+                             static_cast<int>(aPieceofAPath[LRIGHT][P2][X]),
+                             static_cast<int>(aPieceofAPath[LRIGHT][P2][Y]));
+}
     // Lv 2.
 
     // Lv 3.
