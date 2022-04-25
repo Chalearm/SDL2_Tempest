@@ -9,7 +9,8 @@ m_lvSelectValue(LABEL_LV1),
 m_currentStage(MainMenu),
 m_thelv1Path(),
 m_thelv2Path(),
-m_thelv3Path()
+m_thelv3Path(),
+m_playerStartPoint(0)
 {
 
 m_thelv1Path.push_back(walkPath<double>(
@@ -307,6 +308,16 @@ enum MainMenuObj {BACKGROUND_IMG,LABEL_TEMPEST,LABEL_EXIT,LABEL_LV1,LABEL_LV2,LA
         gameObj->setDrawPosition(20,10,200,40);
         m_sdlObjTable[LABEL_EXIT] = gameObj;
     }
+
+    {
+        std::shared_ptr<SDLObject> gameObj(std::make_shared<SDLObject>());
+        gameObj->setSDLHandler(m_sdlSimpleLib);
+        gameObj->loadParameter("Press BK Space to Menu",1);
+        gameObj->setColor(COLORSET[ORANGE]);
+        gameObj->setShownDimension(0,0,260,40);
+        gameObj->setDrawPosition(20,10,260,40);
+        m_sdlObjTable[BACK_TO_MAINMENU] = gameObj;
+    }
     {
         std::shared_ptr<SDLObject> gameObj(std::make_shared<SDLObject>());
         gameObj->setSDLHandler(m_sdlSimpleLib);
@@ -342,14 +353,36 @@ void menuGame::render()
     switch(m_currentStage)
     {
         case MainMenu:
-            mainMenuDisplay();
+            mainMenuDisplay();        
+        break;
+        case Level1:
+            m_sdlObjTable[BACKGROUND_IMG]->render();
+            m_sdlObjTable[BACK_TO_MAINMENU]->render();
+
+        m_sdlSimpleLib->setRenderDrawColor(COLORSET[BLUE]);
+            drawWalkPath(m_thelv1Path,point<double>(100,50),4,true);
+
+        break;
+        case Level2:
+            m_sdlObjTable[BACKGROUND_IMG]->render();
+            m_sdlObjTable[BACK_TO_MAINMENU]->render();
+
+        m_sdlSimpleLib->setRenderDrawColor(COLORSET[BLUE]);
+            drawWalkPath(m_thelv2Path,point<double>(100,50),4,true);
+        break;
+        case Level3:
+            m_sdlObjTable[BACKGROUND_IMG]->render();
+            m_sdlObjTable[BACK_TO_MAINMENU]->render();
+
+        m_sdlSimpleLib->setRenderDrawColor(COLORSET[BLUE]);
+            drawWalkPath(m_thelv3Path,point<double>(100,50),4,true);
         break;
         default:
         break;
     }
 }
 
-void menuGame::drawWalkPath(const std::vector<walkPath<double> >& obj,const point<double>& refPoint,const double &scaleVal)
+void menuGame::drawWalkPath(const std::vector<walkPath<double> >& obj,const point<double>& refPoint,const double &scaleVal, const bool isDrawnPlayer)
 {
     for(int i = 0; i < obj.size(); i++)
     {
@@ -364,7 +397,11 @@ void menuGame::drawWalkPath(const std::vector<walkPath<double> >& obj,const poin
             aPieceofAPath = obj[i].translate(refPoint);
         }
 
-        m_sdlSimpleLib->drawLine(aPieceofAPath[LLEFT]);
+        if (((i-1) != m_playerStartPoint) || (isDrawnPlayer == false))
+        {
+            m_sdlSimpleLib->drawLine(aPieceofAPath[LLEFT]);
+        }
+
         m_sdlSimpleLib->drawLine(aPieceofAPath[LEDGE]);
 
 
@@ -372,6 +409,18 @@ void menuGame::drawWalkPath(const std::vector<walkPath<double> >& obj,const poin
                                  static_cast<int>(aPieceofAPath[LLEFT][P1][Y]), 
                                  static_cast<int>(aPieceofAPath[LRIGHT][P2][X]),
                                  static_cast<int>(aPieceofAPath[LRIGHT][P2][Y]));
+
+        if ((i == m_playerStartPoint) && (isDrawnPlayer == true) )
+        {
+        
+            m_sdlSimpleLib->setRenderDrawColor(COLORSET[YELLOW]);
+            m_sdlSimpleLib->drawLine(aPieceofAPath[LLEFT]);
+            m_sdlSimpleLib->drawLine(aPieceofAPath[LEDGE]);
+            m_sdlSimpleLib->drawLine(aPieceofAPath[LRIGHT]);
+
+            m_sdlSimpleLib->setRenderDrawColor(COLORSET[BLUE]);
+
+        }
     }
 }
 
@@ -386,6 +435,7 @@ void menuGame::mainMenuDisplay()
     std::map<MainMenuObj,std::shared_ptr<SDLObject> >::iterator it;
     for(it = m_sdlObjTable.begin(); it != m_sdlObjTable.end(); it++) 
     {
+        if (it->first != BACK_TO_MAINMENU)
         it->second->render();
     }
         
@@ -412,7 +462,41 @@ void menuGame::setSelectedLvColorAndCondition(const MainMenuObj &aCondition,cons
         m_sdlSimpleLib->setRenderDrawColor(deselectCol);
     }
 }
+void menuGame::moveNextAreaOfPlayer(const std::vector<walkPath<double> >& obj)
+{
+    m_playerStartPoint++;
 
+    if (m_playerStartPoint >= obj.size() )
+    {
+        m_playerStartPoint = 0;
+    }
+}
+void menuGame::moveBackAreaOfPlayer(const std::vector<walkPath<double> >& obj)
+{
+    m_playerStartPoint--;
+    if (m_playerStartPoint < 0 )
+    {
+        m_playerStartPoint = obj.size() - 1;
+    }
+}
+/*
+void menuGame::drawPlayerPosition(const std::vector<walkPath<double> >& obj,const point<double>& refPoint,const double& scale)
+{
+    walkPath<double> aPieceofAPath;
+    if (scaleVal != 1.0)
+    {
+        aPieceofAPath = (obj[i]*scaleVal).translate(refPoint);
+    }
+    else
+    {
+        aPieceofAPath = obj[i].translate(refPoint);
+    }
+    m_sdlSimpleLib->drawLine(aPieceofAPath[LLEFT]);
+    m_sdlSimpleLib->drawLine(aPieceofAPath[LEDGE]);
+    m_sdlSimpleLib->drawLine(aPieceofAPath[LRIGHT]);
+
+}
+*/
 void menuGame::levelSelectionDisplay()
 {
     const int xStart = 40;
@@ -450,36 +534,98 @@ void menuGame::update()
         it->second->update();
     }
 }
+
+void menuGame::levelsKeyboardHandle(const unsigned char &val)
+{
+
+    switch(val)
+    {
+        case 8: // back space
+            m_currentStage = MainMenu;
+        break;
+        case 79:  //right arrow
+        {
+            switch(m_currentStage)
+            {
+                case Level1:
+                    moveNextAreaOfPlayer(m_thelv1Path);
+                break;
+                case Level2:
+                    moveNextAreaOfPlayer(m_thelv2Path);
+                break;
+                case Level3:
+                    moveNextAreaOfPlayer(m_thelv3Path);
+                break;
+                default:
+                break;
+            }
+        }
+        break;
+        case 80:  // left arrow    
+        {
+            switch(m_currentStage)
+            {
+                case Level1:
+                    moveBackAreaOfPlayer(m_thelv1Path);
+                break;
+                case Level2:
+                    moveBackAreaOfPlayer(m_thelv2Path);
+                break;
+                case Level3:
+                    moveBackAreaOfPlayer(m_thelv3Path);
+                break;
+                default:
+                break;
+            }
+
+        }
+        break;
+        default:
+        break;
+    }
+}
+
 void menuGame::handleEvents(const unsigned char& keyPress)
 {
    // std::cout<<((int)keyPress)<<" \n";
-    switch(keyPress)
+    if (m_currentStage == MainMenu)
     {
-        case 79:  //right arrow
-            goNextLv();
-        break;
-        case 80:  // left arrow  
-            goBackLv();
-        break;
-        case 13:  // enter
-            switch (m_lvSelectValue)
-            {
-                case LABEL_LV1:
-                    m_currentStage = Level1;
-                break;
-                case LABEL_LV2:
-                    m_currentStage = Level2;
-                break;
-                case LABEL_LV3:
-                    m_currentStage = Level3;
-                break;
-                default:
-                    m_currentStage = MainMenu;
-                break;
-            }
-        break;
-    }
 
+
+        switch(keyPress)
+        {
+            case 79:  //right arrow
+                goNextLv();
+            break;
+            case 80:  // left arrow  
+                goBackLv();
+            break;
+            case 13:  // enter
+                switch (m_lvSelectValue)
+                {
+                    case LABEL_LV1:
+                        m_currentStage = Level1;
+                        m_playerStartPoint = 0;
+                    break;
+                    case LABEL_LV2:
+                        m_currentStage = Level2;
+                        m_playerStartPoint = 0;
+                    break;
+                    case LABEL_LV3:
+                        m_currentStage = Level3;
+                        m_playerStartPoint = 0;
+                    break;
+                    default:
+                        m_currentStage = MainMenu;
+                    break;
+                }
+            break;
+        }
+    }
+    else
+    {
+        levelsKeyboardHandle(keyPress);
+    }
     std::map<MainMenuObj,std::shared_ptr<SDLObject> >::iterator it;
     for(it = m_sdlObjTable.begin(); it != m_sdlObjTable.end(); it++) 
     {

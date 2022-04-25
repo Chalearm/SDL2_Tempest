@@ -29,6 +29,9 @@ private:
     std::vector<walkPath<double> > m_thelv2Path;
     std::vector<walkPath<double> > m_thelv3Path;
 
+
+    int m_playerStartPoint;
+
     void mainMenuDisplay();
     void levelSelectionDisplay();
 
@@ -37,8 +40,12 @@ private:
     void goNextLv();
     void goBackLv();
 
+    void levelsKeyboardHandle(const unsigned char &val = 0);
     void setSelectedLvColorAndCondition(const MainMenuObj &aCondition,const color &deselectCol, const color &selectColr);
-    void drawWalkPath(const std::vector<walkPath<double> >& obj,const point<double>& refPoint,const double &scaleVal = 1.0);
+    void drawWalkPath(const std::vector<walkPath<double> >& obj,const point<double>& refPoint,const double &scaleVal = 1.0, const bool isDrawnPlayer = false);
+    void drawPlayerPosition(const std::vector<walkPath<double> >& obj,const point<double>& refPoint,const double& scale);
+    void moveNextAreaOfPlayer(const std::vector<walkPath<double> >& obj);
+    void moveBackAreaOfPlayer(const std::vector<walkPath<double> >& obj);
 public:
 
     menuGame();
