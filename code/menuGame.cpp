@@ -287,14 +287,6 @@ enum MainMenuObj {BACKGROUND_IMG,LABEL_TEMPEST,LABEL_EXIT,LABEL_LV1,LABEL_LV2,LA
         m_sdlObjTable[BACKGROUND_IMG] = gameObj;
     }
 
-    {
-        std::shared_ptr<SDLObject> gameObj(std::make_shared<SDLObject>());
-        gameObj->setSDLHandler(m_sdlSimpleLib);
-        gameObj->loadParameter("./anAnimal1.png");
-        gameObj->setShownDimension(0,0,128,82);
-        gameObj->setDrawPosition(0,0,128,82);
-        m_sdlObjTable[ANIMAL] = gameObj;
-    }
 
     {
         std::shared_ptr<SDLObject> gameObj(std::make_shared<SDLObject>());
@@ -455,17 +447,6 @@ void menuGame::update()
     std::map<MainMenuObj,std::shared_ptr<SDLObject> >::iterator it;
     for(it = m_sdlObjTable.begin(); it != m_sdlObjTable.end(); it++) 
     {
-        if (it->first == ANIMAL)
-        {
-
-            std::shared_ptr<gameObj> aGameObj = m_sdlObjTable[ANIMAL];
-            int newXval = 128*int(((clock()/100)%6));
-            int newXVal2 = (randomVal*(clock()%101/100) )%640;
-            int newYVal2 = (randomVal*(clock()%101/100) )%640;
-
-            aGameObj->moveFromCurrentPos(newXVal2,newYVal2);
-            aGameObj->setShownDimension(newXval, 0, 128, 72);
-        }
         it->second->update();
     }
 }
