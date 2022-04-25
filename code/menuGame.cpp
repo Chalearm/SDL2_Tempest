@@ -225,21 +225,37 @@ m_thelv3Path.push_back(walkPath<double>(
                 point<double>(87.5,87.5),
                 point<double>(75,100),
                 point<double>(56.25,62.5)));
- 
-/*
 
-               
 m_thelv3Path.push_back(walkPath<double>(
                 point<double>(56.25,62.5),
-                point<double>(87.5,87.5),
                 point<double>(75,100),
-                point<double>(53.125,65.625)));
+                point<double>(50,100),
+                point<double>(50,62.5)));
 
 
-                */
-                
+m_thelv3Path.push_back(walkPath<double>(
+                point<double>(50,62.5),
+                point<double>(50,100),
+                point<double>(25,100),
+                point<double>(43.75,62.5)));
 
-                
+m_thelv3Path.push_back(walkPath<double>(
+                point<double>(43.75,62.5),
+                point<double>(25,100),
+                point<double>(12.5,87.5),
+                point<double>(40.625,59.375)));
+
+m_thelv3Path.push_back(walkPath<double>(
+                point<double>(40.625,59.375),
+                point<double>(12.5,87.5),
+                point<double>(0,75),
+                point<double>(37.5,56.25)));
+
+m_thelv3Path.push_back(walkPath<double>(
+                point<double>(37.5,56.25),
+                point<double>(0,75),
+                point<double>(0,50),
+                point<double>(37.5,50)));
 }
 
 menuGame::menuGame(const menuGame& obj):
@@ -465,6 +481,21 @@ void menuGame::handleEvents(const unsigned char& keyPress)
             goBackLv();
         break;
         case 13:  // enter
+            switch (m_lvSelectValue)
+            {
+                case LABEL_LV1:
+                    m_currentStage = Level1;
+                break;
+                case LABEL_LV2:
+                    m_currentStage = Level2;
+                break;
+                case LABEL_LV3:
+                    m_currentStage = Level3;
+                break;
+                default:
+                    m_currentStage = MainMenu;
+                break;
+            }
         break;
     }
 
