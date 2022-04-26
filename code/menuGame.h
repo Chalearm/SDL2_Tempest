@@ -46,6 +46,7 @@ private:
     void drawPlayerPosition(const std::vector<walkPath<double> >& obj,const point<double>& refPoint,const double& scale);
     void moveNextAreaOfPlayer(const std::vector<walkPath<double> >& obj);
     void moveBackAreaOfPlayer(const std::vector<walkPath<double> >& obj);
+    const std::vector<walkPath<double> >& switchWalkPathByLv(const GameScene& val = Level1);
 public:
 
     menuGame();

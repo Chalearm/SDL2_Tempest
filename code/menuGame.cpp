@@ -355,29 +355,13 @@ void menuGame::render()
         case MainMenu:
             mainMenuDisplay();        
         break;
-        case Level1:
-            m_sdlObjTable[BACKGROUND_IMG]->render();
-            m_sdlObjTable[BACK_TO_MAINMENU]->render();
-
-        m_sdlSimpleLib->setRenderDrawColor(COLORSET[BLUE]);
-            drawWalkPath(m_thelv1Path,point<double>(100,50),4,true);
-
-        break;
-        case Level2:
-            m_sdlObjTable[BACKGROUND_IMG]->render();
-            m_sdlObjTable[BACK_TO_MAINMENU]->render();
-
-        m_sdlSimpleLib->setRenderDrawColor(COLORSET[BLUE]);
-            drawWalkPath(m_thelv2Path,point<double>(100,50),4,true);
-        break;
-        case Level3:
-            m_sdlObjTable[BACKGROUND_IMG]->render();
-            m_sdlObjTable[BACK_TO_MAINMENU]->render();
-
-        m_sdlSimpleLib->setRenderDrawColor(COLORSET[BLUE]);
-            drawWalkPath(m_thelv3Path,point<double>(100,50),4,true);
-        break;
         default:
+        {
+            m_sdlObjTable[BACKGROUND_IMG]->render();
+            m_sdlObjTable[BACK_TO_MAINMENU]->render();
+            m_sdlSimpleLib->setRenderDrawColor(COLORSET[BLUE]);
+            drawWalkPath(switchWalkPathByLv(m_currentStage),point<double>(100,50),4,true);
+        }
         break;
     }
 }
@@ -465,10 +449,13 @@ void menuGame::setSelectedLvColorAndCondition(const MainMenuObj &aCondition,cons
 void menuGame::moveNextAreaOfPlayer(const std::vector<walkPath<double> >& obj)
 {
     m_playerStartPoint++;
-
     if (m_playerStartPoint >= obj.size() )
     {
         m_playerStartPoint = 0;
+    }
+    else
+    {
+        // Do nothing
     }
 }
 void menuGame::moveBackAreaOfPlayer(const std::vector<walkPath<double> >& obj)
@@ -477,6 +464,10 @@ void menuGame::moveBackAreaOfPlayer(const std::vector<walkPath<double> >& obj)
     if (m_playerStartPoint < 0 )
     {
         m_playerStartPoint = obj.size() - 1;
+    }
+    else
+    {
+        // Do nothing
     }
 }
 /*
@@ -535,6 +526,24 @@ void menuGame::update()
     }
 }
 
+const std::vector<walkPath<double> >& menuGame::switchWalkPathByLv(const GameScene& val)
+{
+    switch(val)
+    {
+        case Level1:
+            return m_thelv1Path;
+        break;
+        case Level2:
+            return m_thelv2Path;
+        break;
+        case Level3:
+            return m_thelv3Path;
+        break;
+        default:
+        break;
+    }
+    return m_thelv1Path;
+}
 void menuGame::levelsKeyboardHandle(const unsigned char &val)
 {
 
@@ -544,41 +553,10 @@ void menuGame::levelsKeyboardHandle(const unsigned char &val)
             m_currentStage = MainMenu;
         break;
         case 79:  //right arrow
-        {
-            switch(m_currentStage)
-            {
-                case Level1:
-                    moveNextAreaOfPlayer(m_thelv1Path);
-                break;
-                case Level2:
-                    moveNextAreaOfPlayer(m_thelv2Path);
-                break;
-                case Level3:
-                    moveNextAreaOfPlayer(m_thelv3Path);
-                break;
-                default:
-                break;
-            }
-        }
+            moveNextAreaOfPlayer(switchWalkPathByLv(m_currentStage));
         break;
-        case 80:  // left arrow    
-        {
-            switch(m_currentStage)
-            {
-                case Level1:
-                    moveBackAreaOfPlayer(m_thelv1Path);
-                break;
-                case Level2:
-                    moveBackAreaOfPlayer(m_thelv2Path);
-                break;
-                case Level3:
-                    moveBackAreaOfPlayer(m_thelv3Path);
-                break;
-                default:
-                break;
-            }
-
-        }
+        case 80:  // left arrow
+            moveBackAreaOfPlayer(switchWalkPathByLv(m_currentStage));
         break;
         default:
         break;
@@ -590,8 +568,6 @@ void menuGame::handleEvents(const unsigned char& keyPress)
    // std::cout<<((int)keyPress)<<" \n";
     if (m_currentStage == MainMenu)
     {
-
-
         switch(keyPress)
         {
             case 79:  //right arrow
