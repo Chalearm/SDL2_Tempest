@@ -12,10 +12,11 @@ private:
     point<double> m_p4;
 
 public:
-	flippers(std::shared_ptr<std::vector<walkPath<double> > > &refLanes,const point<double>& refPoint);
+	flippers(std::shared_ptr<std::vector<walkPath<double> > > &refLanes, const double& scale, const point<double>& refPoint);
 	~flippers();
 	flippers(const flippers& obj);
 	flippers& operator=(const flippers& obj);
+	std::vector<aLine<double> > drawEnemy();
 	void move();
 };
 

@@ -1,7 +1,7 @@
 #include "tanker.h"
 
-tanker::tanker(std::shared_ptr<std::vector<walkPath<double> > >& refLanes,const point<double>& refPoint):
-enemy(refLanes,refPoint)
+tanker::tanker(std::shared_ptr<std::vector<walkPath<double> > >& refLanes,const double& scale, const point<double>& refPoint):
+enemy(refLanes,scale,refPoint)
 {
 
 }

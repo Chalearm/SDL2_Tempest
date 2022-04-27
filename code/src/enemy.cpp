@@ -3,8 +3,9 @@
 std::random_device enemy::s_rd;
 std::mt19937 enemy::s_gen;
 
-enemy::enemy(std::shared_ptr<std::vector<walkPath<double> > > &refLanes, const point<double>& refPoint):
+enemy::enemy(std::shared_ptr<std::vector<walkPath<double> > > &refLanes, const double& scale, const point<double>& refPoint):
 m_refPoint(refPoint),
+m_scale(scale),
 m_currentPosition(0),
 m_speed(0),
 m_refLanes(refLanes),
@@ -55,6 +56,10 @@ bool enemy::isHitTheBullet(const point<double> &bulletPoint)
    return true;
 }
 
+std::vector<aLine<double> > enemy::drawEnemy()
+{
+	return std::vector<aLine<double> >();
+}
 bool enemy::isAlive()const
 {
 	return m_isAlive;

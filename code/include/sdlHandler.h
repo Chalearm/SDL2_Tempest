@@ -10,6 +10,7 @@
 #include "gameState.h"
 #include "gameObj.h"
 #include "color.h"
+#include "gameConstance.h"
 #include "gameDataType.h"
 #include "aLine.h"
 
@@ -27,7 +28,7 @@ private:
 	std::shared_ptr<gameState> m_gameActivist;
 
 protected:
-    SDLHandler(const std::string &windowTitle = "Tempest Game",const int &windowWidth = 640, const int &windowHeight = 480);
+    SDLHandler(const std::string &windowTitle = "Tempest Game",const int &windowWidth = g_window_width, const int &windowHeight = g_window_height);
     static std::shared_ptr<SDLHandler> theSdlHandler;
 public:
 
@@ -38,7 +39,7 @@ public:
     ~SDLHandler();
 
   //  void operator=(const SDLHandler &) = delete;
-    static std::shared_ptr<SDLHandler> GetInstance(const std::string &windowTitle = "Tempest Game",const int &windowWidth = 640, const int &windowHeight = 480);
+    static std::shared_ptr<SDLHandler> GetInstance(const std::string &windowTitle = "Tempest Game",const int &windowWidth = g_window_width, const int &windowHeight = g_window_height);
     void setTheActivist(std::shared_ptr<gameState> anObj);
     void setNewWindowTitle(const std::string &windowTitle = "Tempest Game");
     void init();

@@ -1,8 +1,8 @@
 #include "flippers.h"
 
 
-flippers::flippers(std::shared_ptr<std::vector<walkPath<double> > > &refLanes,const point<double>& refPoint):
-enemy(refLanes,refPoint),
+flippers::flippers(std::shared_ptr<std::vector<walkPath<double> > > &refLanes,const double& scale, const point<double>& refPoint):
+enemy(refLanes,scale,refPoint),
 m_p1(),
 m_p2(),
 m_p3(),
@@ -23,7 +23,10 @@ m_p4(obj.m_p4)
 {
 
 }
-
+std::vector<aLine<double> > flippers::drawEnemy()
+{
+	return std::vector<aLine<double> >();
+}
 flippers& flippers::operator=(const flippers& obj)
 {
 	if (this != &obj)

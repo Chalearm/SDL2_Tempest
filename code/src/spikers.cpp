@@ -1,7 +1,7 @@
 #include "spikers.h"
 
-spikers::spikers(std::shared_ptr<std::vector<walkPath<double> > >& refLanes,const point<double>& refPoint):
-enemy(refLanes,refPoint),
+spikers::spikers(std::shared_ptr<std::vector<walkPath<double> > >& refLanes,const double& scale, const point<double>& refPoint):
+enemy(refLanes,scale,refPoint),
 m_movingTrack()
 {
 	// random speed 1 - 3%

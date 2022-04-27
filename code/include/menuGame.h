@@ -36,8 +36,8 @@ private:
     /*
        random enemy type - criteria 
        0 - 70  --> spikers
-       71 - 90 --> tanker
-       91 - 99 --> flippers
+       71 - 96 --> tanker
+       97 - 99 --> flippers
     */
     std::list<std::shared_ptr<enemy> > m_enemyList;
 
@@ -56,6 +56,7 @@ private:
     void levelsKeyboardHandle(const unsigned char &val = 0);
     void createEnemies(std::shared_ptr<std::vector<walkPath<double> > >& lvPathObj,const point<double>& refPoint,std::list<std::shared_ptr<enemy> >& alist);
     EnemyType randomEnemyTp();
+    void renderEnemied();
     void setSelectedLvColorAndCondition(const MainMenuObj &aCondition,const color &deselectCol, const color &selectColr);
     void drawWalkPath(std::shared_ptr<std::vector<walkPath<double> > >& pObj,const point<double>& refPoint,const double &scaleVal = 1.0, const bool isDrawnPlayer = false);
     void drawPlayerPosition(const std::vector<walkPath<double> >& obj,const point<double>& refPoint,const double& scale);

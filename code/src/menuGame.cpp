@@ -285,7 +285,7 @@ enum MainMenuObj {BACKGROUND_IMG,LABEL_TEMPEST,LABEL_EXIT,LABEL_LV1,LABEL_LV2,LA
         gameObj->setSDLHandler(m_sdlSimpleLib);
         gameObj->loadParameter("./space.png");
         gameObj->setShownDimension(0,0,640,480);
-        gameObj->setDrawPosition(0,0,640,480);
+        gameObj->setDrawPosition(0,0,g_window_width,g_window_height);
         m_sdlObjTable[BACKGROUND_IMG] = gameObj;
     }
 
@@ -296,7 +296,7 @@ enum MainMenuObj {BACKGROUND_IMG,LABEL_TEMPEST,LABEL_EXIT,LABEL_LV1,LABEL_LV2,LA
         gameObj->loadParameter("Tempest",1);
         gameObj->setColor(COLORSET[YELLOW]);
         gameObj->setShownDimension(0,0,400,50);
-        gameObj->setDrawPosition(120,60,400,50);
+        gameObj->setDrawPosition(g_ratioScreen*120,g_ratioScreen*60,g_ratioScreen*400,g_ratioScreen*50);
         m_sdlObjTable[LABEL_TEMPEST] = gameObj;
     }
     
@@ -306,7 +306,7 @@ enum MainMenuObj {BACKGROUND_IMG,LABEL_TEMPEST,LABEL_EXIT,LABEL_LV1,LABEL_LV2,LA
         gameObj->loadParameter("Press ESC to exit",1);
         gameObj->setColor(COLORSET[ORANGE]);
         gameObj->setShownDimension(0,0,200,40);
-        gameObj->setDrawPosition(20,10,200,40);
+        gameObj->setDrawPosition(g_ratioScreen*20,g_ratioScreen*10,g_ratioScreen*200,g_ratioScreen*40);
         m_sdlObjTable[LABEL_EXIT] = gameObj;
     }
 
@@ -316,7 +316,7 @@ enum MainMenuObj {BACKGROUND_IMG,LABEL_TEMPEST,LABEL_EXIT,LABEL_LV1,LABEL_LV2,LA
         gameObj->loadParameter("Press BK Space to Menu",1);
         gameObj->setColor(COLORSET[ORANGE]);
         gameObj->setShownDimension(0,0,260,40);
-        gameObj->setDrawPosition(20,10,260,40);
+        gameObj->setDrawPosition(g_ratioScreen*20,g_ratioScreen*10,g_ratioScreen*260,g_ratioScreen*40);
         m_sdlObjTable[BACK_TO_MAINMENU] = gameObj;
     }
     {
@@ -325,7 +325,7 @@ enum MainMenuObj {BACKGROUND_IMG,LABEL_TEMPEST,LABEL_EXIT,LABEL_LV1,LABEL_LV2,LA
         gameObj->loadParameter("Level 1",1);
         gameObj->setColor(COLORSET[DARK_GREEN]);
         gameObj->setShownDimension(0,0,200,40);
-        gameObj->setDrawPosition(40,340,160,40);
+        gameObj->setDrawPosition(g_ratioScreen*40,g_ratioScreen*340,g_ratioScreen*160,g_ratioScreen*40);
         m_sdlObjTable[LABEL_LV1] = gameObj;
     }
     {
@@ -334,7 +334,7 @@ enum MainMenuObj {BACKGROUND_IMG,LABEL_TEMPEST,LABEL_EXIT,LABEL_LV1,LABEL_LV2,LA
         gameObj->loadParameter("Level 2",1);
         gameObj->setColor(COLORSET[DARK_GREEN]);
         gameObj->setShownDimension(0,0,200,40);
-        gameObj->setDrawPosition(240,340,160,40);
+        gameObj->setDrawPosition(g_ratioScreen*240,g_ratioScreen*340,g_ratioScreen*160,g_ratioScreen*40);
         m_sdlObjTable[LABEL_LV2] = gameObj;   
     }
     {
@@ -343,12 +343,30 @@ enum MainMenuObj {BACKGROUND_IMG,LABEL_TEMPEST,LABEL_EXIT,LABEL_LV1,LABEL_LV2,LA
         gameObj->loadParameter("Level 3",1);
         gameObj->setColor(COLORSET[DARK_GREEN]);
         gameObj->setShownDimension(0,0,200,40);
-        gameObj->setDrawPosition(440,340,160,40);
+        gameObj->setDrawPosition(g_ratioScreen*440,g_ratioScreen*340,g_ratioScreen*160,g_ratioScreen*40);
         m_sdlObjTable[LABEL_LV3] = gameObj;     
     }
 
 }
-
+void menuGame::renderEnemied()
+{
+    std::list<std::shared_ptr<enemy> >::iterator it;
+    for (it = m_enemyList.begin(); it != m_enemyList.end(); ++it)
+    {
+        if (it->get()->isAlive())
+        {
+            std::vector<aLine<double> > lineSet = it->get()->drawEnemy();
+            for (int j = 0; j < lineSet.size(); j++)
+            {
+                m_sdlSimpleLib->drawLine(lineSet[j]);
+            }
+        }
+        else
+        {
+            // Do nothing
+        }
+    }
+}
 void menuGame::render()
 {
     switch(m_currentStage)
@@ -361,7 +379,9 @@ void menuGame::render()
             m_sdlObjTable[BACKGROUND_IMG]->render();
             m_sdlObjTable[BACK_TO_MAINMENU]->render();
             m_sdlSimpleLib->setRenderDrawColor(COLORSET[BLUE]);
-            drawWalkPath(switchWalkPathByLv(m_currentStage),point<double>(100,50),4,true);
+            drawWalkPath(switchWalkPathByLv(m_currentStage),g_refPoint,g_lvScale,true);
+            renderEnemied();
+
         }
         break;
     }
@@ -371,22 +391,25 @@ EnemyType menuGame::randomEnemyTp()
 {    /*
        random enemy type - criteria 
        0 - 70  --> spikers
-       71 - 90 --> tanker
-       91 - 99 --> flippers
+       71 - 96 --> tanker
+       97 - 99 --> flippers
     */
     EnemyType retVal = SPIKERS;
     int ranVal = static_cast<int>(enemy::randomFn(99.0,0.0));
     if (ranVal <= 70)
     {
         // do nothing
+       // std::cout<<" SPIKERS  \n";
     }
-    else if (ranVal <= 90)
+    else if (ranVal <= 96)
     {
         retVal = TANKER;
+      //  std::cout<<" TANKER  \n";
     }
     else
     {
         retVal = FLIPPERS;
+       // std::cout<<" FLIPPERS  \n";
     }
     return retVal;
 }
@@ -415,36 +438,36 @@ void menuGame::createEnemies(std::shared_ptr<std::vector<walkPath<double> > >& l
         default:
         break;
     }
+   // std::cout<<" start random \n";
     for (int i = 0; i < numberOfEnemy; i++)
     {
         switch (randomEnemyTp())
         {
             case TANKER:
             {
-                std::shared_ptr<tanker> aPTanker(new tanker(lvPathObj,refPoint));
+                std::shared_ptr<tanker> aPTanker(new tanker(lvPathObj,g_lvScale,g_refPoint));
                 alist.push_back(aPTanker); 
             }
             break;
             case SPIKERS:
             {
-                std::shared_ptr<spikers> aPSpikers(new spikers(lvPathObj,refPoint));
+                std::shared_ptr<spikers> aPSpikers(new spikers(lvPathObj,g_lvScale,g_refPoint));
                 alist.push_back(aPSpikers); 
             }
             break;
             case FLIPPERS:
             {
-                std::shared_ptr<flippers> aPTFlippers(new flippers(lvPathObj,refPoint));
+                std::shared_ptr<flippers> aPTFlippers(new flippers(lvPathObj,g_lvScale,g_refPoint));
                 alist.push_back(aPTFlippers); 
             }
             break;
             default:
             {
-                std::shared_ptr<tanker> aPTanker(new tanker(lvPathObj,refPoint));
+                std::shared_ptr<tanker> aPTanker(new tanker(lvPathObj,g_lvScale,g_refPoint));
                 alist.push_back(aPTanker); 
             }
             break;
         }
-        //alist.push_back(anEnemy);
     }
 }
 void menuGame::drawWalkPath(std::shared_ptr<std::vector<walkPath<double> > >& pObj,const point<double>& refPoint,const double &scaleVal, const bool isDrawnPlayer)
@@ -516,7 +539,7 @@ void menuGame::mainMenuDisplay()
         m_sdlObjTable[m_oldLvSelectValue]->setColor(COLORSET[DARK_GREEN]);
         m_sdlObjTable[m_lvSelectValue]->setColor(COLORSET[YELLOW]);
         m_sdlSimpleLib->setRenderDrawColor(COLORSET[YELLOW]);
-        m_sdlSimpleLib->drawRectangle(20 + 200*(m_lvSelectValue - LABEL_LV1),150,190,190);
+        m_sdlSimpleLib->drawRectangle(g_ratioScreen*(20 + 200*(m_lvSelectValue - LABEL_LV1)),g_ratioScreen*150,g_ratioScreen*190,g_ratioScreen*190);
     }
 }
 
@@ -559,33 +582,32 @@ void menuGame::moveBackAreaOfPlayer(std::shared_ptr<std::vector<walkPath<double>
 
 void menuGame::levelSelectionDisplay()
 {
-    const int xStart = 40;
-    const int yStart = 170;
-    const int yStartLv1 = yStart + 25;
+    const int xStart = g_ratioScreen*40;
+    const int yStart = g_ratioScreen*170;
+    const int yStartLv1 = yStart + g_ratioScreen*25;
     setSelectedLvColorAndCondition(LABEL_LV1,COLORSET[BLUE],COLORSET[YELLOW]);
-    m_sdlSimpleLib->drawRectangle(xStart,yStart,150,150);
+    m_sdlSimpleLib->drawRectangle(xStart,yStart,g_ratioScreen*150,g_ratioScreen*150);
 
     setSelectedLvColorAndCondition(LABEL_LV2,COLORSET[BLUE],COLORSET[YELLOW]);
-    m_sdlSimpleLib->drawRectangle(240,yStart,150,150);
+    m_sdlSimpleLib->drawRectangle(g_ratioScreen*240,yStart,g_ratioScreen*150,g_ratioScreen*150);
 
     setSelectedLvColorAndCondition(LABEL_LV3,COLORSET[BLUE],COLORSET[YELLOW]);
-    m_sdlSimpleLib->drawRectangle(440,yStart,150,150);
+    m_sdlSimpleLib->drawRectangle(g_ratioScreen*440,yStart,g_ratioScreen*150,g_ratioScreen*150);
 
     // Lv 1.
     setSelectedLvColorAndCondition(LABEL_LV1,COLORSET[RED],COLORSET[YELLOW]);
-    drawWalkPath(m_thelv1Path,point<double>(xStart + 25,yStartLv1));
+    drawWalkPath(m_thelv1Path,point<double>(xStart + g_ratioScreen*25,yStartLv1),g_ratioScreen);
     // Lv 2.
     setSelectedLvColorAndCondition(LABEL_LV2,COLORSET[RED],COLORSET[YELLOW]);
-    drawWalkPath(m_thelv2Path,point<double>(xStart + 225,yStartLv1));
+    drawWalkPath(m_thelv2Path,point<double>(xStart + g_ratioScreen*225,yStartLv1),g_ratioScreen);
     // Lv 3.
     setSelectedLvColorAndCondition(LABEL_LV3,COLORSET[RED],COLORSET[YELLOW]);
-    drawWalkPath(m_thelv3Path,point<double>(xStart + 425,yStartLv1));
+    drawWalkPath(m_thelv3Path,point<double>(xStart + g_ratioScreen*425,yStartLv1),g_ratioScreen);
 
 }
 
 void menuGame::update()
 {
-
     std::map<MainMenuObj,std::shared_ptr<SDLObject> >::iterator it;
     for(it = m_sdlObjTable.begin(); it != m_sdlObjTable.end(); it++) 
     {
