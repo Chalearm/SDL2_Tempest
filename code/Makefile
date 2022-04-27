@@ -25,46 +25,46 @@ endif
  
 
 
-$(TARGETAPP): $(TARGETAPP).cpp ./obj/game.o ./obj/color.o
-	g++ $(BUILDMAINOPT) -I ./include -L ./lib $(TARGETAPP).cpp -o $(TARGETAPP) -lgame -lcolor
-./obj/game.o : game.cpp ./include/game.h ./obj/menuGame.o ./obj/sdlHandler.o ./obj/gameState.o ./obj/color.o
-	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/game.o game.cpp
+$(TARGETAPP): ./src/$(TARGETAPP).cpp ./obj/game.o ./obj/color.o
+	g++ $(BUILDMAINOPT) -I ./include -L ./lib ./src/$(TARGETAPP).cpp -o $(TARGETAPP) -lgame -lcolor
+./obj/game.o : ./src/game.cpp ./include/game.h ./obj/menuGame.o ./obj/sdlHandler.o ./obj/gameState.o ./obj/color.o
+	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/game.o ./src/game.cpp
 	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libgame.so ./obj/game.o -lsdlHandler -lmenuGame -lgameState -lcolor
-./obj/menuGame.o : menuGame.cpp ./include/menuGame.h ./obj/gameState.o ./obj/sdlHandler.o ./obj/sdlObject.o ./obj/gameMessage.o ./obj/color.o ./obj/flippers.o ./obj/tanker.o ./obj/spikers.o ./obj/enemy.o
-	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/menuGame.o menuGame.cpp 
+./obj/menuGame.o : ./src/menuGame.cpp ./include/menuGame.h ./obj/gameState.o ./obj/sdlHandler.o ./obj/sdlObject.o ./obj/gameMessage.o ./obj/color.o ./obj/flippers.o ./obj/tanker.o ./obj/spikers.o ./obj/enemy.o
+	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/menuGame.o ./src/menuGame.cpp 
 	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libmenuGame.so ./obj/menuGame.o -lgameState -lsdlHandler -lsdlObject -lgameMessage -lcolor -lflippers -lenemy -lspikers -ltanker
-./obj/sdlObject.o : sdlObject.cpp ./include/sdlObject.h ./obj/gameState.o ./obj/sdlHandler.o ./obj/sdlDrawnObj.o
-	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/sdlObject.o sdlObject.cpp
+./obj/sdlObject.o : ./src/sdlObject.cpp ./include/sdlObject.h ./obj/gameState.o ./obj/sdlHandler.o ./obj/sdlDrawnObj.o
+	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/sdlObject.o ./src/sdlObject.cpp
 	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libsdlObject.so ./obj/sdlObject.o -lgameState -lsdlHandler -lsdlDrawnObj
-./obj/sdlHandler.o : sdlHandler.cpp ./include/sdlHandler.h ./obj/gameState.o ./obj/sdlDrawnObj.o ./obj/gameObj.o ./obj/color.o
-	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/sdlHandler.o sdlHandler.cpp
+./obj/sdlHandler.o : ./src/sdlHandler.cpp ./include/sdlHandler.h ./obj/gameState.o ./obj/sdlDrawnObj.o ./obj/gameObj.o ./obj/color.o
+	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/sdlHandler.o ./src/sdlHandler.cpp
 	g++ -L ./lib -shared -fPIC -o ./lib/libsdlHandler.so ./obj/sdlHandler.o -lgameState -l $(LIBINC) -lsdlDrawnObj -lgameObj -lcolor
-./obj/sdlDrawnObj.o : sdlDrawnObj.cpp ./include/sdlDrawnObj.h ./obj/gameObj.o ./obj/color.o
-	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/sdlDrawnObj.o sdlDrawnObj.cpp
+./obj/sdlDrawnObj.o : ./src/sdlDrawnObj.cpp ./include/sdlDrawnObj.h ./obj/gameObj.o ./obj/color.o
+	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/sdlDrawnObj.o ./src/sdlDrawnObj.cpp
 	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libsdlDrawnObj.so ./obj/sdlDrawnObj.o -l $(LIBSDLIMG) -l $(LIBSDLTTF) -l $(LIBINC) -lgameObj -lcolor
-./obj/gameState.o : gameState.cpp ./include/gameState.h
-	g++ -I ./include  -c $(GCCOBJOPT) -o ./obj/gameState.o gameState.cpp
+./obj/gameState.o : ./src/gameState.cpp ./include/gameState.h
+	g++ -I ./include  -c $(GCCOBJOPT) -o ./obj/gameState.o ./src/gameState.cpp
 	g++ -I ./include -shared -fPIC -o ./lib/libgameState.so ./obj/gameState.o
-./obj/gameObj.o : gameObj.cpp ./include/gameObj.h
-	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/gameObj.o gameObj.cpp
+./obj/gameObj.o : ./src/gameObj.cpp ./include/gameObj.h
+	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/gameObj.o ./src/gameObj.cpp
 	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libgameObj.so ./obj/gameObj.o 
-./obj/gameMessage.o : gameMessage.cpp ./include/gameMessage.h
-	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/gameMessage.o gameMessage.cpp
+./obj/gameMessage.o : ./src/gameMessage.cpp ./include/gameMessage.h
+	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/gameMessage.o ./src/gameMessage.cpp
 	g++ -I ./include -shared -fPIC -o ./lib/libgameMessage.so ./obj/gameMessage.o
-./obj/color.o : color.cpp ./include/color.h
-	g++ -I ./include  -c $(GCCOBJOPT) -o ./obj/color.o color.cpp
+./obj/color.o : ./src/color.cpp ./include/color.h
+	g++ -I ./include  -c $(GCCOBJOPT) -o ./obj/color.o ./src/color.cpp
 	g++ -I ./include -shared -fPIC -o ./lib/libcolor.so ./obj/color.o -l $(LIBINC)
-./obj/flippers.o : flippers.cpp ./include/flippers.h ./obj/enemy.o
-	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/flippers.o flippers.cpp
+./obj/flippers.o : ./src/flippers.cpp ./include/flippers.h ./obj/enemy.o
+	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/flippers.o ./src/flippers.cpp
 	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libflippers.so ./obj/flippers.o -lenemy
-./obj/spikers.o : spikers.cpp ./include/spikers.h ./obj/enemy.o
-	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/spikers.o spikers.cpp
+./obj/spikers.o : ./src/spikers.cpp ./include/spikers.h ./obj/enemy.o
+	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/spikers.o ./src/spikers.cpp
 	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libspikers.so ./obj/spikers.o -lenemy
-./obj/tanker.o : tanker.cpp ./include/tanker.h ./obj/enemy.o
-	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/tanker.o tanker.cpp
+./obj/tanker.o : ./src/tanker.cpp ./include/tanker.h ./obj/enemy.o
+	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/tanker.o ./src/tanker.cpp
 	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libtanker.so ./obj/tanker.o -lenemy
-./obj/enemy.o : enemy.cpp ./include/enemy.h
-	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/enemy.o enemy.cpp
+./obj/enemy.o : ./src/enemy.cpp ./include/enemy.h
+	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/enemy.o ./src/enemy.cpp
 	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libenemy.so ./obj/enemy.o
 
 clean:
