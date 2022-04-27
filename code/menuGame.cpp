@@ -1,4 +1,5 @@
 #include <vector>
+#include <memory>
 #include "menuGame.h"
 
 menuGame::menuGame():
@@ -7,92 +8,92 @@ m_sdlObjTable(),
 m_oldLvSelectValue(LABEL_LV1),
 m_lvSelectValue(LABEL_LV1),
 m_currentStage(MainMenu),
-m_thelv1Path(),
-m_thelv2Path(),
-m_thelv3Path(),
+m_thelv1Path(new std::vector<walkPath<double> >()),
+m_thelv2Path(new std::vector<walkPath<double> >()),
+m_thelv3Path(new std::vector<walkPath<double> >()),
 m_playerStartPoint(0)
 {
 
-m_thelv1Path.push_back(walkPath<double>(
+m_thelv1Path->push_back(walkPath<double>(
                 point<double>(40,60),
                 point<double>(0,0),
                 point<double>(25,0),
                 point<double>(45,60)));
-m_thelv1Path.push_back(walkPath<double>(
+m_thelv1Path->push_back(walkPath<double>(
                 point<double>(45,60),
                 point<double>(25,0),
                 point<double>(50,0),
                 point<double>(50,60)));
-m_thelv1Path.push_back(walkPath<double>(
+m_thelv1Path->push_back(walkPath<double>(
                 point<double>(50,60),
                 point<double>(50,0),
                 point<double>(75,0),
                 point<double>(55,60)));
-m_thelv1Path.push_back(walkPath<double>(
+m_thelv1Path->push_back(walkPath<double>(
                 point<double>(55,60),
                 point<double>(75,0),
                 point<double>(100,0),
                 point<double>(60,60)));
 
-m_thelv1Path.push_back(walkPath<double>(
+m_thelv1Path->push_back(walkPath<double>(
                 point<double>(60,60),
                 point<double>(100,0),
                 point<double>(100,25),
                 point<double>(60,65)));
-m_thelv1Path.push_back(walkPath<double>(
+m_thelv1Path->push_back(walkPath<double>(
                 point<double>(60,65),
                 point<double>(100,25),
                 point<double>(100,50),
                 point<double>(60,70)));
-m_thelv1Path.push_back(walkPath<double>(
+m_thelv1Path->push_back(walkPath<double>(
                 point<double>(60,70),
                 point<double>(100,50),
                 point<double>(100,75),
                 point<double>(60,75)));
-m_thelv1Path.push_back(walkPath<double>(
+m_thelv1Path->push_back(walkPath<double>(
                 point<double>(60,75),
                 point<double>(100,75),
                 point<double>(100,100),
                 point<double>(60,80)));
 
-m_thelv1Path.push_back(walkPath<double>(
+m_thelv1Path->push_back(walkPath<double>(
                 point<double>(60,80),
                 point<double>(100,100),
                 point<double>(75,100),
                 point<double>(55,80)));
-m_thelv1Path.push_back(walkPath<double>(
+m_thelv1Path->push_back(walkPath<double>(
                 point<double>(55,80),
                 point<double>(75,100),
                 point<double>(50,100),
                 point<double>(50,80)));
-m_thelv1Path.push_back(walkPath<double>(
+m_thelv1Path->push_back(walkPath<double>(
                 point<double>(50,80),
                 point<double>(50,100),
                 point<double>(25,100),
                 point<double>(45,80)));
-m_thelv1Path.push_back(walkPath<double>(
+m_thelv1Path->push_back(walkPath<double>(
                 point<double>(45,80),
                 point<double>(25,100),
                 point<double>(0,100),
                 point<double>(40,80)));
 
 
-m_thelv1Path.push_back(walkPath<double>(
+m_thelv1Path->push_back(walkPath<double>(
                 point<double>(40,80),
                 point<double>(0,100),
                 point<double>(0,75),
                 point<double>(40,75)));
-m_thelv1Path.push_back(walkPath<double>(
+m_thelv1Path->push_back(walkPath<double>(
                 point<double>(40,75),
                 point<double>(0,75),
                 point<double>(0,50),
                 point<double>(40,70)));
-m_thelv1Path.push_back(walkPath<double>(
+m_thelv1Path->push_back(walkPath<double>(
                 point<double>(40,70),
                 point<double>(0,50),
                 point<double>(0,25),
                 point<double>(40,65)));
-m_thelv1Path.push_back(walkPath<double>(
+m_thelv1Path->push_back(walkPath<double>(
                 point<double>(40,65),
                 point<double>(0,25),
                 point<double>(0,0),
@@ -101,107 +102,107 @@ m_thelv1Path.push_back(walkPath<double>(
 
 // level 2
 
-m_thelv2Path.push_back(walkPath<double>(
+m_thelv2Path->push_back(walkPath<double>(
                 point<double>(37.5,50),
                 point<double>(0,50),
                 point<double>(12.5,25),
                 point<double>(40.625,43.75)));
-m_thelv2Path.push_back(walkPath<double>(
+m_thelv2Path->push_back(walkPath<double>(
                 point<double>(40.625,43.75),
                 point<double>(12.5,25),
                 point<double>(25,0),
                 point<double>(43.75,37.5)));
-m_thelv2Path.push_back(walkPath<double>(
+m_thelv2Path->push_back(walkPath<double>(
                 point<double>(43.75,37.5),
                 point<double>(25,0),
                 point<double>(50,0),
                 point<double>(50,37.5)));
-m_thelv2Path.push_back(walkPath<double>(
+m_thelv2Path->push_back(walkPath<double>(
                 point<double>(50,37.5),
                 point<double>(50,0),
                 point<double>(75,0),
                 point<double>(56.25,37.5)));
 
 
-m_thelv2Path.push_back(walkPath<double>(
+m_thelv2Path->push_back(walkPath<double>(
                 point<double>(56.25,37.5),
                 point<double>(75,0),
                 point<double>(87.5,25),
                 point<double>(59.375,43.75)));
-m_thelv2Path.push_back(walkPath<double>(
+m_thelv2Path->push_back(walkPath<double>(
                 point<double>(59.375,43.75),
                 point<double>(87.5,25),
                 point<double>(100,50),
                 point<double>(62.5,50)));
-m_thelv2Path.push_back(walkPath<double>(
+m_thelv2Path->push_back(walkPath<double>(
                 point<double>(62.5,50),
                 point<double>(100,50),
                 point<double>(87.5,75),
                 point<double>(59.375,56.25)));
-m_thelv2Path.push_back(walkPath<double>(
+m_thelv2Path->push_back(walkPath<double>(
                 point<double>(59.375,56.25),
                 point<double>(87.5,75),
                 point<double>(75,100),
                 point<double>(56.25,62.5)));
-m_thelv2Path.push_back(walkPath<double>(
+m_thelv2Path->push_back(walkPath<double>(
                 point<double>(56.25,62.5),
                 point<double>(75,100),
                 point<double>(50,100),
                 point<double>(50,62.5)));
-m_thelv2Path.push_back(walkPath<double>(
+m_thelv2Path->push_back(walkPath<double>(
                 point<double>(50,62.5),
                 point<double>(50,100),
                 point<double>(25,100),
                 point<double>(43.75,62.5)));
 
-m_thelv2Path.push_back(walkPath<double>(
+m_thelv2Path->push_back(walkPath<double>(
                 point<double>(43.75,62.5),
                 point<double>(25,100),
                 point<double>(12.5,75),
                 point<double>(40.625,56.25)));
-m_thelv2Path.push_back(walkPath<double>(
+m_thelv2Path->push_back(walkPath<double>(
                 point<double>(40.625,56.25),
                 point<double>(12.5,75),
                 point<double>(0,50),
                 point<double>(37.5,50)));
 
 
-m_thelv3Path.push_back(walkPath<double>(
+m_thelv3Path->push_back(walkPath<double>(
                 point<double>(37.5,50),
                 point<double>(0,50),
                 point<double>(0,25),
                 point<double>(37.5,43.75)));
-m_thelv3Path.push_back(walkPath<double>(
+m_thelv3Path->push_back(walkPath<double>(
                 point<double>(37.5,43.75),
                 point<double>(0,25),
                 point<double>(12.5,12.5),
                 point<double>(40.625,40.625)));
-m_thelv3Path.push_back(walkPath<double>(
+m_thelv3Path->push_back(walkPath<double>(
                 point<double>(40.625,40.625),
                 point<double>(12.5,12.5),
                 point<double>(25.0,0),
                 point<double>(43.75,37.5)));
-m_thelv3Path.push_back(walkPath<double>(
+m_thelv3Path->push_back(walkPath<double>(
                 point<double>(43.75,37.5),
                 point<double>(25.0,0),
                 point<double>(50,0),
                 point<double>(50,37.5)));
-m_thelv3Path.push_back(walkPath<double>(
+m_thelv3Path->push_back(walkPath<double>(
                 point<double>(50,37.5),
                 point<double>(50,0),
                 point<double>(75,0),
                 point<double>(56.25,37.5)));
-m_thelv3Path.push_back(walkPath<double>(
+m_thelv3Path->push_back(walkPath<double>(
                 point<double>(56.25,37.5),
                 point<double>(75,0),
                 point<double>(87.5,12.5),
                 point<double>(59.375,40.625)));
-m_thelv3Path.push_back(walkPath<double>(
+m_thelv3Path->push_back(walkPath<double>(
                 point<double>(59.375,40.625),
                 point<double>(87.5,12.5),
                 point<double>(100,25),
                 point<double>(62.5,43.75)));
-m_thelv3Path.push_back(walkPath<double>(
+m_thelv3Path->push_back(walkPath<double>(
                 point<double>(62.5,43.75),
                 point<double>(100,25),
                 point<double>(100,50),
@@ -209,50 +210,50 @@ m_thelv3Path.push_back(walkPath<double>(
 
 
 
-m_thelv3Path.push_back(walkPath<double>(
+m_thelv3Path->push_back(walkPath<double>(
                 point<double>(62.5,50),
                 point<double>(100,50),
                 point<double>(100,75),
                 point<double>(62.5,56.25)));
 
-m_thelv3Path.push_back(walkPath<double>(
+m_thelv3Path->push_back(walkPath<double>(
                 point<double>(62.5,56.25),
                 point<double>(100,75),
                 point<double>(87.5,87.5),
                 point<double>(59.375,59.375)));
 
-m_thelv3Path.push_back(walkPath<double>(
+m_thelv3Path->push_back(walkPath<double>(
                 point<double>(59.375,59.375),
                 point<double>(87.5,87.5),
                 point<double>(75,100),
                 point<double>(56.25,62.5)));
 
-m_thelv3Path.push_back(walkPath<double>(
+m_thelv3Path->push_back(walkPath<double>(
                 point<double>(56.25,62.5),
                 point<double>(75,100),
                 point<double>(50,100),
                 point<double>(50,62.5)));
 
 
-m_thelv3Path.push_back(walkPath<double>(
+m_thelv3Path->push_back(walkPath<double>(
                 point<double>(50,62.5),
                 point<double>(50,100),
                 point<double>(25,100),
                 point<double>(43.75,62.5)));
 
-m_thelv3Path.push_back(walkPath<double>(
+m_thelv3Path->push_back(walkPath<double>(
                 point<double>(43.75,62.5),
                 point<double>(25,100),
                 point<double>(12.5,87.5),
                 point<double>(40.625,59.375)));
 
-m_thelv3Path.push_back(walkPath<double>(
+m_thelv3Path->push_back(walkPath<double>(
                 point<double>(40.625,59.375),
                 point<double>(12.5,87.5),
                 point<double>(0,75),
                 point<double>(37.5,56.25)));
 
-m_thelv3Path.push_back(walkPath<double>(
+m_thelv3Path->push_back(walkPath<double>(
                 point<double>(37.5,56.25),
                 point<double>(0,75),
                 point<double>(0,50),
@@ -366,19 +367,99 @@ void menuGame::render()
     }
 }
 
-void menuGame::drawWalkPath(const std::vector<walkPath<double> >& obj,const point<double>& refPoint,const double &scaleVal, const bool isDrawnPlayer)
+EnemyType menuGame::randomEnemyTp()
+{    /*
+       random enemy type - criteria 
+       0 - 70  --> spikers
+       71 - 90 --> tanker
+       91 - 99 --> flippers
+    */
+    EnemyType retVal = SPIKERS;
+    int ranVal = static_cast<int>(enemy::randomFn(99.0,0.0));
+    if (ranVal <= 70)
+    {
+        // do nothing
+    }
+    else if (ranVal <= 90)
+    {
+        retVal = TANKER;
+    }
+    else
+    {
+        retVal = FLIPPERS;
+    }
+    return retVal;
+}
+
+/*
+std::unique_ptr<enemy>  menuGame::genAnEnemy(const EnemyType& val)
 {
-    for(int i = 0; i < obj.size(); i++)
+    
+}
+*/
+void menuGame::createEnemies(std::shared_ptr<std::vector<walkPath<double> > >& lvPathObj,const point<double> &refPoint,std::list<std::shared_ptr<enemy> >& alist)
+{
+    int numberOfEnemy = 5;
+    alist.clear();
+    switch (m_currentStage)
+    {
+        case Level1:
+            numberOfEnemy = 5;
+        break;
+        case Level2:
+            numberOfEnemy = 10;
+        break;
+        case Level3:
+            numberOfEnemy = 15;
+        break;
+        default:
+        break;
+    }
+    for (int i = 0; i < numberOfEnemy; i++)
+    {
+        switch (randomEnemyTp())
+        {
+            case TANKER:
+            {
+                std::shared_ptr<tanker> aPTanker(new tanker(lvPathObj,refPoint));
+                alist.push_back(aPTanker); 
+            }
+            break;
+            case SPIKERS:
+            {
+                std::shared_ptr<spikers> aPSpikers(new spikers(lvPathObj,refPoint));
+                alist.push_back(aPSpikers); 
+            }
+            break;
+            case FLIPPERS:
+            {
+                std::shared_ptr<flippers> aPTFlippers(new flippers(lvPathObj,refPoint));
+                alist.push_back(aPTFlippers); 
+            }
+            break;
+            default:
+            {
+                std::shared_ptr<tanker> aPTanker(new tanker(lvPathObj,refPoint));
+                alist.push_back(aPTanker); 
+            }
+            break;
+        }
+        //alist.push_back(anEnemy);
+    }
+}
+void menuGame::drawWalkPath(std::shared_ptr<std::vector<walkPath<double> > >& pObj,const point<double>& refPoint,const double &scaleVal, const bool isDrawnPlayer)
+{
+    for(int i = 0; i < pObj->size(); i++)
     {
         // scale 1.0
         walkPath<double> aPieceofAPath;
         if (scaleVal != 1.0)
         {
-            aPieceofAPath = (obj[i]*scaleVal).translate(refPoint);
+            aPieceofAPath = (pObj->at(i)*scaleVal).translate(refPoint);
         }
         else
         {
-            aPieceofAPath = obj[i].translate(refPoint);
+            aPieceofAPath = pObj->at(i).translate(refPoint);
         }
 
         if (((i-1) != m_playerStartPoint) || (isDrawnPlayer == false))
@@ -451,10 +532,10 @@ void menuGame::setSelectedLvColorAndCondition(const MainMenuObj &aCondition,cons
         m_sdlSimpleLib->setRenderDrawColor(deselectCol);
     }
 }
-void menuGame::moveNextAreaOfPlayer(const std::vector<walkPath<double> >& obj)
+void menuGame::moveNextAreaOfPlayer(std::shared_ptr<std::vector<walkPath<double> > >& obj)
 {
     m_playerStartPoint++;
-    if (m_playerStartPoint >= obj.size() )
+    if (m_playerStartPoint >= obj->size() )
     {
         m_playerStartPoint = 0;
     }
@@ -463,12 +544,12 @@ void menuGame::moveNextAreaOfPlayer(const std::vector<walkPath<double> >& obj)
         // Do nothing
     }
 }
-void menuGame::moveBackAreaOfPlayer(const std::vector<walkPath<double> >& obj)
+void menuGame::moveBackAreaOfPlayer(std::shared_ptr<std::vector<walkPath<double> > >& obj)
 {
     m_playerStartPoint--;
     if (m_playerStartPoint < 0 )
     {
-        m_playerStartPoint = obj.size() - 1;
+        m_playerStartPoint = obj->size() - 1;
     }
     else
     {
@@ -512,7 +593,7 @@ void menuGame::update()
     }
 }
 
-const std::vector<walkPath<double> >& menuGame::switchWalkPathByLv(const GameScene& val)
+std::shared_ptr<std::vector<walkPath<double> > >& menuGame::switchWalkPathByLv(const GameScene& val)
 {
     switch(val)
     {
@@ -568,14 +649,17 @@ void menuGame::handleEvents(const unsigned char& keyPress)
                     case LABEL_LV1:
                         m_currentStage = Level1;
                         m_playerStartPoint = 0;
+                        createEnemies(switchWalkPathByLv(m_currentStage),point<double>(0,0),m_enemyList);
                     break;
                     case LABEL_LV2:
                         m_currentStage = Level2;
                         m_playerStartPoint = 0;
+                        createEnemies(switchWalkPathByLv(m_currentStage),point<double>(0,0),m_enemyList);
                     break;
                     case LABEL_LV3:
                         m_currentStage = Level3;
                         m_playerStartPoint = 0;
+                        createEnemies(switchWalkPathByLv(m_currentStage),point<double>(0,0),m_enemyList);
                     break;
                     default:
                         m_currentStage = MainMenu;
@@ -636,6 +720,7 @@ void menuGame::setSDLHandler(const std::shared_ptr<SDLHandler> &obj)
 {
     m_sdlSimpleLib = obj;
 }
+/*
 void menuGame::setRandValue(const int& val)
 {
     randomVal = val;
@@ -645,3 +730,4 @@ void menuGame::setRandValue(const int& val)
         it->second->setRandValue(val);
     }
 }
+*/

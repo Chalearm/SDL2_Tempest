@@ -30,9 +30,9 @@ $(TARGETAPP): $(TARGETAPP).cpp game.o color.o
 game.o : game.cpp game.h menuGame.o sdlHandler.o gameState.o color.o
 	g++ -c $(GCCOBJOPT) -o game.o game.cpp
 	g++ -L . -shared -fPIC -o libgame.so game.o -l sdlHandler -l menuGame -lgameState -lcolor
-menuGame.o : menuGame.cpp menuGame.h gameState.o sdlHandler.o sdlObject.o gameMessage.o color.o
+menuGame.o : menuGame.cpp menuGame.h gameState.o sdlHandler.o sdlObject.o gameMessage.o color.o flippers.o tanker.o spikers.o enemy.o
 	g++ -c $(GCCOBJOPT) -o menuGame.o menuGame.cpp 
-	g++ -I . -L . -shared -fPIC -o libmenuGame.so menuGame.o -lgameState -lsdlHandler -lsdlObject -lgameMessage -lcolor
+	g++ -I . -L . -shared -fPIC -o libmenuGame.so menuGame.o -lgameState -lsdlHandler -lsdlObject -lgameMessage -lcolor -lflippers -lenemy -lspikers -ltanker
 sdlObject.o : sdlObject.cpp sdlObject.h gameState.o sdlHandler.o sdlDrawnObj.o
 	g++ -c $(GCCOBJOPT) -o sdlObject.o sdlObject.cpp
 	g++ -I . -L . -shared -fPIC -o libsdlObject.so sdlObject.o -lgameState -lsdlHandler -lsdlDrawnObj
@@ -54,6 +54,18 @@ gameMessage.o : gameMessage.cpp gameMessage.h
 color.o : color.cpp color.h
 	g++ -c $(GCCOBJOPT) -o color.o color.cpp
 	g++ -shared -fPIC -o libcolor.so color.o -l $(LIBINC)
+flippers.o : flippers.cpp flippers.h enemy.o
+	g++ -c $(GCCOBJOPT) -o flippers.o flippers.cpp
+	g++ -I . -L . -shared -fPIC -o libflippers.so flippers.o -lenemy
+spikers.o : spikers.cpp spikers.h enemy.o
+	g++ -c $(GCCOBJOPT) -o spikers.o spikers.cpp
+	g++ -I . -L . -shared -fPIC -o libspikers.so spikers.o -lenemy
+tanker.o : tanker.cpp tanker.h enemy.o
+	g++ -c $(GCCOBJOPT) -o tanker.o tanker.cpp
+	g++ -I . -L . -shared -fPIC -o libtanker.so tanker.o -lenemy
+enemy.o : enemy.cpp enemy.h
+	g++ -c $(GCCOBJOPT) -o enemy.o enemy.cpp
+	g++ -I . -L . -shared -fPIC -o libenemy.so enemy.o
 
 clean:
 	rm *.o *.so $(TARGETAPP)

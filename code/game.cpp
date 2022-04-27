@@ -38,12 +38,12 @@ void game::render()
 }
 void game::update()
 {
-	int randXVal = randomFn(900,-900)/100;
+	//int randXVal = randomFn(900,-900)/100;
 	/*
 
     */
-    std::shared_ptr<menuGame> gameObj(dynamic_pointer_cast<menuGame>(m_menuGame));
-    gameObj->setRandValue(randXVal);
+    //std::shared_ptr<menuGame> gameObj(dynamic_pointer_cast<menuGame>(m_menuGame));
+   // gameObj->setRandValue(randXVal);
 	theSdlHandler->update();
 
 }

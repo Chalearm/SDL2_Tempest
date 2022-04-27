@@ -1,19 +1,6 @@
 #include "spikers.h"
 
-class spikers : public enemy
-{
-private:
-    aLine<double> m_movingTrack;
-
-public:
-	spikers(std::vector<walkPath<double> > &refLanes,const point<double>& refPoint);
-    ~spikers();
-    void move();
-};
-
-
-
-spikers::spikers(std::vector<walkPath<double> > &refLanes,const point<double>& refPoint):
+spikers::spikers(std::shared_ptr<std::vector<walkPath<double> > >& refLanes,const point<double>& refPoint):
 enemy(refLanes,refPoint),
 m_movingTrack()
 {
@@ -28,7 +15,22 @@ spikers::~spikers()
 {
 
 }
+spikers::spikers(const spikers& obj):
+enemy(obj)
+{}
 
+spikers& spikers::operator=(const spikers& obj)
+{
+	if (this != &obj)
+	{
+         enemy::operator=(obj);
+	}
+	else
+	{
+		// Do nothing
+	}
+	return *this;
+}
 void spikers::move()
 {
 

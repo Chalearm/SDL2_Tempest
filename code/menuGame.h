@@ -3,6 +3,7 @@
  
 #include <iostream>
 #include <cstring>
+#include <list>
 #include <map>
 #include <ctime>
 #include "gameMessage.h"
@@ -12,6 +13,10 @@
 #include "gameDataType.h"
 #include "gameConstance.h"
 #include "walkPath.h"
+#include "enemy.h"
+#include "flippers.h"
+#include "tanker.h"
+#include "spikers.h"
 
 class menuGame : public gameState, public gameMessage
 {
@@ -19,18 +24,26 @@ private:
 
     std::shared_ptr<SDLHandler> m_sdlSimpleLib;
     std::map<MainMenuObj,std::shared_ptr<SDLObject> > m_sdlObjTable;
-    int randomVal;
 
 
     MainMenuObj m_oldLvSelectValue;
     MainMenuObj m_lvSelectValue;
     GameScene m_currentStage;
-    std::vector<walkPath<double> > m_thelv1Path;
-    std::vector<walkPath<double> > m_thelv2Path;
-    std::vector<walkPath<double> > m_thelv3Path;
+    std::shared_ptr<std::vector<walkPath<double> > > m_thelv1Path;
+    std::shared_ptr<std::vector<walkPath<double> > > m_thelv2Path;
+    std::shared_ptr<std::vector<walkPath<double> > > m_thelv3Path;
+
+    /*
+       random enemy type - criteria 
+       0 - 70  --> spikers
+       71 - 90 --> tanker
+       91 - 99 --> flippers
+    */
+    std::list<std::shared_ptr<enemy> > m_enemyList;
 
 
     int m_playerStartPoint;
+
 
     void mainMenuDisplay();
     void levelSelectionDisplay();
@@ -41,12 +54,14 @@ private:
     void goBackLv();
 
     void levelsKeyboardHandle(const unsigned char &val = 0);
+    void createEnemies(std::shared_ptr<std::vector<walkPath<double> > >& lvPathObj,const point<double>& refPoint,std::list<std::shared_ptr<enemy> >& alist);
+    EnemyType randomEnemyTp();
     void setSelectedLvColorAndCondition(const MainMenuObj &aCondition,const color &deselectCol, const color &selectColr);
-    void drawWalkPath(const std::vector<walkPath<double> >& obj,const point<double>& refPoint,const double &scaleVal = 1.0, const bool isDrawnPlayer = false);
+    void drawWalkPath(std::shared_ptr<std::vector<walkPath<double> > >& pObj,const point<double>& refPoint,const double &scaleVal = 1.0, const bool isDrawnPlayer = false);
     void drawPlayerPosition(const std::vector<walkPath<double> >& obj,const point<double>& refPoint,const double& scale);
-    void moveNextAreaOfPlayer(const std::vector<walkPath<double> >& obj);
-    void moveBackAreaOfPlayer(const std::vector<walkPath<double> >& obj);
-    const std::vector<walkPath<double> >& switchWalkPathByLv(const GameScene& val = Level1);
+    void moveNextAreaOfPlayer(std::shared_ptr<std::vector<walkPath<double> > >& obj);
+    void moveBackAreaOfPlayer(std::shared_ptr<std::vector<walkPath<double> > >& obj);
+    std::shared_ptr<std::vector<walkPath<double> > >& switchWalkPathByLv(const GameScene& val = Level1);
 public:
 
     menuGame();
@@ -60,7 +75,7 @@ public:
     void handleEvents(const unsigned char& keyPress = 0);
     void clean();
     void setSDLHandler(const std::shared_ptr<SDLHandler> &obj);
-    void setRandValue(const int& val = 0);
+  //  void setRandValue(const int& val = 0);
 
 
 };
