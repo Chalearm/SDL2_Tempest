@@ -401,7 +401,6 @@ void menuGame::drawWalkPath(const std::vector<walkPath<double> >& obj,const poin
             m_sdlSimpleLib->drawLine(aPieceofAPath[LLEFT]);
             m_sdlSimpleLib->drawLine(aPieceofAPath[LEDGE]);
             m_sdlSimpleLib->drawLine(aPieceofAPath[LRIGHT]);
-
             m_sdlSimpleLib->setRenderDrawColor(COLORSET[BLUE]);
 
         }
@@ -420,7 +419,13 @@ void menuGame::mainMenuDisplay()
     for(it = m_sdlObjTable.begin(); it != m_sdlObjTable.end(); it++) 
     {
         if (it->first != BACK_TO_MAINMENU)
-        it->second->render();
+        {
+            it->second->render();
+        }
+        else
+        {
+            // Do nothing
+        }
     }
         
     if (m_sdlSimpleLib)
@@ -470,24 +475,7 @@ void menuGame::moveBackAreaOfPlayer(const std::vector<walkPath<double> >& obj)
         // Do nothing
     }
 }
-/*
-void menuGame::drawPlayerPosition(const std::vector<walkPath<double> >& obj,const point<double>& refPoint,const double& scale)
-{
-    walkPath<double> aPieceofAPath;
-    if (scaleVal != 1.0)
-    {
-        aPieceofAPath = (obj[i]*scaleVal).translate(refPoint);
-    }
-    else
-    {
-        aPieceofAPath = obj[i].translate(refPoint);
-    }
-    m_sdlSimpleLib->drawLine(aPieceofAPath[LLEFT]);
-    m_sdlSimpleLib->drawLine(aPieceofAPath[LEDGE]);
-    m_sdlSimpleLib->drawLine(aPieceofAPath[LRIGHT]);
 
-}
-*/
 void menuGame::levelSelectionDisplay()
 {
     const int xStart = 40;
@@ -511,8 +499,6 @@ void menuGame::levelSelectionDisplay()
     // Lv 3.
     setSelectedLvColorAndCondition(LABEL_LV3,COLORSET[RED],COLORSET[YELLOW]);
     drawWalkPath(m_thelv3Path,point<double>(xStart + 425,yStartLv1));
-
-
 
 }
 
