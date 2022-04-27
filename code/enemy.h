@@ -1,6 +1,7 @@
 #ifndef __ENEMY__
 #define __ENEMY__
 #include <random>
+#include <memory>
 #include "gameDataType.h"
 #include "point.h"
 #include "walkPath.h"
