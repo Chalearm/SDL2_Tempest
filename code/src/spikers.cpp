@@ -31,6 +31,13 @@ spikers& spikers::operator=(const spikers& obj)
 	}
 	return *this;
 }
+
+
+std::vector<aLine<double> > spikers::drawEnemy()
+{
+	return std::vector<aLine<double> >();
+}
+
 void spikers::move()
 {
 

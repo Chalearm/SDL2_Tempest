@@ -10,7 +10,10 @@ m_currentPosition(0),
 m_speed(0),
 m_refLanes(refLanes),
 m_beingLane(0),
-m_isAlive(true)
+m_isAlive(true),
+m_timeToMove(0.01),  // 0.3 second
+m_startTime(std::clock()),
+m_isTimeUp(false)
 {
 	//m_refLanes = refLanes;
 	m_beingLane = static_cast<int>(randomFn(refLanes->size()-1,0.0));
@@ -22,7 +25,10 @@ m_currentPosition(obj.m_currentPosition),
 m_speed(obj.m_speed),
 m_refLanes(obj.m_refLanes),
 m_beingLane(obj.m_beingLane),
-m_isAlive(obj.m_isAlive)
+m_isAlive(obj.m_isAlive),
+m_timeToMove(obj.m_timeToMove),  // 0.3 second
+m_startTime(obj.m_startTime),
+m_isTimeUp(obj.m_isTimeUp)
 {}
 
 
@@ -32,11 +38,13 @@ enemy& enemy::operator=(const enemy& obj)
     {
     	
     	m_refPoint = obj.m_refPoint;
-	    m_currentPosition = obj.m_currentPosition;
-	    m_speed = obj.m_speed;
-	    m_refLanes = obj.m_refLanes;
-        m_beingLane = obj.m_beingLane;    // which lane where enemy stays
-        m_isAlive = obj.m_isAlive;
+      m_currentPosition = obj.m_currentPosition;
+      m_speed = obj.m_speed;
+      m_refLanes = obj.m_refLanes;
+      m_beingLane = obj.m_beingLane;    // which lane where enemy stays
+      m_isAlive = obj.m_isAlive;
+      m_timeToMove = obj.m_timeToMove;
+      m_isTimeUp = obj.m_isTimeUp;
         
        // enemy::enemy(obj);
     }
@@ -67,7 +75,17 @@ bool enemy::isAlive()const
 
 void enemy::move()
 {
-    
+	const double duration = ( std::clock() - m_startTime ) / (double) CLOCKS_PER_SEC;
+	m_isTimeUp =  (duration > m_timeToMove);
+	if (m_isTimeUp)
+	{
+		m_startTime = std::clock();
+	}
+	else
+	{
+		// Do nothing
+	}
+
 }
 
 double enemy::randomFn(double max,double min)

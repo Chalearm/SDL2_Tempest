@@ -13,6 +13,7 @@ public:
     ~spikers();
     spikers(const spikers& obj);
     spikers& operator=(const spikers& obj);
+    std::vector<aLine<double> > drawEnemy();
     void move();
 };
 

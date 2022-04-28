@@ -3,10 +3,10 @@
 #include <random>
 #include <vector>
 #include <memory>
+#include <ctime>
 #include "gameDataType.h"
 #include "point.h"
 #include "walkPath.h"
-
 class enemy
 {
 protected:
@@ -17,7 +17,10 @@ protected:
     std::shared_ptr<std::vector<walkPath<double> > >& m_refLanes; // (the reference of the lanns where enemy can go around)
     int m_beingLane;    // which lane where enemy stays
     bool m_isAlive;
-
+ 
+    double m_timeToMove; // in second;
+    std::clock_t m_startTime;
+    bool m_isTimeUp;
 
 public:
      // random fundion

@@ -14,14 +14,15 @@ public:
 	~point();
 	point<T>& operator=(const point<T>& obj);
 	point<T> operator+(const point<T>& obj)const;
-    point<T> operator-(const point<T>& obj);
+    point<T> operator-(const point<T>& obj)const;
     point<T> operator/(const T val);
 	point<T>& operator+=(const point<T>& obj);
     point<T>& operator-=(const point<T>& obj);
     point<T> operator*(const T& val)const;
     T operator[](const pointType val)const;
     bool operator==(const point<T>& obj);
-    T dybydx();
+    T dybydx()const;
+    T norm2() const;
 
 };
 
@@ -70,7 +71,7 @@ point<T> point<T>::operator+(const point<T>& obj)const
 }
 
 template <class T>
-point<T> point<T>::operator-(const point<T>& obj)
+point<T> point<T>::operator-(const point<T>& obj)const
 {
 	return point<T>(m_x-obj.m_x,m_y-obj.m_y);
 }
@@ -131,7 +132,7 @@ point<T>& point<T>::operator-=(const point<T>& obj)
     return *this;
 }
 template <class T>
-T point<T>::dybydx()
+T point<T>::dybydx() const
 {
 	T ret = T();
 	if (m_x != T())
@@ -143,6 +144,11 @@ T point<T>::dybydx()
 		// Do nothing
 	}
 	return ret;
+}
+template <class T>
+T point<T>::norm2() const
+{
+	return m_x*m_x + m_y*m_y;
 }
 template <class T>
 bool point<T>::operator==(const point<T>& obj)

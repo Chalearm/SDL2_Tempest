@@ -379,7 +379,9 @@ void menuGame::render()
             m_sdlObjTable[BACKGROUND_IMG]->render();
             m_sdlObjTable[BACK_TO_MAINMENU]->render();
             m_sdlSimpleLib->setRenderDrawColor(COLORSET[BLUE]);
-            drawWalkPath(switchWalkPathByLv(m_currentStage),g_refPoint,g_lvScale,true);
+            drawWalkPath(switchWalkPathByLv(m_currentStage),g_refPoint*g_ratioScreen,g_lvScale,true);
+
+            m_sdlSimpleLib->setRenderDrawColor(COLORSET[RED]);
             renderEnemied();
 
         }
@@ -479,7 +481,7 @@ void menuGame::drawWalkPath(std::shared_ptr<std::vector<walkPath<double> > >& pO
         if (scaleVal != 1.0)
         {
             aPieceofAPath = (pObj->at(i)*scaleVal).translate(refPoint);
-        }
+        } 
         else
         {
             aPieceofAPath = pObj->at(i).translate(refPoint);
@@ -613,6 +615,21 @@ void menuGame::update()
     {
         it->second->update();
     }
+
+    std::list<std::shared_ptr<enemy> >::iterator it2;
+    for (it2 = m_enemyList.begin(); it2 != m_enemyList.end(); ++it2)
+    {
+        if (it2->get()->isAlive())
+        {
+            it2->get()->move();
+        }
+        else
+        {
+            // Do nothing
+        }
+    }
+    
+
 }
 
 std::shared_ptr<std::vector<walkPath<double> > >& menuGame::switchWalkPathByLv(const GameScene& val)
