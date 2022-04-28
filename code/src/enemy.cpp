@@ -5,6 +5,7 @@ std::mt19937 enemy::s_gen;
 
 enemy::enemy(std::shared_ptr<std::vector<walkPath<double> > > &refLanes, const double& scale, const point<double>& refPoint):
 m_refPoint(refPoint),
+m_lines(),
 m_scale(scale),
 m_currentPosition(0),
 m_speed(0),
@@ -21,6 +22,7 @@ m_isTimeUp(false)
 
 enemy::enemy(const enemy& obj):
 m_refPoint(obj.m_refPoint),
+m_lines(obj.m_lines),
 m_currentPosition(obj.m_currentPosition),
 m_speed(obj.m_speed),
 m_refLanes(obj.m_refLanes),
@@ -38,6 +40,7 @@ enemy& enemy::operator=(const enemy& obj)
     {
     	
     	m_refPoint = obj.m_refPoint;
+    	m_lines = obj.m_lines;
       m_currentPosition = obj.m_currentPosition;
       m_speed = obj.m_speed;
       m_refLanes = obj.m_refLanes;
@@ -66,10 +69,10 @@ bool enemy::isHitTheBullet(const point<double> &bulletPoint)
 
 std::vector<aLine<double> > enemy::drawEnemy()
 {
-	return std::vector<aLine<double> >();
+	return m_lines;
 }
 bool enemy::isAlive()const
-{
+{	
 	return m_isAlive;
 }
 
@@ -88,6 +91,16 @@ void enemy::move()
 
 }
 
+void enemy::addToLineVect(const point<double>& p1,const point<double>& p2)
+{
+	m_lines.push_back(scaleAndTranslate(aLine<double>(p1,p2)));
+}
+
+aLine<double> enemy::scaleAndTranslate(const aLine<double>& obj)
+{
+    return obj*m_scale + m_refPoint;
+}
+
 point<double> enemy::findPointInBetweenALane(const walkPath<double> &w,const double& percentageOfDistance, const double& percentageOfDistBetweenRLline) // 0 - 100% = 0.00 to 1.00
 {
 	point<double> retPoint;
@@ -97,7 +110,7 @@ point<double> enemy::findPointInBetweenALane(const walkPath<double> &w,const dou
 	const double ditanceOfThePointAtRightLine = euclidientRightline*percentageOfDistance;
 
 	const point<double> pL = findPointOnTheLine(w[LLEFT],ditanceOfThePointAtLeftLine);
-	const point<double> pR = findPointOnTheLine(w[LRIGHT].swapP1P2(),ditanceOfThePointAtLeftLine);
+	const point<double> pR = findPointOnTheLine(w[LRIGHT].swapP1P2(),ditanceOfThePointAtRightLine);
 	const double ditancePLR = aLine<double>(pL,pR).euclidianDis();
    if (percentageOfDistBetweenRLline == 0.0)
    {
@@ -126,6 +139,7 @@ point<double> enemy::findPointOnTheLine(const aLine<double> &l1, const double& d
     {
         teta = 1.570796; // pi/2
     }
+    /*
     std::cout<<__FUNCTION__<<" being lane:"<<m_beingLane<<std::endl;
 
     std::cout<<"ditance :"<<distanceOnTheLine<<" fullDist:"<<l1.euclidianDis()<<" "<<this<<std::endl;
@@ -134,16 +148,19 @@ point<double> enemy::findPointOnTheLine(const aLine<double> &l1, const double& d
     std::cout<<" slope:"<<slope<<std::endl;
     std::cout<<" cos val:"<<cos(teta)<<std::endl;
     std::cout<<" sin val:"<<sin(teta)<<std::endl;
+    */
     double xSign = 1.0;
     double ySign = 1.0;
     if ((l1[P2][X] - l1[P1][X]) < 0.0) xSign = -1.0;
     if ((l1[P2][Y] < l1[P1][Y])) ySign = -1.0;
     const point<double> deltaPoint = point<double>(xSign*distanceOnTheLine*abs(cos(teta)),ySign*distanceOnTheLine*abs(sin(teta)));
     point<double> resultPoint = l1[P1] + deltaPoint;
+    /*
     std::cout<<" cos value :"<<deltaPoint[X]<<std::endl;
     std::cout<<" sine value :"<<deltaPoint[Y]<<std::endl;
 
     std::cout<<" result (x,y) :"<<"("<<resultPoint[X]<<","<<resultPoint[Y]<<")"<<std::endl;
+    */
     return resultPoint;
 }
 
