@@ -88,6 +88,65 @@ void enemy::move()
 
 }
 
+point<double> enemy::findPointInBetweenALane(const walkPath<double> &w,const double& percentageOfDistance, const double& percentageOfDistBetweenRLline) // 0 - 100% = 0.00 to 1.00
+{
+	point<double> retPoint;
+	const double euclidientLeftline = w[LLEFT].euclidianDis();
+	const double euclidientRightline = w[LRIGHT].euclidianDis();
+	const double ditanceOfThePointAtLeftLine = euclidientLeftline*percentageOfDistance;
+	const double ditanceOfThePointAtRightLine = euclidientRightline*percentageOfDistance;
+
+	const point<double> pL = findPointOnTheLine(w[LLEFT],ditanceOfThePointAtLeftLine);
+	const point<double> pR = findPointOnTheLine(w[LRIGHT].swapP1P2(),ditanceOfThePointAtLeftLine);
+	const double ditancePLR = aLine<double>(pL,pR).euclidianDis();
+   if (percentageOfDistBetweenRLline == 0.0)
+   {
+   	retPoint = pL;
+   }
+   else if (percentageOfDistBetweenRLline == 1.0)
+   {
+   	retPoint = pR;
+   }
+   else
+   {
+   	retPoint = findPointOnTheLine(aLine<double>(pL,pR),ditancePLR*percentageOfDistBetweenRLline);
+   }
+   return retPoint;
+
+}
+point<double> enemy::findPointOnTheLine(const aLine<double> &l1, const double& distanceOnTheLine)
+{
+    const double slope = l1.slope();
+    double teta = 0;
+    if (l1[P1][X] != l1[P2][X] )
+    {
+        teta = atan(slope);
+    }
+    else
+    {
+        teta = 1.570796; // pi/2
+    }
+    std::cout<<__FUNCTION__<<" being lane:"<<m_beingLane<<std::endl;
+
+    std::cout<<"ditance :"<<distanceOnTheLine<<" fullDist:"<<l1.euclidianDis()<<" "<<this<<std::endl;
+    std::cout<<" P1(x,y) :"<<"("<<l1[P1][X]<<","<<l1[P1][Y]<<")"<<std::endl;
+    std::cout<<" P2(x,y) :"<<"("<<l1[P2][X]<<","<<l1[P2][Y]<<")"<<" P2.y - p1.y ;"<<(l1[P2][Y]-l1[P1][Y])<<std::endl;
+    std::cout<<" slope:"<<slope<<std::endl;
+    std::cout<<" cos val:"<<cos(teta)<<std::endl;
+    std::cout<<" sin val:"<<sin(teta)<<std::endl;
+    double xSign = 1.0;
+    double ySign = 1.0;
+    if ((l1[P2][X] - l1[P1][X]) < 0.0) xSign = -1.0;
+    if ((l1[P2][Y] < l1[P1][Y])) ySign = -1.0;
+    const point<double> deltaPoint = point<double>(xSign*distanceOnTheLine*abs(cos(teta)),ySign*distanceOnTheLine*abs(sin(teta)));
+    point<double> resultPoint = l1[P1] + deltaPoint;
+    std::cout<<" cos value :"<<deltaPoint[X]<<std::endl;
+    std::cout<<" sine value :"<<deltaPoint[Y]<<std::endl;
+
+    std::cout<<" result (x,y) :"<<"("<<resultPoint[X]<<","<<resultPoint[Y]<<")"<<std::endl;
+    return resultPoint;
+}
+
 double enemy::randomFn(double max,double min)
 {	
 	std::uniform_real_distribution<> distrib(min,max);

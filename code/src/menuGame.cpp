@@ -447,25 +447,25 @@ void menuGame::createEnemies(std::shared_ptr<std::vector<walkPath<double> > >& l
         {
             case TANKER:
             {
-                std::shared_ptr<tanker> aPTanker(new tanker(lvPathObj,g_lvScale,g_refPoint));
+                std::shared_ptr<tanker> aPTanker(new tanker(lvPathObj,g_lvScale,g_refPoint*g_ratioScreen));
                 alist.push_back(aPTanker); 
             }
             break;
             case SPIKERS:
             {
-                std::shared_ptr<spikers> aPSpikers(new spikers(lvPathObj,g_lvScale,g_refPoint));
+                std::shared_ptr<spikers> aPSpikers(new spikers(lvPathObj,g_lvScale,g_refPoint*g_ratioScreen));
                 alist.push_back(aPSpikers); 
             }
             break;
             case FLIPPERS:
             {
-                std::shared_ptr<flippers> aPTFlippers(new flippers(lvPathObj,g_lvScale,g_refPoint));
+                std::shared_ptr<flippers> aPTFlippers(new flippers(lvPathObj,g_lvScale,g_refPoint*g_ratioScreen));
                 alist.push_back(aPTFlippers); 
             }
             break;
             default:
             {
-                std::shared_ptr<tanker> aPTanker(new tanker(lvPathObj,g_lvScale,g_refPoint));
+                std::shared_ptr<tanker> aPTanker(new tanker(lvPathObj,g_lvScale,g_refPoint*g_ratioScreen));
                 alist.push_back(aPTanker); 
             }
             break;

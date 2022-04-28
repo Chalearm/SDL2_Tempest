@@ -21,7 +21,8 @@ protected:
     double m_timeToMove; // in second;
     std::clock_t m_startTime;
     bool m_isTimeUp;
-
+    point<double> findPointOnTheLine(const aLine<double> &l1, const double& distanceOnTheLine);
+    point<double> findPointInBetweenALane(const walkPath<double> &w,const double& percentageOfDistance =0.0, const double& percentageOfDistBetweenRLline = 0.0); // 0 - 100% = 0.00 to 1.00
 public:
      // random fundion
 	static std::random_device s_rd;

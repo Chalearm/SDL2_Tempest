@@ -22,7 +22,7 @@ public:
     aLine<T> operator+(const point<T>& val)const;
     aLine<T> swapP1P2();
     T slope() const;
-    T eulidianDis() const;
+    T euclidianDis() const;
 
 };
 
@@ -100,7 +100,7 @@ bool aLine<T>::operator==(const aLine<T>& obj)
 }
 
 template <class T>
-T aLine<T>::eulidianDis() const
+T aLine<T>::euclidianDis() const
 {
     return pow((m_p1-m_p2).norm2(),0.5);
 }

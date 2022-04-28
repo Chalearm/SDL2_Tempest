@@ -10,8 +10,6 @@ private:
     aLine<double> m_line2;
     aLine<double> m_line3;
     aLine<double> m_line4;
-
-    point<double> findPointOnTheLine(const aLine<double> &l1, const double& distanceOnTheLine);
 public:
 	tanker(std::shared_ptr<std::vector<walkPath<double> > >& refLanes,const double& scale, const point<double>& refPoint);
 	~tanker();
