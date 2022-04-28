@@ -2,6 +2,7 @@
 #define __FLIPPERS__
 #include "enemy.h"
 #include "point.h"
+#include "lineWithColor.h"
 
 class flippers : public enemy
 {
@@ -16,7 +17,7 @@ public:
 	~flippers();
 	flippers(const flippers& obj);
 	flippers& operator=(const flippers& obj);
-	std::vector<aLine<double> > drawEnemy();
+	std::vector<lineWithColor> drawEnemy();
 	void move();
 };
 

@@ -23,9 +23,9 @@ m_p4(obj.m_p4)
 {
 
 }
-std::vector<aLine<double> > flippers::drawEnemy()
+std::vector<lineWithColor > flippers::drawEnemy()
 {
-	return std::vector<aLine<double> >();
+	return std::vector<lineWithColor>();
 }
 flippers& flippers::operator=(const flippers& obj)
 {

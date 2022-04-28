@@ -5,6 +5,7 @@ tanker::tanker(std::shared_ptr<std::vector<walkPath<double> > >& refLanes,const 
 enemy(refLanes,scale,refPoint)
 {
    m_speed = enemy::randomFn(0.04,0.017);
+   m_bodyColor = g_tankerColor;
 }
 tanker::~tanker()
 {}
@@ -26,7 +27,7 @@ tanker& tanker::operator=(const tanker& obj)
     return *this;
 }
 
-std::vector<aLine<double> > tanker::drawEnemy()
+std::vector<lineWithColor> tanker::drawEnemy()
 {
     return m_lines;
 }
@@ -50,23 +51,22 @@ void tanker::move()
         const point<double> p32 = findPointInBetweenALane(aWalkpath,m_currentPosition,(0.3*widthOfTanker+(1-0.3*widthOfTanker)*0.5));
         const point<double> centerTop2 = findPointInBetweenALane(aWalkpath,m_currentPosition + 0.01,0.5);
         const point<double> centerBottom2 = findPointInBetweenALane(aWalkpath,m_currentPosition - 0.01,0.5);
-
-        addToLineVect(p4,centerTop);
-        addToLineVect(centerTop,p3);
-        addToLineVect(p3,centerBottom);
-        addToLineVect(centerBottom,p4);
-        addToLineVect(p42,centerTop2);
-        addToLineVect(centerTop2,p32);
-        addToLineVect(p32,centerBottom2);
-        addToLineVect(centerBottom2,p42);
-        addToLineVect(p42,p4);
-        addToLineVect(centerTop2,centerTop);
-        addToLineVect(centerBottom2,centerBottom);
-        addToLineVect(p32,p3);
-        addToLineVect(p42,centerTop);
-        addToLineVect(centerTop2,p3);
-        addToLineVect(p32,centerBottom);
-        addToLineVect(centerBottom2,p4);
+//addToLineVect
+        addToLineWitBodyColorVect(p4,centerTop);
+        addToLineWitBodyColorVect(centerTop,p3);
+        addToLineWitBodyColorVect(p3,centerBottom);
+        addToLineWitBodyColorVect(centerBottom,p4);
+        addToLineWitBodyColorVect(p42,centerTop2);
+        addToLineWitBodyColorVect(centerTop2,p32);
+        addToLineWitBodyColorVect(centerBottom2,p42);
+        addToLineWitBodyColorVect(p42,p4);
+        addToLineWitBodyColorVect(centerTop2,centerTop);
+        addToLineWitBodyColorVect(centerBottom2,centerBottom);
+        addToLineWitBodyColorVect(p32,p3);
+        addToLineWitBodyColorVect(p42,centerTop);
+        addToLineWitBodyColorVect(centerTop2,p3);
+        addToLineWitBodyColorVect(p32,centerBottom);
+        addToLineWitBodyColorVect(centerBottom2,p4);
 
         //std::cout<<" sdsfdfd ";
         m_currentPosition += m_speed;

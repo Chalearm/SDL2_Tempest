@@ -20,6 +20,7 @@ public:
 	color(const color& obj);
 	color& operator=(const color& obj);
 	bool operator==(const color& obj);
+	bool operator!=(const color& obj);
 
 	void setGradientColor(const color& obj);
 	void accumulateColor(const GameColor &col, const char& delCol);

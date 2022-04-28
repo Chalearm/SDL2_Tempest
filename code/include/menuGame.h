@@ -13,6 +13,7 @@
 #include "gameDataType.h"
 #include "gameConstance.h"
 #include "walkPath.h"
+#include "lineWithColor.h"
 #include "enemy.h"
 #include "flippers.h"
 #include "tanker.h"

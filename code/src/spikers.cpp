@@ -33,9 +33,9 @@ spikers& spikers::operator=(const spikers& obj)
 }
 
 
-std::vector<aLine<double> > spikers::drawEnemy()
+std::vector<lineWithColor> spikers::drawEnemy()
 {
-	return std::vector<aLine<double> >();
+	return std::vector<lineWithColor >();
 }
 
 void spikers::move()

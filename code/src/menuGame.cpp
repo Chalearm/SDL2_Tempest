@@ -350,15 +350,25 @@ enum MainMenuObj {BACKGROUND_IMG,LABEL_TEMPEST,LABEL_EXIT,LABEL_LV1,LABEL_LV2,LA
 }
 void menuGame::renderEnemied()
 {
+    color col = COLORSET[NOCOLOR];
     std::list<std::shared_ptr<enemy> >::iterator it;
     for (it = m_enemyList.begin(); it != m_enemyList.end(); ++it)
     {
         if (it->get()->isAlive())
         {
-            std::vector<aLine<double> > lineSet = it->get()->drawEnemy();
+            std::vector<lineWithColor> lineSet = it->get()->drawEnemy();
             for (int j = 0; j < lineSet.size(); j++)
             {
-                m_sdlSimpleLib->drawLine(lineSet[j]);
+                if (col != lineSet[j].getColor())
+                {
+                    col = lineSet[j].getColor();
+                    m_sdlSimpleLib->setRenderDrawColor(col);
+                }
+                else
+                {
+                    // Do nothing
+                }
+                m_sdlSimpleLib->drawLine(lineSet[j].getLine());
             }
         }
         else
@@ -381,7 +391,7 @@ void menuGame::render()
             m_sdlSimpleLib->setRenderDrawColor(COLORSET[BLUE]);
             drawWalkPath(switchWalkPathByLv(m_currentStage),g_refPoint*g_ratioScreen,g_lvScale,true);
 
-            m_sdlSimpleLib->setRenderDrawColor(COLORSET[RED]);
+           // m_sdlSimpleLib->setRenderDrawColor(COLORSET[RED]);
             renderEnemied();
 
         }

@@ -1,7 +1,7 @@
 #ifndef __POINT__
 #define __POINT__
-
 #include <iostream>
+#include "gameDataType.h"
 template <class T>
 class point
 {

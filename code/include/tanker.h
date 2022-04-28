@@ -2,6 +2,9 @@
 #define __TANKER__
 #include "enemy.h"
 #include "aLine.h"
+#include "gameDataType.h"
+#include "gameConstance.h"
+#include "color.h"
 
 class tanker : public enemy
 {
@@ -11,7 +14,7 @@ public:
 	~tanker();
 	tanker(const tanker& obj);
 	tanker& operator=(const tanker& obj);
-	std::vector<aLine<double> > drawEnemy();
+	std::vector<lineWithColor> drawEnemy();
 	void move();
 };
 

@@ -9,6 +9,9 @@
 // constanst
 std::map<GameColor, color> COLORSET(color::create_ColorMap());
 
+const color g_tankerColor = COLORSET[MAGENTA];
+
+
 const int g_window_height = 600;
 const int g_window_width = 800;
 const double g_lvScale = 4.6;

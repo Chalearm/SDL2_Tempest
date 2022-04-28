@@ -5,13 +5,16 @@
 #include <memory>
 #include <ctime>
 #include "gameDataType.h"
+#include "color.h"
 #include "point.h"
 #include "walkPath.h"
+#include "lineWithColor.h"
 class enemy
 {
 protected:
 	point<double> m_refPoint; // the center point of the level (polygon)
-	std::vector<aLine<double> > m_lines;
+     std::vector<lineWithColor> m_lines;
+	color m_bodyColor;
 	double m_scale;
 	double m_currentPosition; // h = 0 %  (0.0) - 100% (1.0) , 100% is at the top (edge of the polygon)
 	double m_speed; // dh/dt (should be 1% - 10% (0.01 - 0.1) -- 100% (1.0) = the lane's length )
@@ -22,7 +25,8 @@ protected:
 	double m_timeToMove; // in second;
 	std::clock_t m_startTime;
 	bool m_isTimeUp;
-	void addToLineVect(const point<double>& p1,const point<double>& p2);
+	void addToLineVect(const point<double>& p1,const point<double>& p2, const color& col);
+	void addToLineWitBodyColorVect(const point<double>& p1,const point<double>& p2);
 	aLine<double> scaleAndTranslate(const aLine<double>& obj);
 	point<double> findPointOnTheLine(const aLine<double> &l1, const double& distanceOnTheLine);
 	point<double> findPointInBetweenALane(const walkPath<double> &w,const double& percentageOfDistance =0.0, const double& percentageOfDistBetweenRLline = 0.0); // 0 - 100% = 0.00 to 1.00
@@ -38,7 +42,7 @@ public:
 	bool isHitTheBullet(const point<double> &bulletPoint);
 	bool isAlive()const;
 	virtual void move();
-     virtual std::vector<aLine<double> > drawEnemy();
+     virtual std::vector<lineWithColor> drawEnemy();
 	static double randomFn(double max,double min);
 };
 

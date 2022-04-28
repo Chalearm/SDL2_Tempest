@@ -30,9 +30,9 @@ $(TARGETAPP): ./src/$(TARGETAPP).cpp ./obj/game.o ./obj/color.o
 ./obj/game.o : ./src/game.cpp ./include/game.h ./obj/menuGame.o ./obj/sdlHandler.o ./obj/gameState.o ./obj/color.o
 	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/game.o ./src/game.cpp
 	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libgame.so ./obj/game.o -lsdlHandler -lmenuGame -lgameState -lcolor
-./obj/menuGame.o : ./src/menuGame.cpp ./include/menuGame.h ./obj/gameState.o ./obj/sdlHandler.o ./obj/sdlObject.o ./obj/gameMessage.o ./obj/color.o ./obj/flippers.o ./obj/tanker.o ./obj/spikers.o ./obj/enemy.o
+./obj/menuGame.o : ./src/menuGame.cpp ./include/menuGame.h ./obj/gameState.o ./obj/sdlHandler.o ./obj/sdlObject.o ./obj/gameMessage.o ./obj/color.o ./obj/flippers.o ./obj/tanker.o ./obj/spikers.o ./obj/enemy.o ./obj/lineWithColor.o
 	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/menuGame.o ./src/menuGame.cpp 
-	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libmenuGame.so ./obj/menuGame.o -lgameState -lsdlHandler -lsdlObject -lgameMessage -lcolor -lflippers -lenemy -lspikers -ltanker
+	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libmenuGame.so ./obj/menuGame.o -lgameState -lsdlHandler -lsdlObject -lgameMessage -lcolor -lflippers -lenemy -lspikers -ltanker -llineWithColor
 ./obj/sdlObject.o : ./src/sdlObject.cpp ./include/sdlObject.h ./obj/gameState.o ./obj/sdlHandler.o ./obj/sdlDrawnObj.o ./obj/color.o
 	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/sdlObject.o ./src/sdlObject.cpp
 	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libsdlObject.so ./obj/sdlObject.o -lgameState -lsdlHandler -lsdlDrawnObj -lcolor
@@ -51,21 +51,24 @@ $(TARGETAPP): ./src/$(TARGETAPP).cpp ./obj/game.o ./obj/color.o
 ./obj/gameMessage.o : ./src/gameMessage.cpp ./include/gameMessage.h
 	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/gameMessage.o ./src/gameMessage.cpp
 	g++ -I ./include -shared -fPIC -o ./lib/libgameMessage.so ./obj/gameMessage.o
+./obj/flippers.o : ./src/flippers.cpp ./include/flippers.h ./obj/enemy.o ./obj/color.o ./obj/lineWithColor.o
+	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/flippers.o ./src/flippers.cpp
+	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libflippers.so ./obj/flippers.o -lenemy -lcolor -llineWithColor
+./obj/spikers.o : ./src/spikers.cpp ./include/spikers.h ./obj/enemy.o ./obj/color.o ./obj/lineWithColor.o
+	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/spikers.o ./src/spikers.cpp
+	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libspikers.so ./obj/spikers.o -lenemy -lcolor -llineWithColor
+./obj/tanker.o : ./src/tanker.cpp ./include/tanker.h ./obj/enemy.o ./obj/color.o ./obj/lineWithColor.o
+	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/tanker.o ./src/tanker.cpp
+	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libtanker.so ./obj/tanker.o -lenemy -lcolor -llineWithColor
+./obj/enemy.o : ./src/enemy.cpp ./include/enemy.h ./obj/color.o ./obj/lineWithColor.o
+	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/enemy.o ./src/enemy.cpp
+	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libenemy.so ./obj/enemy.o -lcolor -llineWithColor
+./obj/lineWithColor.o : ./src/lineWithColor.cpp ./include/lineWithColor.h ./obj/color.o
+	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/lineWithColor.o ./src/lineWithColor.cpp
+	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/liblineWithColor.so ./obj/lineWithColor.o -lcolor
 ./obj/color.o : ./src/color.cpp ./include/color.h
 	g++ -I ./include  -c $(GCCOBJOPT) -o ./obj/color.o ./src/color.cpp
 	g++ -I ./include -shared -fPIC -o ./lib/libcolor.so ./obj/color.o -l $(LIBINC)
-./obj/flippers.o : ./src/flippers.cpp ./include/flippers.h ./obj/enemy.o
-	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/flippers.o ./src/flippers.cpp
-	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libflippers.so ./obj/flippers.o -lenemy
-./obj/spikers.o : ./src/spikers.cpp ./include/spikers.h ./obj/enemy.o
-	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/spikers.o ./src/spikers.cpp
-	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libspikers.so ./obj/spikers.o -lenemy
-./obj/tanker.o : ./src/tanker.cpp ./include/tanker.h ./obj/enemy.o
-	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/tanker.o ./src/tanker.cpp
-	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libtanker.so ./obj/tanker.o -lenemy
-./obj/enemy.o : ./src/enemy.cpp ./include/enemy.h
-	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/enemy.o ./src/enemy.cpp
-	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libenemy.so ./obj/enemy.o
 
 clean:
 	rm ./obj/*.o ./lib/*.so $(TARGETAPP)

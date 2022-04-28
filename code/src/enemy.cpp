@@ -6,6 +6,7 @@ std::mt19937 enemy::s_gen;
 enemy::enemy(std::shared_ptr<std::vector<walkPath<double> > > &refLanes, const double& scale, const point<double>& refPoint):
 m_refPoint(refPoint),
 m_lines(),
+m_bodyColor(COLORSET[NOCOLOR]),
 m_scale(scale),
 m_currentPosition(0),
 m_speed(0),
@@ -23,6 +24,7 @@ m_isTimeUp(false)
 enemy::enemy(const enemy& obj):
 m_refPoint(obj.m_refPoint),
 m_lines(obj.m_lines),
+m_bodyColor(obj.m_bodyColor),
 m_currentPosition(obj.m_currentPosition),
 m_speed(obj.m_speed),
 m_refLanes(obj.m_refLanes),
@@ -41,6 +43,7 @@ enemy& enemy::operator=(const enemy& obj)
     	
     	m_refPoint = obj.m_refPoint;
     	m_lines = obj.m_lines;
+    	m_bodyColor = obj.m_bodyColor;
       m_currentPosition = obj.m_currentPosition;
       m_speed = obj.m_speed;
       m_refLanes = obj.m_refLanes;
@@ -67,7 +70,7 @@ bool enemy::isHitTheBullet(const point<double> &bulletPoint)
    return true;
 }
 
-std::vector<aLine<double> > enemy::drawEnemy()
+std::vector<lineWithColor> enemy::drawEnemy()
 {
 	return m_lines;
 }
@@ -91,9 +94,15 @@ void enemy::move()
 
 }
 
-void enemy::addToLineVect(const point<double>& p1,const point<double>& p2)
+void enemy::addToLineVect(const point<double>& p1,const point<double>& p2, const color& col)
 {
-	m_lines.push_back(scaleAndTranslate(aLine<double>(p1,p2)));
+	m_lines.push_back(lineWithColor(scaleAndTranslate(aLine<double>(p1,p2)),col));
+}
+
+
+void enemy::addToLineWitBodyColorVect(const point<double>& p1,const point<double>& p2)
+{
+   addToLineVect(p1,p2,m_bodyColor);
 }
 
 aLine<double> enemy::scaleAndTranslate(const aLine<double>& obj)

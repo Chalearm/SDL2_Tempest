@@ -2,6 +2,7 @@
 #define __SPIKERS__
 #include "enemy.h"
 #include "aLine.h"
+#include "lineWithColor.h"
 
 class spikers : public enemy
 {
@@ -13,7 +14,7 @@ public:
     ~spikers();
     spikers(const spikers& obj);
     spikers& operator=(const spikers& obj);
-    std::vector<aLine<double> > drawEnemy();
+    std::vector<lineWithColor> drawEnemy();
     void move();
 };
 
