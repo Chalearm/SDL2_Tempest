@@ -153,7 +153,25 @@ point<double> enemy::findPointOnTheLine(const aLine<double> &l1, const double& d
     double ySign = 1.0;
     if ((l1[P2][X] - l1[P1][X]) < 0.0) xSign = -1.0;
     if ((l1[P2][Y] < l1[P1][Y])) ySign = -1.0;
-    const point<double> deltaPoint = point<double>(xSign*distanceOnTheLine*abs(cos(teta)),ySign*distanceOnTheLine*abs(sin(teta)));
+    double sinVal = sin(teta);
+    double cosVal = cos(teta);
+    if (sinVal < 0.0)
+    {
+    	sinVal *= -1.0;
+    }
+    else
+    {
+    	// Do  nothing
+    }
+    if (cosVal < 0.0)
+    {
+    	cosVal *= -1.0;
+    }
+    else
+    {
+    	// Do  nothing
+    }
+    const point<double> deltaPoint = point<double>(xSign*distanceOnTheLine*cosVal,ySign*distanceOnTheLine*sinVal);
     point<double> resultPoint = l1[P1] + deltaPoint;
     /*
     std::cout<<" cos value :"<<deltaPoint[X]<<std::endl;

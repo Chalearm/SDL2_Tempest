@@ -33,7 +33,7 @@ std::vector<aLine<double> > tanker::drawEnemy()
 void tanker::move()
 {
 
-    if ((m_isTimeUp) && (m_currentPosition <= 1.0))
+    if ((m_isTimeUp) && (static_cast<int>(m_currentPosition) <= 1))
     {
         m_lines.clear();
         //eulidianDis
