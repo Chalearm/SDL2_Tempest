@@ -4,7 +4,7 @@
 tanker::tanker(std::shared_ptr<std::vector<walkPath<double> > >& refLanes,const double& scale, const point<double>& refPoint):
 enemy(refLanes,scale,refPoint)
 {
-   m_speed = enemy::randomFn(0.04,0.017);
+   m_speed = enemy::randomFn(0.01,0.002);
    m_bodyColor = g_tankerColor;
 }
 tanker::~tanker()
@@ -34,7 +34,7 @@ std::vector<lineWithColor> tanker::drawEnemy()
 void tanker::move()
 {
 
-    if ((m_isTimeUp) && (static_cast<int>(m_currentPosition) <= 1))
+    if (m_isAlive && (m_isTimeUp) && (static_cast<int>(m_currentPosition) <= 1))
     {
         m_lines.clear();
         //eulidianDis

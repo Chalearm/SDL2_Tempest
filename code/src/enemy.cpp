@@ -12,13 +12,16 @@ m_currentPosition(0),
 m_speed(0),
 m_refLanes(refLanes),
 m_beingLane(0),
-m_isAlive(true),
+m_isAlive(false),
 m_timeToMove(0.01),  // 0.3 second
+m_timeToAlive(0),
 m_startTime(std::clock()),
 m_isTimeUp(false)
 {
 	//m_refLanes = refLanes;
 	m_beingLane = static_cast<int>(randomFn(refLanes->size()-1,0.0));
+	m_timeToAlive = randomFn(4.0,0.0);
+	m_isAlive = (m_timeToAlive == 0.0);
 }
 
 enemy::enemy(const enemy& obj):
@@ -82,9 +85,25 @@ bool enemy::isAlive()const
 void enemy::move()
 {
 	const double duration = ( std::clock() - m_startTime ) / (double) CLOCKS_PER_SEC;
-	m_isTimeUp =  (duration > m_timeToMove);
+	if (m_isAlive)
+	{
+		m_isTimeUp =  (duration > m_timeToMove);
+	}
+	else
+	{
+		m_isTimeUp =  (duration > m_timeToAlive);
+	}
 	if (m_isTimeUp)
 	{
+		if ((m_isAlive == false) && (m_timeToAlive != 0))
+		{
+			m_timeToAlive = 0.0;
+			m_isAlive = true;
+		}
+		else
+		{
+			// Do nothing
+		}
 		m_startTime = std::clock();
 	}
 	else

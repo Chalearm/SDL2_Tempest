@@ -23,6 +23,7 @@ protected:
 	bool m_isAlive;
 
 	double m_timeToMove; // in second;
+	double m_timeToAlive; // random between 0 - 4 seconds
 	std::clock_t m_startTime;
 	bool m_isTimeUp;
 	void addToLineVect(const point<double>& p1,const point<double>& p2, const color& col);

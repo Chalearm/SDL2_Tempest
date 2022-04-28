@@ -10,6 +10,9 @@
 std::map<GameColor, color> COLORSET(color::create_ColorMap());
 
 const color g_tankerColor = COLORSET[MAGENTA];
+const color g_spikersColor = COLORSET[GREEN];
+const color g_spikersTrackColor = COLORSET[ORANGE];
+const color g_flippersColor = COLORSET[RED];
 
 
 const int g_window_height = 600;

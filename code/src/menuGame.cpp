@@ -403,19 +403,19 @@ EnemyType menuGame::randomEnemyTp()
 {    /*
        random enemy type - criteria 
        0 - 70  --> spikers
-       71 - 96 --> tanker
-       97 - 99 --> flippers
+       71 - 95 --> tanker
+       96 - 99 --> flippers
     */
-    EnemyType retVal = SPIKERS;
+    EnemyType retVal = TANKER;
     int ranVal = static_cast<int>(enemy::randomFn(99.0,0.0));
     if (ranVal <= 70)
     {
         // do nothing
        // std::cout<<" SPIKERS  \n";
     }
-    else if (ranVal <= 96)
+    else if (ranVal <= 95)
     {
-        retVal = TANKER;
+        retVal = SPIKERS;
       //  std::cout<<" TANKER  \n";
     }
     else
@@ -629,14 +629,17 @@ void menuGame::update()
     std::list<std::shared_ptr<enemy> >::iterator it2;
     for (it2 = m_enemyList.begin(); it2 != m_enemyList.end(); ++it2)
     {
+
+            it2->get()->move();
+            /*
         if (it2->get()->isAlive())
         {
-            it2->get()->move();
         }
         else
         {
             // Do nothing
         }
+        */
     }
     
 
