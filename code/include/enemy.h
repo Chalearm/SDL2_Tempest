@@ -17,6 +17,7 @@ protected:
 	color m_bodyColor;
 	double m_scale;
 	double m_currentPosition; // h = 0 %  (0.0) - 100% (1.0) , 100% is at the top (edge of the polygon)
+	double m_positionToTransform; // h = 0 %  (0.0) - 100% (1.0) , 100% is at the top (edge of the polygon)
 	double m_speed; // dh/dt (should be 1% - 10% (0.01 - 0.1) -- 100% (1.0) = the lane's length )
 	std::shared_ptr<std::vector<walkPath<double> > >& m_refLanes; // (the reference of the lanns where enemy can go around)
 	int m_beingLane;    // which lane where enemy stays
@@ -26,6 +27,7 @@ protected:
 	double m_timeToAlive; // random between 0 - 4 seconds
 	std::clock_t m_startTime;
 	bool m_isTimeUp;
+	EnemyType m_myType;
 	void addToLineVect(const point<double>& p1,const point<double>& p2, const color& col);
 	void addToLineWitBodyColorVect(const point<double>& p1,const point<double>& p2);
 	aLine<double> scaleAndTranslate(const aLine<double>& obj);
@@ -45,6 +47,10 @@ public:
 	virtual void move();
      virtual std::vector<lineWithColor> drawEnemy();
 	static double randomFn(double max,double min);
+	virtual bool transform()const;
+	virtual void setCurrentPos(const double& pos);
+	double getCurrentPos()const;
+	EnemyType getMyType()const;
 };
 
 #endif /* define (__ENEMY__) */

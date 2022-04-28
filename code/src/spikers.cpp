@@ -12,6 +12,7 @@ m_moveDirection(1)
 	m_bodyColor = g_spikersColor;
 	m_walkTrack = enemy::randomFn(0.7,0.3);
 	m_timeToAlive = randomFn(8.0,2.0);
+	m_myType = SPIKERS;
 
 
 	// find the center point of the bottom line in the lane

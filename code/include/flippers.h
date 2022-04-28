@@ -18,6 +18,7 @@ public:
 	flippers(const flippers& obj);
 	flippers& operator=(const flippers& obj);
 	std::vector<lineWithColor> drawEnemy();
+	void setCurrentPos(const double& pos);
 	void move();
 };
 

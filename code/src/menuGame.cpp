@@ -630,7 +630,23 @@ void menuGame::update()
     for (it2 = m_enemyList.begin(); it2 != m_enemyList.end(); ++it2)
     {
 
+        if (it2->get()->transform() && (it2->get()->getMyType() == TANKER))
+        {
+            const double curPos = it2->get()->getCurrentPos();
+
+            std::shared_ptr<flippers> aPTFlippers(new flippers(switchWalkPathByLv(m_currentStage),g_lvScale,g_refPoint*g_ratioScreen));
+            std::shared_ptr<flippers> aPTFlippers2(new flippers(switchWalkPathByLv(m_currentStage),g_lvScale,g_refPoint*g_ratioScreen));
+            aPTFlippers->setCurrentPos(curPos+enemy::randomFn(0.0,-0.2));
+            aPTFlippers2->setCurrentPos(curPos+enemy::randomFn(0.0,-0.2));
+            m_enemyList.push_back(aPTFlippers);
+            m_enemyList.push_back(aPTFlippers2);
+            it2 = m_enemyList.erase(it2);
+         
+        }
+        else
+        {
             it2->get()->move();
+        }
             /*
         if (it2->get()->isAlive())
         {

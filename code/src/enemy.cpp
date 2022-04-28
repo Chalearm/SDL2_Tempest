@@ -9,6 +9,7 @@ m_lines(),
 m_bodyColor(COLORSET[NOCOLOR]),
 m_scale(scale),
 m_currentPosition(0),
+m_positionToTransform(0),
 m_speed(0),
 m_refLanes(refLanes),
 m_beingLane(0),
@@ -16,7 +17,8 @@ m_isAlive(false),
 m_timeToMove(0.01),  // 0.3 second
 m_timeToAlive(0),
 m_startTime(std::clock()),
-m_isTimeUp(false)
+m_isTimeUp(false),
+m_myType(ENEMY)
 {
 	//m_refLanes = refLanes;
 	m_beingLane = static_cast<int>(randomFn(refLanes->size()-1,0.0));
@@ -29,13 +31,15 @@ m_refPoint(obj.m_refPoint),
 m_lines(obj.m_lines),
 m_bodyColor(obj.m_bodyColor),
 m_currentPosition(obj.m_currentPosition),
+m_positionToTransform(obj.m_positionToTransform),
 m_speed(obj.m_speed),
 m_refLanes(obj.m_refLanes),
 m_beingLane(obj.m_beingLane),
 m_isAlive(obj.m_isAlive),
 m_timeToMove(obj.m_timeToMove),  // 0.3 second
 m_startTime(obj.m_startTime),
-m_isTimeUp(obj.m_isTimeUp)
+m_isTimeUp(obj.m_isTimeUp),
+m_myType(obj.m_myType)
 {}
 
 
@@ -48,12 +52,14 @@ enemy& enemy::operator=(const enemy& obj)
     	m_lines = obj.m_lines;
     	m_bodyColor = obj.m_bodyColor;
       m_currentPosition = obj.m_currentPosition;
+      m_positionToTransform = obj.m_positionToTransform;
       m_speed = obj.m_speed;
       m_refLanes = obj.m_refLanes;
       m_beingLane = obj.m_beingLane;    // which lane where enemy stays
       m_isAlive = obj.m_isAlive;
       m_timeToMove = obj.m_timeToMove;
       m_isTimeUp = obj.m_isTimeUp;
+      m_myType = obj.m_myType;
         
        // enemy::enemy(obj);
     }
@@ -82,6 +88,22 @@ bool enemy::isAlive()const
 	return m_isAlive;
 }
 
+double enemy::getCurrentPos()const
+{
+	return m_currentPosition;
+}
+bool enemy::transform()const
+{
+	return m_isAlive&&(m_currentPosition >= m_positionToTransform);
+}
+void enemy::setCurrentPos(const double& pos)
+{
+    m_currentPosition = pos;
+}
+EnemyType enemy::getMyType()const
+{
+     return m_myType;
+}
 void enemy::move()
 {
 	const double duration = ( std::clock() - m_startTime ) / (double) CLOCKS_PER_SEC;

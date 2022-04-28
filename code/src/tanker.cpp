@@ -5,7 +5,9 @@ tanker::tanker(std::shared_ptr<std::vector<walkPath<double> > >& refLanes,const 
 enemy(refLanes,scale,refPoint)
 {
    m_speed = enemy::randomFn(0.01,0.002);
+   m_positionToTransform = enemy::randomFn(0.7,0.5);
    m_bodyColor = g_tankerColor;
+    m_myType = TANKER;
 }
 tanker::~tanker()
 {}
