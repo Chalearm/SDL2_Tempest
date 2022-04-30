@@ -426,12 +426,6 @@ EnemyType menuGame::randomEnemyTp()
     return retVal;
 }
 
-/*
-std::unique_ptr<enemy>  menuGame::genAnEnemy(const EnemyType& val)
-{
-    
-}
-*/
 void menuGame::createEnemies(std::shared_ptr<std::vector<walkPath<double> > >& lvPathObj,const point<double> &refPoint,std::list<std::shared_ptr<enemy> >& alist)
 {
     int numberOfEnemy = 5;
@@ -636,8 +630,8 @@ void menuGame::update()
 
             std::shared_ptr<flippers> aPTFlippers(new flippers(switchWalkPathByLv(m_currentStage),g_lvScale,g_refPoint*g_ratioScreen));
             std::shared_ptr<flippers> aPTFlippers2(new flippers(switchWalkPathByLv(m_currentStage),g_lvScale,g_refPoint*g_ratioScreen));
-            aPTFlippers->setCurrentPos(curPos+enemy::randomFn(0.0,-0.2));
-            aPTFlippers2->setCurrentPos(curPos+enemy::randomFn(0.0,-0.2));
+            aPTFlippers->setCurrentPos(curPos+enemy::randomFn(-0.3,-0.6));
+            aPTFlippers2->setCurrentPos(curPos+enemy::randomFn(-0.3,-0.6));
             m_enemyList.push_back(aPTFlippers);
             m_enemyList.push_back(aPTFlippers2);
             it2 = m_enemyList.erase(it2);
@@ -647,15 +641,6 @@ void menuGame::update()
         {
             it2->get()->move();
         }
-            /*
-        if (it2->get()->isAlive())
-        {
-        }
-        else
-        {
-            // Do nothing
-        }
-        */
     }
     
 
@@ -788,14 +773,3 @@ void menuGame::setSDLHandler(const std::shared_ptr<SDLHandler> &obj)
 {
     m_sdlSimpleLib = obj;
 }
-/*
-void menuGame::setRandValue(const int& val)
-{
-    randomVal = val;
-    std::map<MainMenuObj,std::shared_ptr<SDLObject> >::iterator it;
-    for(it = m_sdlObjTable.begin(); it != m_sdlObjTable.end(); it++) 
-    {
-        it->second->setRandValue(val);
-    }
-}
-*/

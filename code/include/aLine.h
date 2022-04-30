@@ -1,7 +1,19 @@
+//  
+//
+//     ALine
+//
+//     define in header aLine
+//     template<class T> class point<T>
+//     
+//     aLine is a line on the XY-plane , provides composition objects made up of 
+//     the 2 point objects operations in basic mathematics (+ and * ),
+//     and extra methods as the following :
+//     - 
+//
+//
 #ifndef __ALINE__
 #define __ALINE__
 #include <iostream>
-#include <cmath>
 #include "point.h"
 
 
@@ -22,7 +34,7 @@ public:
     aLine<T> operator+(const point<T>& val)const;
     aLine<T> swapP1P2();
     T slope() const;
-    T euclidianDis() const;
+    T EuclideanDis() const;
 
 };
 
@@ -100,15 +112,15 @@ bool aLine<T>::operator==(const aLine<T>& obj)
 }
 
 template <class T>
-T aLine<T>::euclidianDis() const
+T aLine<T>::EuclideanDis() const
 {
-    return pow((m_p1-m_p2).norm2(),0.5);
+    return (m_p1-m_p2).norm2();
 }
 
 template <class T>
 T aLine<T>::slope() const
 {
 	point<T> aPoint = m_p2 - m_p1;
-	return aPoint.dybydx();
+	return aPoint.yDividedByX();
 }
 #endif /* define (__aLine<T>__) */

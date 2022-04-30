@@ -81,6 +81,7 @@ walkPath<T>& walkPath<T>::operator=(const walkPath<T> &obj)
 	}
 	return *this;
 }
+
 template<class T>
 walkPath<T>::walkPath(const std::vector<point<T> >& obj)
 {

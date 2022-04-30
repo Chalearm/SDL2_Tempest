@@ -11,6 +11,7 @@ private:
     point<double> m_p2;
     point<double> m_p3;
     point<double> m_p4;
+    int m_inverseDirectionLane;
 
 public:
 	flippers(std::shared_ptr<std::vector<walkPath<double> > > &refLanes, const double& scale, const point<double>& refPoint);

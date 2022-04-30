@@ -1,6 +1,29 @@
+//  
+//
+//     point
+//
+//     define in header <point>
+//     template<class T> class point<T>
+//     
+//     Point is a point in the XY plane or 2-dimensions has members only x and y, 
+//     provides the basic operations in mathematic (+, -, * and /),
+//     and extra methods as the following :
+//     - norm-2 function
+//     - Y/X ratio function
+//     - compare function 
+//     - accessibility (operator[]) to the X or Y member 
+//
+//     Exammple :
+//     point<float> p1(3.0,0.0);
+//     point<float> p2(3.0,4.0);
+//     point<float> p3(0.0,0.0);
+//     float ditanceP1P3 = (p2 - p3).norm2();
+//
+
 #ifndef __POINT__
 #define __POINT__
 #include <iostream>
+#include <cmath>
 #include "gameDataType.h"
 template <class T>
 class point
@@ -21,7 +44,7 @@ public:
     point<T> operator*(const T& val)const;
     T operator[](const pointType val)const;
     bool operator==(const point<T>& obj);
-    T dybydx()const;
+    T yDividedByX()const;
     T norm2() const;
 
 };
@@ -131,8 +154,9 @@ point<T>& point<T>::operator-=(const point<T>& obj)
 	}
     return *this;
 }
+
 template <class T>
-T point<T>::dybydx() const
+T point<T>::yDividedByX() const
 {
 	T ret = T();
 	if (m_x != T())
@@ -148,7 +172,7 @@ T point<T>::dybydx() const
 template <class T>
 T point<T>::norm2() const
 {
-	return m_x*m_x + m_y*m_y;
+	return pow(m_x*m_x + m_y*m_y,0.5);
 }
 template <class T>
 bool point<T>::operator==(const point<T>& obj)

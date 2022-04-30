@@ -22,7 +22,7 @@ m_myType(ENEMY)
 {
 	//m_refLanes = refLanes;
 	m_beingLane = static_cast<int>(randomFn(refLanes->size()-1,0.0));
-	m_timeToAlive = randomFn(4.0,0.0);
+	m_timeToAlive = randomFn(9.0,0.0);
 	m_isAlive = (m_timeToAlive == 0.0);
 }
 
@@ -154,14 +154,14 @@ aLine<double> enemy::scaleAndTranslate(const aLine<double>& obj)
 point<double> enemy::findPointInBetweenALane(const walkPath<double> &w,const double& percentageOfDistance, const double& percentageOfDistBetweenRLline) // 0 - 100% = 0.00 to 1.00
 {
 	point<double> retPoint;
-	const double euclidientLeftline = w[LLEFT].euclidianDis();
-	const double euclidientRightline = w[LRIGHT].euclidianDis();
+	const double euclidientLeftline = w[LLEFT].EuclideanDis();
+	const double euclidientRightline = w[LRIGHT].EuclideanDis();
 	const double ditanceOfThePointAtLeftLine = euclidientLeftline*percentageOfDistance;
 	const double ditanceOfThePointAtRightLine = euclidientRightline*percentageOfDistance;
 
 	const point<double> pL = findPointOnTheLine(w[LLEFT],ditanceOfThePointAtLeftLine);
 	const point<double> pR = findPointOnTheLine(w[LRIGHT].swapP1P2(),ditanceOfThePointAtRightLine);
-	const double ditancePLR = aLine<double>(pL,pR).euclidianDis();
+	const double ditancePLR = aLine<double>(pL,pR).EuclideanDis();
    if (percentageOfDistBetweenRLline == 0.0)
    {
    	retPoint = pL;

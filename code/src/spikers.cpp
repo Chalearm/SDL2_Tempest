@@ -70,7 +70,6 @@ void spikers::move()
         const double heightOfTanker = 0.07; // 0.01 - 1.0 (1% to 100%) 100% is the length of the lanes
         walkPath<double> aWalkpath = m_refLanes->at(m_beingLane);
 
-
         const point<double> p1 = findPointInBetweenALane(aWalkpath,m_currentPosition,0.5);
         const point<double> p2 = findPointInBetweenALane(aWalkpath,m_currentPosition+0.01,0.5);
         const point<double> p3 = findPointInBetweenALane(aWalkpath,m_currentPosition+0.01,0.55);
@@ -80,8 +79,7 @@ void spikers::move()
         const point<double> p7 = findPointInBetweenALane(aWalkpath,m_currentPosition+0.02,0.6);
         const point<double> p8 = findPointInBetweenALane(aWalkpath,m_currentPosition-0.02,0.6);
         const point<double> p9 = findPointInBetweenALane(aWalkpath,m_currentPosition-0.02,0.4);
-        const point<double> p10 = findPointInBetweenALane(aWalkpath,m_currentPosition+0.02,0.4);
-
+       const point<double> p10 = findPointInBetweenALane(aWalkpath,m_currentPosition+0.02,0.4);
 //addToLineVect
         addToLineWitBodyColorVect(p1,p2);
         addToLineWitBodyColorVect(p2,p3);
