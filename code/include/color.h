@@ -1,3 +1,21 @@
+//  
+//
+//     color
+//
+//     define in header color
+//     class color
+//     
+//     color stores color value (Red, Green, Blue and Alpha) as the SDL_Color object and gradient color value 
+//     it provides following methods:
+//     setGradientColor : update gradient color = gradient (r, g, b, a)
+//     accumulateColor : update color value (r, g, b or a) of SDL_Color object  and update gradient color value
+//     moveForwardColor : update color values --> new color = color + gradient col
+//     moveBackwardColor : update color values --> new color = color - gradient col
+//     changeBasecolor : update the color value of SDL_Color object (r, g, b, or a)
+//     getColorVal : return the color value (r, g, b or a)  
+//     getSDLCol : return SDL_Color object
+//
+//
 #ifndef __COLOR__
 #define __COLOR__
 #include <SDL2/SDL.h>

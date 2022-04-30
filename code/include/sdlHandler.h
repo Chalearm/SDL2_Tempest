@@ -1,3 +1,14 @@
+//  
+//
+//     SDLHandler
+//
+//     define in header SDLHandler
+//     class SDLHandler
+//     
+//     It controls the game screen or game window and 
+//     provides the screen for drawinng texture and text message by SDL library
+//
+
 #ifndef __SDLHANDLER_
 #define __SDLHANDLER_
  

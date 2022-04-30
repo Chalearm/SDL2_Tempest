@@ -1,3 +1,11 @@
+//  
+//
+//     menuGame
+//
+//     define in header menuGame
+//     
+//     control all events/ drawn objects happening on the main mennu
+
 #ifndef __MENUGAME__
 #define __MENUGAME__
  

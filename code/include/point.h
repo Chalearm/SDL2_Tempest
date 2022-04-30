@@ -8,12 +8,14 @@
 //     Point is a point in the XY plane or 2-dimensions has members only x and y, 
 //     provides the basic operations in mathematic (+, -, * and /),
 //     and extra methods as the following :
-//     - norm-2 function
-//     - Y/X ratio function
-//     - compare function 
-//     - accessibility (operator[]) to the X or Y member 
+//     - norm2 : calculate the norm-2 
+//     - yDividedByX : return Y/X ratio 
+//     - operator== : compare equality
+//     - operator[] : accessibility (operator[]) to the X or Y member 
 //
 //     Exammple :
+//     #include "point.h"
+//
 //     point<float> p1(3.0,0.0);
 //     point<float> p2(3.0,4.0);
 //     point<float> p3(0.0,0.0);

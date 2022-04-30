@@ -1,3 +1,12 @@
+//  
+//
+//     lineWithColor
+//
+//     define in header lineWithColor
+//     
+//     this is the class made up of aLine and color
+//
+
 #ifndef __LINEWITHCOLOR__
 #define __LINEWITHCOLOR__
 #include "aLine.h"

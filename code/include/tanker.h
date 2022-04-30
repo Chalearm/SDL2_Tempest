@@ -1,3 +1,14 @@
+//  
+//
+//     tanker
+//
+//     define in header tanker
+//     class tanker
+//     
+//     tanker is a class for tanker object derived from enemy class
+//
+//
+
 #ifndef __TANKER__
 #define __TANKER__
 #include "enemy.h"

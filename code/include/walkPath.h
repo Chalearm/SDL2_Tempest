@@ -1,3 +1,19 @@
+//  
+//
+//     walkPath
+//
+//     define in header walkPath
+//     class walkPath
+//     
+//     provides the scope area for all lanes as the set of line and point 
+//     this is used for player and enemy movement and the sets is also used for 
+//     creating the level as polygon. The set of line is a lane in a level:
+//     - line at right side 
+//     - line at left side
+//     - line of edge
+//
+//
+
 #ifndef __WALKPATH__
 #define __WALKPATH__ 
 #include <map>

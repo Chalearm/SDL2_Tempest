@@ -1,3 +1,15 @@
+//  
+//
+//     SDLObject
+//
+//     define in header SDLObject
+//     class SDLObject
+//     
+//     It controls not only drawing of SDL objects on the game screen but also 
+//     controls the state machine (game state) of them in the game cycle or SDL cycle
+//
+
+
 #ifndef __SDLOBJECT_
 #define __SDLOBJECT_
  

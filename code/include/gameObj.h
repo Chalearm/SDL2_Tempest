@@ -1,3 +1,14 @@
+//  
+//
+//     gameObj
+//
+//     define in header gameObj
+//     class gameObj
+//     
+//     is base class for the object what displays on the game and
+//     provide the methods to control/set the drawn texture 's dimension 
+//
+
 #ifndef __GAMEOBJ__
 #define __GAMEOBJ__
 #include <iostream>

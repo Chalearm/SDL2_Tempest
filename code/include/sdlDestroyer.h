@@ -1,3 +1,12 @@
+//  
+//
+//     SDLDestroyer
+//
+//     define in header SDLDestroyer
+//     
+//     provides the delete method to be used with c++ smart pointer
+//
+
 #ifndef __SDLDESTROYER__
 #define __SDLDESTROYER__
  

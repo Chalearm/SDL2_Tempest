@@ -5,11 +5,24 @@
 //     define in header aLine
 //     template<class T> class point<T>
 //     
-//     aLine is a line on the XY-plane , provides composition objects made up of 
-//     the 2 point objects operations in basic mathematics (+ and * ),
+//     aLine is a line on the XY-plane ,which is a composition objects made up of 
+//     the 2 point objects, and provides operations in basic mathematics (+ and * ),
 //     and extra methods as the following :
-//     - 
+//     - slope : calculate the slope value of the line, m = (y2-y1)/(x2-x1)
+//     - swapP1P2 : switch the started point and ended point
+//     - EuclideanDis : calculate the euclidean distance
 //
+//
+//     Exammple :
+//     #include "aLine.h"
+//     #include "point.h"
+//
+//     point<float> p1(3.0,4.0);
+//     point<float> p2(0.0,0.0);
+//     point<float> p3(1.0,1.0);
+//     aLine<float> l1(p1,p2);
+//     aLine<float> l2 = l1 + p3;  // translate the line(l1) by plusing p3
+//     float ditanceL2 = l2.EuclideanDis();
 //
 #ifndef __ALINE__
 #define __ALINE__

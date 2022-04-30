@@ -1,3 +1,14 @@
+
+//  
+//
+//     gameState
+//
+//     define in header gameState
+//     class gameState
+//     
+//     is base class for the object how displays on the game
+//
+
 #ifndef __GAMESTATE__
 #define __GAMESTATE__
  

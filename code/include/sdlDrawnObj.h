@@ -1,3 +1,15 @@
+//  
+//
+//     SDLDrawnObj
+//
+//     define in header SDLDrawnObj
+//     class SDLDrawnObj
+//     
+//     it controls fonnt and image displayed on screen by SDL library
+//
+
+
+
 #ifndef __SDLDRAWNOBJ__
 #define __SDLDRAWNOBJ__
  

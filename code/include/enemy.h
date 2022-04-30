@@ -1,3 +1,15 @@
+//  
+//
+//     enemy
+//
+//     define in header enemy
+//     class enemy
+//     
+//     enemy provides the interface and comon attributes for general enemy (Tankers, spikers, flippers or etc)
+//     and common methods to control movement of any enemy object. 
+//     it provides following methods:
+
+
 #ifndef __ENEMY__
 #define __ENEMY__
 #include <random>

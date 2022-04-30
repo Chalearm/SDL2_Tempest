@@ -1,3 +1,10 @@
+//  
+//
+//     gameConstance
+//     
+//     provides all constances for the game : color and dimension
+//
+//
 #ifndef __GAMECONSTANCE__
 #define __GAMECONSTANCE__
 #include <iostream>

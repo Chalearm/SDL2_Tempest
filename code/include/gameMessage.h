@@ -1,3 +1,14 @@
+//  
+//
+//     gameMessage
+//
+//     define in header gameMessage
+//     class gameMessage
+//     
+//     provides the interface method with primitive data type (int, float, char or etc) to communicate among game objects 
+//
+
+
 #ifndef __GAMEMESSAGE__
 #define __GAMEMESSAGE__
 #include <iostream> 

@@ -1,3 +1,13 @@
+//  
+//
+//     game
+//
+//     define in header game
+//     class game
+//     
+//     it is the game structure controling each step for the game cycle ( init, render, update and etc)
+//
+//
 #ifndef __GAME__
 #define __GAME__
 

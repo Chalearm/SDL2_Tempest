@@ -1,3 +1,13 @@
+//  
+//
+//     spikers
+//
+//     define in header spikers
+//     class flippers
+//     
+//     spikers is a class for spikers object derived from enemy class
+//
+//
 #ifndef __SPIKERS__
 #define __SPIKERS__
 #include "enemy.h"
