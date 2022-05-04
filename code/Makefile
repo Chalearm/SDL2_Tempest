@@ -53,16 +53,19 @@ $(TARGETAPP): ./src/$(TARGETAPP).cpp ./obj/game.o ./obj/color.o
 	g++ -I ./include -shared -fPIC -o ./lib/libgameMessage.so ./obj/gameMessage.o
 ./obj/flippers.o : ./src/flippers.cpp ./include/flippers.h ./obj/enemy.o ./obj/color.o ./obj/lineWithColor.o
 	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/flippers.o ./src/flippers.cpp
-	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libflippers.so ./obj/flippers.o -lenemy -lcolor -llineWithColor
+	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libflippers.so ./obj/flippers.o -lenemy -lcolor -llineWithColor -lmotion2D
 ./obj/spikers.o : ./src/spikers.cpp ./include/spikers.h ./obj/enemy.o ./obj/color.o ./obj/lineWithColor.o
 	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/spikers.o ./src/spikers.cpp
-	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libspikers.so ./obj/spikers.o -lenemy -lcolor -llineWithColor
+	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libspikers.so ./obj/spikers.o -lenemy -lcolor -llineWithColor -lmotion2D
 ./obj/tanker.o : ./src/tanker.cpp ./include/tanker.h ./obj/enemy.o ./obj/color.o ./obj/lineWithColor.o
 	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/tanker.o ./src/tanker.cpp
-	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libtanker.so ./obj/tanker.o -lenemy -lcolor -llineWithColor
-./obj/enemy.o : ./src/enemy.cpp ./include/enemy.h ./obj/color.o ./obj/lineWithColor.o
+	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libtanker.so ./obj/tanker.o -lenemy -lcolor -llineWithColor -lmotion2D
+./obj/enemy.o : ./src/enemy.cpp ./include/enemy.h ./obj/color.o ./obj/lineWithColor.o ./obj/motion2D.o
 	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/enemy.o ./src/enemy.cpp
-	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libenemy.so ./obj/enemy.o -lcolor -llineWithColor
+	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libenemy.so ./obj/enemy.o -lcolor -llineWithColor -lmotion2D
+./obj/motion2D.o : ./src/motion2D.cpp ./include/motion2D.h ./obj/color.o ./obj/lineWithColor.o
+	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/motion2D.o ./src/motion2D.cpp
+	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libmotion2D.so ./obj/motion2D.o -lcolor -llineWithColor
 ./obj/lineWithColor.o : ./src/lineWithColor.cpp ./include/lineWithColor.h ./obj/color.o
 	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/lineWithColor.o ./src/lineWithColor.cpp
 	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/liblineWithColor.so ./obj/lineWithColor.o -lcolor

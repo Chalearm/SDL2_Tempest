@@ -29,8 +29,9 @@ m_inverseDirectionLane(1)
 	addToLineWitBodyColorVect(m_p1,m_p4);
 	addToLineWitBodyColorVect(m_p2,m_p3);
 	m_timeToMove = randomFn(0.05,0.01);
-	m_timeToAlive = randomFn(0.2,0.0);
+	m_timeToAlive = randomFn(0.02,0.0);
 	m_myType = FLIPPERS;
+	motion2D::setTimeCount(m_timeToAlive);
 
 }
 

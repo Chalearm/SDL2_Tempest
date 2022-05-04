@@ -407,7 +407,8 @@ EnemyType menuGame::randomEnemyTp()
        96 - 99 --> flippers
     */
     EnemyType retVal = TANKER;
-    int ranVal = static_cast<int>(enemy::randomFn(99.0,0.0));
+    tanker aTanker(switchWalkPathByLv(m_currentStage),g_lvScale,g_refPoint*g_ratioScreen);
+    int ranVal = static_cast<int>(aTanker.randomFn(99.0,0.0));
     if (ranVal <= 70)
     {
         // do nothing
@@ -630,8 +631,8 @@ void menuGame::update()
 
             std::shared_ptr<flippers> aPTFlippers(new flippers(switchWalkPathByLv(m_currentStage),g_lvScale,g_refPoint*g_ratioScreen));
             std::shared_ptr<flippers> aPTFlippers2(new flippers(switchWalkPathByLv(m_currentStage),g_lvScale,g_refPoint*g_ratioScreen));
-            aPTFlippers->setCurrentPos(curPos+enemy::randomFn(-0.3,-0.6));
-            aPTFlippers2->setCurrentPos(curPos+enemy::randomFn(-0.3,-0.6));
+            aPTFlippers->setCurrentPos(curPos+aPTFlippers->randomFn(-0.3,-0.6));
+            aPTFlippers2->setCurrentPos(curPos+aPTFlippers->randomFn(-0.3,-0.6));
             m_enemyList.push_back(aPTFlippers);
             m_enemyList.push_back(aPTFlippers2);
             it2 = m_enemyList.erase(it2);
