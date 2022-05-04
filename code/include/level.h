@@ -1,19 +1,18 @@
 //  
 //
-//     menuGame
+//     Level
 //
-//     define in header menuGame
+//     define in header Level
 //     
-//     control all events/ drawn objects happening on the main mennu
+//     control all events/ drawn objects happening on the Level
 
-#ifndef __MENUGAME__
-#define __MENUGAME__
+#ifndef __LEVEL__
+#define __LEVEL__
  
 #include <iostream>
 #include <cstring>
 #include <list>
 #include <map>
-#include <ctime>
 #include "gameMessage.h"
 #include "sdlHandler.h"
 #include "gameState.h"
@@ -27,21 +26,16 @@
 #include "tanker.h"
 #include "spikers.h"
 
-class menuGame : public gameState, public gameMessage
+class level : public gameState, public gameMessage
 {
 private:
 
     std::shared_ptr<SDLHandler> m_sdlSimpleLib;
-    std::map<MainMenuObj,std::shared_ptr<SDLObject> > m_sdlObjTable;
+    std::map<LevelObj,std::shared_ptr<SDLObject> > m_sdlObjTable;
 
-
-    MainMenuObj m_oldLvSelectValue;
-    MainMenuObj m_lvSelectValue;
     GameScene m_currentStage;
-    std::shared_ptr<std::vector<walkPath<double> > > m_thelv1Path;
-    std::shared_ptr<std::vector<walkPath<double> > > m_thelv2Path;
-    std::shared_ptr<std::vector<walkPath<double> > > m_thelv3Path;
-
+    std::shared_ptr<std::vector<walkPath<double> > > m_thelvPath;
+    int m_numberOfEnemy;
     /*
        random enemy type - criteria 
        0 - 70  --> spikers
@@ -53,30 +47,23 @@ private:
 
     int m_playerStartPoint;
 
+protected:
 
-    void mainMenuDisplay();
-    void levelSelectionDisplay();
-
-
-    void goNextLv();
-    void goBackLv();
-
+    void setWalkPathSet(const std::shared_ptr<std::vector<walkPath<double> > >& obj);
     void levelsKeyboardHandle(const unsigned char &val = 0);
     void createEnemies(std::shared_ptr<std::vector<walkPath<double> > >& lvPathObj,const point<double>& refPoint,std::list<std::shared_ptr<enemy> >& alist);
     EnemyType randomEnemyTp();
     void renderEnemied();
-    void setSelectedLvColorAndCondition(const MainMenuObj &aCondition,const color &deselectCol, const color &selectColr);
-    void drawWalkPath(std::shared_ptr<std::vector<walkPath<double> > >& pObj,const point<double>& refPoint,const double &scaleVal = 1.0, const bool isDrawnPlayer = false);
-
-
+    void drawWalkPath(std::shared_ptr<std::vector<walkPath<double> > >& pObj,const point<double>& refPoint,const double &scaleVal = 1.0, const bool& isDrawnPlayer = false);
+    void drawPlayerPosition(const std::vector<walkPath<double> >& obj,const point<double>& refPoint,const double& scale);
     void moveNextAreaOfPlayer(std::shared_ptr<std::vector<walkPath<double> > >& obj);
     void moveBackAreaOfPlayer(std::shared_ptr<std::vector<walkPath<double> > >& obj);
-    std::shared_ptr<std::vector<walkPath<double> > >& switchWalkPathByLv(const GameScene& val = Level1);
 public:
 
-    menuGame();
-    menuGame(const menuGame& obj);
-    ~menuGame();
+    level();
+    level(const level& obj);
+    ~level();
+    level& operator=(const level& obj);
 
     void init();
     void render();
@@ -84,9 +71,7 @@ public:
     void handleEvents(const unsigned char& keyPress = 0);
     void clean();
     void setSDLHandler(const std::shared_ptr<SDLHandler> &obj);
-
-
 };
 
 
-#endif /* define (__MENUGAME__) */
+#endif /* define (__LEVEL__) */

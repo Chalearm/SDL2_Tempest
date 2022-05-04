@@ -1,5 +1,7 @@
 
 #include "game.h"
+#include "menuGame.h"
+#include "level1.h"
 
 game::game():
 theSdlHandler(SDLHandler::GetInstance("Tempest!!!")),

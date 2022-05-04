@@ -309,7 +309,7 @@ enum MainMenuObj {BACKGROUND_IMG,LABEL_TEMPEST,LABEL_EXIT,LABEL_LV1,LABEL_LV2,LA
         gameObj->setDrawPosition(g_ratioScreen*20,g_ratioScreen*10,g_ratioScreen*200,g_ratioScreen*40);
         m_sdlObjTable[LABEL_EXIT] = gameObj;
     }
-
+/*
     {
         std::shared_ptr<SDLObject> gameObj(std::make_shared<SDLObject>());
         gameObj->setSDLHandler(m_sdlSimpleLib);
@@ -319,6 +319,7 @@ enum MainMenuObj {BACKGROUND_IMG,LABEL_TEMPEST,LABEL_EXIT,LABEL_LV1,LABEL_LV2,LA
         gameObj->setDrawPosition(g_ratioScreen*20,g_ratioScreen*10,g_ratioScreen*260,g_ratioScreen*40);
         m_sdlObjTable[BACK_TO_MAINMENU] = gameObj;
     }
+    */
     {
         std::shared_ptr<SDLObject> gameObj(std::make_shared<SDLObject>());
         gameObj->setSDLHandler(m_sdlSimpleLib);
@@ -387,7 +388,7 @@ void menuGame::render()
         default:
         {
             m_sdlObjTable[BACKGROUND_IMG]->render();
-            m_sdlObjTable[BACK_TO_MAINMENU]->render();
+           // m_sdlObjTable[BACK_TO_MAINMENU]->render();
             m_sdlSimpleLib->setRenderDrawColor(COLORSET[BLUE]);
             drawWalkPath(switchWalkPathByLv(m_currentStage),g_refPoint*g_ratioScreen,g_lvScale,true);
 
@@ -529,14 +530,16 @@ void menuGame::mainMenuDisplay()
     std::map<MainMenuObj,std::shared_ptr<SDLObject> >::iterator it;
     for(it = m_sdlObjTable.begin(); it != m_sdlObjTable.end(); it++) 
     {
+        /*
         if (it->first != BACK_TO_MAINMENU)
         {
-            it->second->render();
         }
         else
         {
             // Do nothing
         }
+        */
+        it->second->render();
     }
         
     if (m_sdlSimpleLib)

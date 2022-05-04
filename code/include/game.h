@@ -17,7 +17,6 @@
 #include "gameConstance.h"
 #include "gameState.h"
 #include "sdlHandler.h"
-#include "menuGame.h"
 using namespace std;
 
 class game
@@ -26,6 +25,8 @@ private:
 	bool m_isRunning;
 	std::shared_ptr<SDLHandler> theSdlHandler;
 	std::shared_ptr<gameState> m_menuGame;
+	std::shared_ptr<gameState> m_lv1;
+	//std::shared
 
 	// random fundion
 	std::random_device rd;
