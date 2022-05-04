@@ -295,12 +295,44 @@ void level::render()
         drawWalkPath(m_thelvPath,g_refPoint*g_ratioScreen,g_lvScale,true);
         renderEnemied();
     }
+    else
+    {
+        // Do nothing
+    }
 
 }
 
 void level::update()
 {
+    std::map<LevelObj,std::shared_ptr<SDLObject> >::iterator it;
+    for(it = m_sdlObjTable.begin(); it != m_sdlObjTable.end(); it++) 
+    {
+        it->second->update();
+    }
 
+    std::list<std::shared_ptr<enemy> >::iterator it2;
+    for (it2 = m_enemyList.begin(); it2 != m_enemyList.end(); ++it2)
+    {
+
+        if (it2->get()->transform() && (it2->get()->getMyType() == TANKER))
+        {
+            const double curPos = it2->get()->getCurrentPos();
+
+            std::shared_ptr<flippers> aPTFlippers(new flippers(m_thelvPath,g_lvScale,g_refPoint*g_ratioScreen));
+            std::shared_ptr<flippers> aPTFlippers2(new flippers(m_thelvPath,g_lvScale,g_refPoint*g_ratioScreen));
+            aPTFlippers->setCurrentPos(curPos+aPTFlippers->randomFn(-0.3,-0.6));
+            aPTFlippers2->setCurrentPos(curPos+aPTFlippers->randomFn(-0.3,-0.6));
+            m_enemyList.push_back(aPTFlippers);
+            m_enemyList.push_back(aPTFlippers2);
+            it2 = m_enemyList.erase(it2);
+         
+        }
+        else
+        {
+            it2->get()->move();
+        }
+    }
+    
 }
 void level::handleEvents(const unsigned char& keyPress)
 {
