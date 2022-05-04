@@ -91,7 +91,6 @@ void SDLHandler::render()
 	if (isAbleToRun())
 	{    
 		SDLDrawnObj::renderClear();		
-		//setRenderDrawColor(222,33,45,255);
 		if (m_gameActivist)
 		{
 			m_gameActivist->render();
@@ -100,7 +99,6 @@ void SDLHandler::render()
 		{
 			// Do nothing
 		}
-	//	setRenderDrawColor(222,33,45,255);
         SDLDrawnObj::renderPresent();
 
 	}

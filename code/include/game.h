@@ -14,6 +14,7 @@
 
 #include <iostream>
 #include <random>
+#include "gameConstance.h"
 #include "gameState.h"
 #include "sdlHandler.h"
 #include "menuGame.h"

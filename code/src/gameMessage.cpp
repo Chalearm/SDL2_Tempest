@@ -29,6 +29,12 @@ void gameMessage::setDoubleValue(const int& selectedVal,const double& setVal)
     UNUSED(setVal);
 }
 
+unsigned char gameMessage::getUChar(const int& selectedVal)
+{
+    UNUSED(selectedVal);
+    return '\0';
+}
+
 long long int gameMessage::getLLIntVal(const int& selectedVal)
 {
     UNUSED(selectedVal);

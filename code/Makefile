@@ -27,7 +27,7 @@ endif
 
 $(TARGETAPP): ./src/$(TARGETAPP).cpp ./obj/game.o ./obj/color.o
 	g++ $(BUILDMAINOPT) -I ./include -L ./lib ./src/$(TARGETAPP).cpp -o $(TARGETAPP) -lgame -lcolor
-./obj/game.o : ./src/game.cpp ./include/game.h ./obj/menuGame.o ./obj/sdlHandler.o ./obj/gameState.o ./obj/color.o
+./obj/game.o : ./src/game.cpp ./include/game.h ./obj/menuGame.o ./obj/sdlHandler.o ./obj/gameState.o ./obj/color.o 
 	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/game.o ./src/game.cpp
 	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libgame.so ./obj/game.o -lsdlHandler -lmenuGame -lgameState -lcolor
 ./obj/menuGame.o : ./src/menuGame.cpp ./include/menuGame.h ./obj/gameState.o ./obj/sdlHandler.o ./obj/sdlObject.o ./obj/gameMessage.o ./obj/color.o ./obj/flippers.o ./obj/tanker.o ./obj/spikers.o ./obj/enemy.o ./obj/lineWithColor.o

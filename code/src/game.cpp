@@ -5,8 +5,7 @@ game::game():
 theSdlHandler(SDLHandler::GetInstance("Tempest!!!")),
 m_menuGame(),
 rd(),
-gen(rd()),
-m_animalFlipVal(0)
+gen(rd())
 {
     std::shared_ptr<menuGame> gameObj = std::make_shared<menuGame>();
 	gameObj->setSDLHandler(theSdlHandler);
@@ -38,12 +37,6 @@ void game::render()
 }
 void game::update()
 {
-	//int randXVal = randomFn(900,-900)/100;
-	/*
-
-    */
-    //std::shared_ptr<menuGame> gameObj(dynamic_pointer_cast<menuGame>(m_menuGame));
-   // gameObj->setRandValue(randXVal);
 	theSdlHandler->update();
 
 }

@@ -20,6 +20,7 @@
 class tanker : public enemy
 {
 private:
+	// nothing
 public:
 	tanker(std::shared_ptr<std::vector<walkPath<double> > >& refLanes,const double& scale, const point<double>& refPoint);
 	~tanker();

@@ -57,7 +57,6 @@ private:
     void mainMenuDisplay();
     void levelSelectionDisplay();
 
-    //void drawLvSelection(constexpr int& xStart = 0, constexpr int& yStart = 0,);
 
     void goNextLv();
     void goBackLv();
@@ -69,6 +68,8 @@ private:
     void setSelectedLvColorAndCondition(const MainMenuObj &aCondition,const color &deselectCol, const color &selectColr);
     void drawWalkPath(std::shared_ptr<std::vector<walkPath<double> > >& pObj,const point<double>& refPoint,const double &scaleVal = 1.0, const bool isDrawnPlayer = false);
     void drawPlayerPosition(const std::vector<walkPath<double> >& obj,const point<double>& refPoint,const double& scale);
+
+
     void moveNextAreaOfPlayer(std::shared_ptr<std::vector<walkPath<double> > >& obj);
     void moveBackAreaOfPlayer(std::shared_ptr<std::vector<walkPath<double> > >& obj);
     std::shared_ptr<std::vector<walkPath<double> > >& switchWalkPathByLv(const GameScene& val = Level1);
@@ -78,14 +79,12 @@ public:
     menuGame(const menuGame& obj);
     ~menuGame();
 
-
     void init();
     void render();
     void update();
     void handleEvents(const unsigned char& keyPress = 0);
     void clean();
     void setSDLHandler(const std::shared_ptr<SDLHandler> &obj);
-  //  void setRandValue(const int& val = 0);
 
 
 };

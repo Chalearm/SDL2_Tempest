@@ -29,8 +29,6 @@ public:
 
     aLine<double> getLine()const;
     color getColor()const;
-  //  static aLine<double> operator=(const lineWithColor& obj);
-   // static color operator=(const lineWithColor& obj);
 
 };
 
