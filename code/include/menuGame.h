@@ -52,6 +52,7 @@ private:
 
 
     int m_playerStartPoint;
+    MainMenuState m_mmState;
 
 
     void mainMenuDisplay();
@@ -72,6 +73,8 @@ private:
     void moveNextAreaOfPlayer(std::shared_ptr<std::vector<walkPath<double> > >& obj);
     void moveBackAreaOfPlayer(std::shared_ptr<std::vector<walkPath<double> > >& obj);
     std::shared_ptr<std::vector<walkPath<double> > >& switchWalkPathByLv(const GameScene& val = Level1);
+
+    void initState();
 public:
 
     menuGame();
@@ -84,6 +87,7 @@ public:
     void handleEvents(const unsigned char& keyPress = 0);
     void clean();
     void setSDLHandler(const std::shared_ptr<SDLHandler> &obj);
+    GameScene getGameState() const;
 
 
 };

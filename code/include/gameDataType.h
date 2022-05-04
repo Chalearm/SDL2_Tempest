@@ -20,8 +20,10 @@ enum GameScene {MainMenu, Level1, Level2, Level3};
 //enum SelectionType {DATA_GAMESCENE};
 
 enum MainMenuObj {BACKGROUND_IMG,LABEL_TEMPEST,LABEL_EXIT,LABEL_LV1,LABEL_LV2,LABEL_LV3};
+enum MainMenuState {MM_init,MM_running};
 
 enum LevelObj {BACKGROUNDLV_IMG,SCORE_BOARD,GAME_OVER,BACK_TO_MAINMENU};
+enum LevelState {LV_init,LV_running};
 
 enum EnemyType {ENEMY,FLIPPERS, TANKER, SPIKERS};
 //enum baseColor {RED, GREEN, BLUE, ALPHA};

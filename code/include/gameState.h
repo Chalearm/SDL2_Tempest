@@ -11,7 +11,8 @@
 
 #ifndef __GAMESTATE__
 #define __GAMESTATE__
- 
+#include "gameDataType.h" 
+
 class gameState
 {
 private: 
@@ -24,6 +25,7 @@ public:
 	virtual void update();
 	virtual void handleEvents(const unsigned char& keyPress = 0);
 	virtual void clean();
+	virtual GameScene getGameState() const;
 };
 
 #endif /* define (__GAMESTATE__) */

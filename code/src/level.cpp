@@ -3,16 +3,21 @@
 level::level():
 m_sdlSimpleLib(),
 m_sdlObjTable(),
+m_thelvPath(),
+m_lvState(LV_init),
+m_numberOfEnemy(5),
 m_currentStage(Level1),
-m_thelvPath()
+m_enemyList()
 {
-
 }
 level::level(const level& obj):
 m_sdlSimpleLib(obj.m_sdlSimpleLib),
 m_sdlObjTable(obj.m_sdlObjTable),
+m_thelvPath(obj.m_thelvPath),
+m_lvState(obj.m_lvState),
+m_numberOfEnemy(obj.m_numberOfEnemy),
 m_currentStage(obj.m_currentStage),
-m_thelvPath(obj.m_thelvPath)
+m_enemyList(obj.m_enemyList)
 {
 
 }
@@ -22,6 +27,10 @@ level::~level()
 
 }
 
+GameScene level::getGameState() const
+{
+    return m_currentStage;
+}
 void level::setWalkPathSet(const std::shared_ptr<std::vector<walkPath<double> > >& obj)
 {
     m_thelvPath = obj;
@@ -35,6 +44,9 @@ level& level::operator=(const level& obj)
         m_sdlObjTable = obj.m_sdlObjTable;
         m_currentStage = obj.m_currentStage;
         m_thelvPath = obj.m_thelvPath;
+        m_numberOfEnemy = obj.m_numberOfEnemy;
+        m_lvState = obj.m_lvState;
+        m_enemyList = obj.m_enemyList;
     }
     else
     {
@@ -42,12 +54,14 @@ level& level::operator=(const level& obj)
     }
     return *this;
 }
+
 void level::levelsKeyboardHandle(const unsigned char &val)
 {
     switch(val)
     {
         case 8: // back space
             m_currentStage = MainMenu;
+            m_enemyList.clear();
         break;
         case 79:  //right arrow
             moveNextAreaOfPlayer(m_thelvPath);
@@ -59,40 +73,44 @@ void level::levelsKeyboardHandle(const unsigned char &val)
         break;
     }
 }
+
 void level::createEnemies(std::shared_ptr<std::vector<walkPath<double> > >& lvPathObj,const point<double>& refPoint,std::list<std::shared_ptr<enemy> >& alist)
-{
-   // std::cout<<" start random \n";
+{    
+    alist.clear();
     for (int i = 0; i < m_numberOfEnemy; i++)
     {
+        
         switch (randomEnemyTp())
         {
             case TANKER:
             {
-                std::shared_ptr<tanker> aPTanker(new tanker(lvPathObj,g_lvScale,g_refPoint*g_ratioScreen));
-                alist.push_back(aPTanker); 
+               std::shared_ptr<tanker> aPTanker(new tanker(lvPathObj,g_lvScale,refPoint));
+               alist.push_back(aPTanker); 
             }
             break;
             case SPIKERS:
             {
-                std::shared_ptr<spikers> aPSpikers(new spikers(lvPathObj,g_lvScale,g_refPoint*g_ratioScreen));
+                std::shared_ptr<spikers> aPSpikers(new spikers(lvPathObj,g_lvScale,refPoint));
                 alist.push_back(aPSpikers); 
             }
             break;
             case FLIPPERS:
             {
-                std::shared_ptr<flippers> aPTFlippers(new flippers(lvPathObj,g_lvScale,g_refPoint*g_ratioScreen));
+                std::shared_ptr<flippers> aPTFlippers(new flippers(lvPathObj,g_lvScale,refPoint));
                 alist.push_back(aPTFlippers); 
             }
             break;
             default:
             {
-                std::shared_ptr<tanker> aPTanker(new tanker(lvPathObj,g_lvScale,g_refPoint*g_ratioScreen));
+                std::shared_ptr<tanker> aPTanker(new tanker(lvPathObj,g_lvScale,refPoint));
                 alist.push_back(aPTanker); 
             }
             break;
         }
+        
     }
 }
+
 EnemyType level::randomEnemyTp()
 {
   /*
@@ -102,8 +120,8 @@ EnemyType level::randomEnemyTp()
        96 - 99 --> flippers
     */
     EnemyType retVal = TANKER;
-    tanker aTanker(m_thelvPath,g_lvScale,g_refPoint*g_ratioScreen);
-    int ranVal = static_cast<int>(aTanker.randomFn(99.0,0.0));
+    std::shared_ptr<tanker> aPTanker(new tanker(m_thelvPath,g_lvScale,g_refPoint*g_ratioScreen));
+    int ranVal = static_cast<int>(aPTanker->randomFn(99.0,0.0));
     if (ranVal <= 70)
     {
         // do nothing
@@ -118,9 +136,9 @@ EnemyType level::randomEnemyTp()
     }
     return retVal;
 }
+
 void level::renderEnemied()
 {
-
     color col = COLORSET[NOCOLOR];
     std::list<std::shared_ptr<enemy> >::iterator it;
     for (it = m_enemyList.begin(); it != m_enemyList.end(); ++it)
@@ -148,12 +166,13 @@ void level::renderEnemied()
         }
     }
 }
-void level::drawWalkPath(std::shared_ptr<std::vector<walkPath<double> > >& pObj,const point<double>& refPoint,const double &scaleVal, const bool& isDrawnPlayer)
-{
 
+void level::drawWalkPath(std::shared_ptr<std::vector<walkPath<double> > >& pObj,const point<double>& refPoint,const double &scaleVal, const bool& isDrawnPlayer)
+{ 
     for(int i = 0; i < pObj->size(); i++)
     {
         // scale 1.0
+       
         walkPath<double> aPieceofAPath;
         if (scaleVal != 1.0)
         {
@@ -217,6 +236,28 @@ void level::moveBackAreaOfPlayer(std::shared_ptr<std::vector<walkPath<double> > 
 
 void level::init()
 {//GAME_OVER
+    switch (m_lvState)
+    {
+        case LV_init:
+        {
+            initState();
+            m_lvState =  LV_running;
+        }
+        break;
+        case LV_running:
+        {
+            m_playerStartPoint = 0;
+            createEnemies(m_thelvPath,g_refPoint*g_ratioScreen,m_enemyList);      
+        }
+        break;
+        default:
+
+        break;
+    }
+}
+
+void level::initState()
+{
     {
         std::shared_ptr<SDLObject> gameObj(std::make_shared<SDLObject>());
         gameObj->setSDLHandler(m_sdlSimpleLib);
@@ -243,16 +284,18 @@ void level::init()
         gameObj->setDrawPosition(g_ratioScreen*20,g_ratioScreen*20,g_ratioScreen*260,g_ratioScreen*40);
         m_sdlObjTable[GAME_OVER] = gameObj;
     }
-
 }
-
 void level::render()
 {
-    m_sdlObjTable[BACKGROUNDLV_IMG]->render();
-    m_sdlObjTable[BACK_TO_MAINMENU]->render();
-    m_sdlSimpleLib->setRenderDrawColor(COLORSET[BLUE]);
-    drawWalkPath(m_thelvPath,g_refPoint*g_ratioScreen,g_lvScale,true);
-    renderEnemied();
+    if (m_sdlSimpleLib)
+    {
+        m_sdlObjTable[BACKGROUNDLV_IMG]->render();
+        m_sdlObjTable[BACK_TO_MAINMENU]->render();
+        m_sdlSimpleLib->setRenderDrawColor(COLORSET[BLUE]);
+        drawWalkPath(m_thelvPath,g_refPoint*g_ratioScreen,g_lvScale,true);
+        renderEnemied();
+    }
+
 }
 
 void level::update()

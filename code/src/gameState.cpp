@@ -22,3 +22,8 @@ void gameState::handleEvents(const unsigned char& keyPress)
 
 void gameState::clean()
 {}
+
+GameScene gameState::getGameState() const
+{
+	return MainMenu;
+}

@@ -15,6 +15,7 @@
 #include <iostream>
 #include <random>
 #include "gameConstance.h"
+#include "gameMessage.h"
 #include "gameState.h"
 #include "sdlHandler.h"
 using namespace std;
@@ -24,8 +25,9 @@ class game
 private:
 	bool m_isRunning;
 	std::shared_ptr<SDLHandler> theSdlHandler;
-	std::shared_ptr<gameState> m_menuGame;
-	std::shared_ptr<gameState> m_lv1;
+	std::shared_ptr<gameState> m_currentGameState;
+	std::shared_ptr<gameState> m_oldGameState;
+	std::map<GameScene,std::shared_ptr<gameState> > m_gameScene;
 	//std::shared
 
 	// random fundion

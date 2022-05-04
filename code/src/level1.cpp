@@ -8,12 +8,6 @@ level1::level1():
 level()
 {
 
-}
-
-level1::level1(const level1& obj):
-level(obj)
-{
-
     std::shared_ptr<std::vector<walkPath<double> > > l_thelv1Path(new std::vector<walkPath<double> >());
     l_thelv1Path->push_back(walkPath<double>(
                 point<double>(40,60),
@@ -102,6 +96,11 @@ level(obj)
     setWalkPathSet(l_thelv1Path);
 }
 
+level1::level1(const level1& obj):
+level(obj)
+{
+}
+
 level1::~level1()
 {
 
@@ -122,6 +121,7 @@ level1& level1::operator=(const level1& obj)
 void level1::init()
 {
     level::init();
+    m_currentStage = Level1;
 }
 void level1::render()
 {

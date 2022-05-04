@@ -11,7 +11,8 @@ m_currentStage(MainMenu),
 m_thelv1Path(new std::vector<walkPath<double> >()),
 m_thelv2Path(new std::vector<walkPath<double> >()),
 m_thelv3Path(new std::vector<walkPath<double> >()),
-m_playerStartPoint(0)
+m_playerStartPoint(0),
+m_mmState(MM_init)
 {
 
 m_thelv1Path->push_back(walkPath<double>(
@@ -265,7 +266,8 @@ m_sdlSimpleLib(obj.m_sdlSimpleLib),
 m_sdlObjTable(obj.m_sdlObjTable),
 m_oldLvSelectValue(obj.m_oldLvSelectValue),
 m_lvSelectValue(obj.m_lvSelectValue),
-m_currentStage(obj.m_currentStage)
+m_currentStage(obj.m_currentStage),
+m_mmState(obj.m_mmState)
 {}
 
 menuGame::~menuGame()
@@ -275,78 +277,20 @@ menuGame::~menuGame()
 
 void menuGame::init()
 {
-    /*
-
-enum MainMenuObj {BACKGROUND_IMG,LABEL_TEMPEST,LABEL_EXIT,LABEL_LV1,LABEL_LV2,LABEL_LV3,ANIMAL};
-
-    */
+    switch(m_mmState)
     {
-        std::shared_ptr<SDLObject> gameObj(std::make_shared<SDLObject>());
-        gameObj->setSDLHandler(m_sdlSimpleLib);
-        gameObj->loadParameter("./space.png");
-        gameObj->setShownDimension(0,0,640,480);
-        gameObj->setDrawPosition(0,0,g_window_width,g_window_height);
-        m_sdlObjTable[BACKGROUND_IMG] = gameObj;
+        case MM_init:
+        {
+            initState();
+            m_mmState = MM_running;
+        }
+        case MM_running:
+        {
+            m_lvSelectValue = LABEL_LV1;
+        }
+        break;
     }
-
-
-    {
-        std::shared_ptr<SDLObject> gameObj(std::make_shared<SDLObject>());
-        gameObj->setSDLHandler(m_sdlSimpleLib);
-        gameObj->loadParameter("Tempest",1);
-        gameObj->setColor(COLORSET[YELLOW]);
-        gameObj->setShownDimension(0,0,400,50);
-        gameObj->setDrawPosition(g_ratioScreen*120,g_ratioScreen*60,g_ratioScreen*400,g_ratioScreen*50);
-        m_sdlObjTable[LABEL_TEMPEST] = gameObj;
-    }
-    
-    {
-        std::shared_ptr<SDLObject> gameObj(std::make_shared<SDLObject>());
-        gameObj->setSDLHandler(m_sdlSimpleLib);
-        gameObj->loadParameter("Press ESC to exit",1);
-        gameObj->setColor(COLORSET[ORANGE]);
-        gameObj->setShownDimension(0,0,200,40);
-        gameObj->setDrawPosition(g_ratioScreen*20,g_ratioScreen*10,g_ratioScreen*200,g_ratioScreen*40);
-        m_sdlObjTable[LABEL_EXIT] = gameObj;
-    }
-/*
-    {
-        std::shared_ptr<SDLObject> gameObj(std::make_shared<SDLObject>());
-        gameObj->setSDLHandler(m_sdlSimpleLib);
-        gameObj->loadParameter("Press BK Space to Menu",1);
-        gameObj->setColor(COLORSET[ORANGE]);
-        gameObj->setShownDimension(0,0,260,40);
-        gameObj->setDrawPosition(g_ratioScreen*20,g_ratioScreen*10,g_ratioScreen*260,g_ratioScreen*40);
-        m_sdlObjTable[BACK_TO_MAINMENU] = gameObj;
-    }
-    */
-    {
-        std::shared_ptr<SDLObject> gameObj(std::make_shared<SDLObject>());
-        gameObj->setSDLHandler(m_sdlSimpleLib);
-        gameObj->loadParameter("Level 1",1);
-        gameObj->setColor(COLORSET[DARK_GREEN]);
-        gameObj->setShownDimension(0,0,200,40);
-        gameObj->setDrawPosition(g_ratioScreen*40,g_ratioScreen*340,g_ratioScreen*160,g_ratioScreen*40);
-        m_sdlObjTable[LABEL_LV1] = gameObj;
-    }
-    {
-        std::shared_ptr<SDLObject> gameObj(std::make_shared<SDLObject>());
-        gameObj->setSDLHandler(m_sdlSimpleLib);
-        gameObj->loadParameter("Level 2",1);
-        gameObj->setColor(COLORSET[DARK_GREEN]);
-        gameObj->setShownDimension(0,0,200,40);
-        gameObj->setDrawPosition(g_ratioScreen*240,g_ratioScreen*340,g_ratioScreen*160,g_ratioScreen*40);
-        m_sdlObjTable[LABEL_LV2] = gameObj;   
-    }
-    {
-        std::shared_ptr<SDLObject> gameObj(std::make_shared<SDLObject>());
-        gameObj->setSDLHandler(m_sdlSimpleLib);
-        gameObj->loadParameter("Level 3",1);
-        gameObj->setColor(COLORSET[DARK_GREEN]);
-        gameObj->setShownDimension(0,0,200,40);
-        gameObj->setDrawPosition(g_ratioScreen*440,g_ratioScreen*340,g_ratioScreen*160,g_ratioScreen*40);
-        m_sdlObjTable[LABEL_LV3] = gameObj;     
-    }
+    m_currentStage = MainMenu;
 
 }
 void menuGame::renderEnemied()
@@ -376,6 +320,67 @@ void menuGame::renderEnemied()
         {
             // Do nothing
         }
+    }
+}
+
+void menuGame::initState()
+{
+
+    {
+        std::shared_ptr<SDLObject> gameObj(std::make_shared<SDLObject>());
+        gameObj->setSDLHandler(m_sdlSimpleLib);
+        gameObj->loadParameter("./space.png");
+        gameObj->setShownDimension(0,0,640,480);
+        gameObj->setDrawPosition(0,0,g_window_width,g_window_height);
+        m_sdlObjTable[BACKGROUND_IMG] = gameObj;
+    }
+
+
+    {
+        std::shared_ptr<SDLObject> gameObj(std::make_shared<SDLObject>());
+        gameObj->setSDLHandler(m_sdlSimpleLib);
+        gameObj->loadParameter("Tempest",1);
+        gameObj->setColor(COLORSET[YELLOW]);
+        gameObj->setShownDimension(0,0,400,50);
+        gameObj->setDrawPosition(g_ratioScreen*120,g_ratioScreen*60,g_ratioScreen*400,g_ratioScreen*50);
+        m_sdlObjTable[LABEL_TEMPEST] = gameObj;
+    }
+    
+    {
+        std::shared_ptr<SDLObject> gameObj(std::make_shared<SDLObject>());
+        gameObj->setSDLHandler(m_sdlSimpleLib);
+        gameObj->loadParameter("Press ESC to exit",1);
+        gameObj->setColor(COLORSET[ORANGE]);
+        gameObj->setShownDimension(0,0,200,40);
+        gameObj->setDrawPosition(g_ratioScreen*20,g_ratioScreen*10,g_ratioScreen*200,g_ratioScreen*40);
+        m_sdlObjTable[LABEL_EXIT] = gameObj;
+    }
+    {
+        std::shared_ptr<SDLObject> gameObj(std::make_shared<SDLObject>());
+        gameObj->setSDLHandler(m_sdlSimpleLib);
+        gameObj->loadParameter("Level 1",1);
+        gameObj->setColor(COLORSET[DARK_GREEN]);
+        gameObj->setShownDimension(0,0,200,40);
+        gameObj->setDrawPosition(g_ratioScreen*40,g_ratioScreen*340,g_ratioScreen*160,g_ratioScreen*40);
+        m_sdlObjTable[LABEL_LV1] = gameObj;
+    }
+    {
+        std::shared_ptr<SDLObject> gameObj(std::make_shared<SDLObject>());
+        gameObj->setSDLHandler(m_sdlSimpleLib);
+        gameObj->loadParameter("Level 2",1);
+        gameObj->setColor(COLORSET[DARK_GREEN]);
+        gameObj->setShownDimension(0,0,200,40);
+        gameObj->setDrawPosition(g_ratioScreen*240,g_ratioScreen*340,g_ratioScreen*160,g_ratioScreen*40);
+        m_sdlObjTable[LABEL_LV2] = gameObj;   
+    }
+    {
+        std::shared_ptr<SDLObject> gameObj(std::make_shared<SDLObject>());
+        gameObj->setSDLHandler(m_sdlSimpleLib);
+        gameObj->loadParameter("Level 3",1);
+        gameObj->setColor(COLORSET[DARK_GREEN]);
+        gameObj->setShownDimension(0,0,200,40);
+        gameObj->setDrawPosition(g_ratioScreen*440,g_ratioScreen*340,g_ratioScreen*160,g_ratioScreen*40);
+        m_sdlObjTable[LABEL_LV3] = gameObj;     
     }
 }
 void menuGame::render()
@@ -434,9 +439,6 @@ void menuGame::createEnemies(std::shared_ptr<std::vector<walkPath<double> > >& l
     alist.clear();
     switch (m_currentStage)
     {
-        case Level1:
-            numberOfEnemy = 5;
-        break;
         case Level2:
             numberOfEnemy = 10;
         break;
@@ -654,9 +656,7 @@ std::shared_ptr<std::vector<walkPath<double> > >& menuGame::switchWalkPathByLv(c
 {
     switch(val)
     {
-        case Level1:
-            return m_thelv1Path;
-        break;
+        
         case Level2:
             return m_thelv2Path;
         break;
@@ -704,9 +704,9 @@ void menuGame::handleEvents(const unsigned char& keyPress)
                 switch (m_lvSelectValue)
                 {
                     case LABEL_LV1:
+                    {
                         m_currentStage = Level1;
-                        m_playerStartPoint = 0;
-                        createEnemies(switchWalkPathByLv(m_currentStage),point<double>(0,0),m_enemyList);
+                    }
                     break;
                     case LABEL_LV2:
                         m_currentStage = Level2;
@@ -753,6 +753,10 @@ void menuGame::goNextLv()
     }
 }
 
+GameScene menuGame::getGameState() const
+{
+    return m_currentStage;
+}
 void menuGame::goBackLv()
 {
     m_oldLvSelectValue = m_lvSelectValue;

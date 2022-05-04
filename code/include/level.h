@@ -33,9 +33,8 @@ private:
     std::shared_ptr<SDLHandler> m_sdlSimpleLib;
     std::map<LevelObj,std::shared_ptr<SDLObject> > m_sdlObjTable;
 
-    GameScene m_currentStage;
     std::shared_ptr<std::vector<walkPath<double> > > m_thelvPath;
-    int m_numberOfEnemy;
+
     /*
        random enemy type - criteria 
        0 - 70  --> spikers
@@ -46,9 +45,13 @@ private:
 
 
     int m_playerStartPoint;
+    LevelState m_lvState;
+
+    void initState();
 
 protected:
-
+    int m_numberOfEnemy;
+    GameScene m_currentStage;
     void setWalkPathSet(const std::shared_ptr<std::vector<walkPath<double> > >& obj);
     void levelsKeyboardHandle(const unsigned char &val = 0);
     void createEnemies(std::shared_ptr<std::vector<walkPath<double> > >& lvPathObj,const point<double>& refPoint,std::list<std::shared_ptr<enemy> >& alist);
@@ -71,6 +74,7 @@ public:
     void handleEvents(const unsigned char& keyPress = 0);
     void clean();
     void setSDLHandler(const std::shared_ptr<SDLHandler> &obj);
+    GameScene getGameState() const;
 };
 
 
