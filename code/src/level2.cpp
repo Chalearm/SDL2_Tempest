@@ -9,7 +9,6 @@ level()
 {
     m_numberOfEnemy = g_numberOfEnemies_Lv2;
     std::shared_ptr<std::vector<walkPath<double> > > l_thelv2Path(new std::vector<walkPath<double> >());
-
     l_thelv2Path->push_back(walkPath<double>(
     point<double>(37.5,50),
     point<double>(0,50),
@@ -116,4 +115,12 @@ void level2::handleEvents(const unsigned char& keyPress)
 void level2::clean()
 {
     level::clean();
+}
+std::shared_ptr<std::vector<walkPath<double> > > level2::getWalkPaht()const
+{
+    return level::getWalkPaht();
+}
+void level2::setSDLHandler(const std::shared_ptr<SDLHandler> &obj)
+{
+    level::setSDLHandler(obj);
 }

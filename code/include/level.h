@@ -13,7 +13,6 @@
 #include <cstring>
 #include <list>
 #include <map>
-#include "gameMessage.h"
 #include "sdlHandler.h"
 #include "gameState.h"
 #include "sdlObject.h"
@@ -26,7 +25,7 @@
 #include "tanker.h"
 #include "spikers.h"
 
-class level : public gameState, public gameMessage
+class level : public gameState
 {
 private:
 

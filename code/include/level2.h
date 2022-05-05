@@ -24,6 +24,8 @@ public:
     void update();
     void handleEvents(const unsigned char& keyPress = 0);
     void clean();
+    std::shared_ptr<std::vector<walkPath<double> > > getWalkPaht()const;
+    void setSDLHandler(const std::shared_ptr<SDLHandler> &obj);
 };
 
 

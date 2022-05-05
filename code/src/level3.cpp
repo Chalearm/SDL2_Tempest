@@ -146,3 +146,12 @@ void level3::clean()
 {
     level::clean();
 }
+std::shared_ptr<std::vector<walkPath<double> > > level3::getWalkPaht()const
+{
+    return level::getWalkPaht();
+}
+
+void level3::setSDLHandler(const std::shared_ptr<SDLHandler> &obj)
+{
+    level::setSDLHandler(obj);
+}

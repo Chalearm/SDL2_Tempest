@@ -9,9 +9,7 @@ game::game():
 theSdlHandler(SDLHandler::GetInstance("Tempest!!!")),
 m_currentGameState(),
 m_oldGameState(),
-m_gameScene(),
-rd(),
-gen(rd())
+m_gameScene()
 {
 	
 	std::shared_ptr<level1> lv1Obj = std::make_shared<level1>();  // create level 1
@@ -37,11 +35,6 @@ gen(rd())
 game::~game()
 {
 
-}
-int game::randomFn(int max,int min)
-{
-	std::uniform_int_distribution<> distrib(min,max);
-	return distrib(gen);
 }
 
 bool game::init()

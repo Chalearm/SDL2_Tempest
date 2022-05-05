@@ -14,7 +14,6 @@
 #include <list>
 #include <map>
 #include <ctime>
-#include "gameMessage.h"
 #include "sdlHandler.h"
 #include "gameState.h"
 #include "sdlObject.h"
@@ -27,7 +26,7 @@
 #include "tanker.h"
 #include "spikers.h"
 
-class menuGame : public gameState, public gameMessage
+class menuGame : public gameState
 {
 private:
 

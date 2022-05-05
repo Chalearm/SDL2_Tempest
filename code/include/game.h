@@ -11,11 +11,7 @@
 #ifndef __GAME__
 #define __GAME__
 
-
 #include <iostream>
-#include <random>
-#include "gameConstance.h"
-#include "gameMessage.h"
 #include "gameState.h"
 #include "sdlHandler.h"
 using namespace std;
@@ -28,14 +24,7 @@ private:
 	std::shared_ptr<gameState> m_currentGameState;
 	std::shared_ptr<gameState> m_oldGameState;
 	std::map<GameScene,std::shared_ptr<gameState> > m_gameScene;
-	//std::shared
 
-	// random fundion
-	std::random_device rd;
-	std::mt19937 gen;
-
-	int m_animalFlipVal;
-	int randomFn(int max,int min);
 public:
 	game();
 	~game();
