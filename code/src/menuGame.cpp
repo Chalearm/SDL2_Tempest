@@ -8,9 +8,7 @@ m_sdlObjTable(),
 m_oldLvSelectValue(LABEL_LV1),
 m_lvSelectValue(LABEL_LV1),
 m_currentStage(MainMenu),
-m_thelv1Path(new std::vector<walkPath<double> >()),
-m_thelv2Path(new std::vector<walkPath<double> >()),
-m_thelv3Path(new std::vector<walkPath<double> >()),
+m_thelvPathTable(),
 m_playerStartPoint(0),
 m_mmState(MM_init)
 {
@@ -23,6 +21,7 @@ m_sdlObjTable(obj.m_sdlObjTable),
 m_oldLvSelectValue(obj.m_oldLvSelectValue),
 m_lvSelectValue(obj.m_lvSelectValue),
 m_currentStage(obj.m_currentStage),
+m_thelvPathTable(obj.m_thelvPathTable),
 m_mmState(obj.m_mmState)
 {}
 
@@ -205,14 +204,13 @@ void menuGame::levelSelectionDisplay()
 
     // Lv 1.
     setSelectedLvColorAndCondition(LABEL_LV1,COLORSET[RED],COLORSET[YELLOW]);
-    drawWalkPath(m_thelv1Path,point<double>(xStart + g_ratioScreen*25,yStartLv1),g_ratioScreen);
+    drawWalkPath(m_thelvPathTable[Level1],point<double>(xStart + g_ratioScreen*25,yStartLv1),g_ratioScreen);
     // Lv 2.
     setSelectedLvColorAndCondition(LABEL_LV2,COLORSET[RED],COLORSET[YELLOW]);
-    drawWalkPath(m_thelv2Path,point<double>(xStart + g_ratioScreen*225,yStartLv1),g_ratioScreen);
+    drawWalkPath(m_thelvPathTable[Level2],point<double>(xStart + g_ratioScreen*225,yStartLv1),g_ratioScreen);
     // Lv 3.
     setSelectedLvColorAndCondition(LABEL_LV3,COLORSET[RED],COLORSET[YELLOW]);
-    drawWalkPath(m_thelv3Path,point<double>(xStart + g_ratioScreen*425,yStartLv1),g_ratioScreen);
-
+    drawWalkPath(m_thelvPathTable[Level3],point<double>(xStart + g_ratioScreen*425,yStartLv1),g_ratioScreen);
 }
 
 void menuGame::update()
@@ -227,21 +225,7 @@ void menuGame::update()
 
 void menuGame::setWalkPath(const GameScene& selectedLv,const std::shared_ptr<std::vector<walkPath<double> > >&obj)
 {
-    switch(selectedLv)
-    {
-        case Level1:
-             m_thelv1Path = obj;
-        break;
-        case Level2:
-             m_thelv2Path = obj;
-        break;
-        case Level3:
-             m_thelv3Path = obj;
-        break;
-        default:
-             m_thelv1Path = obj;
-        break;
-    }
+    m_thelvPathTable[selectedLv] = obj;
 }
 
 

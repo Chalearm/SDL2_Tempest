@@ -38,9 +38,7 @@ private:
     MainMenuObj m_oldLvSelectValue;
     MainMenuObj m_lvSelectValue;
     GameScene m_currentStage;
-    std::shared_ptr<std::vector<walkPath<double> > > m_thelv1Path;
-    std::shared_ptr<std::vector<walkPath<double> > > m_thelv2Path;
-    std::shared_ptr<std::vector<walkPath<double> > > m_thelv3Path;
+    std::map<GameScene,std::shared_ptr<std::vector<walkPath<double> > > >m_thelvPathTable;
 
     int m_playerStartPoint;
     MainMenuState m_mmState;
