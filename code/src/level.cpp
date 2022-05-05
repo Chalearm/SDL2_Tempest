@@ -5,7 +5,7 @@ m_sdlSimpleLib(),
 m_sdlObjTable(),
 m_thelvPath(),
 m_lvState(LV_init),
-m_numberOfEnemy(5),
+m_numberOfEnemy(g_numberOfEnemies_Lv1),
 m_currentStage(Level1),
 m_enemyList()
 {
@@ -334,6 +334,12 @@ void level::update()
     }
     
 }
+
+std::shared_ptr<std::vector<walkPath<double> > > level::getWalkPaht()const
+{
+    return m_thelvPath;
+}
+
 void level::handleEvents(const unsigned char& keyPress)
 {
     levelsKeyboardHandle(keyPress);

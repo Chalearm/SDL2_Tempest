@@ -75,6 +75,7 @@ public:
     void clean();
     void setSDLHandler(const std::shared_ptr<SDLHandler> &obj);
     GameScene getGameState() const;
+    std::shared_ptr<std::vector<walkPath<double> > > getWalkPaht()const;
 };
 
 

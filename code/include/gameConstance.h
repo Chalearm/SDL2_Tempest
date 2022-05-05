@@ -2,7 +2,7 @@
 //
 //     gameConstance
 //     
-//     provides all constances for the game : color and dimension
+//     provides all constances for the game : color and dimension 
 //
 //
 #ifndef __GAMECONSTANCE__
@@ -20,6 +20,10 @@ const color g_tankerColor = COLORSET[MAGENTA];
 const color g_spikersColor = COLORSET[GREEN];
 const color g_spikersTrackColor = COLORSET[ORANGE];
 const color g_flippersColor = COLORSET[RED];
+
+const unsigned int g_numberOfEnemies_Lv1 = 10;
+const unsigned int g_numberOfEnemies_Lv2 = 100;
+const unsigned int g_numberOfEnemies_Lv3 = 110;
 
 
 const int g_window_height = 600;

@@ -7,7 +7,6 @@
 level1::level1():
 level()
 {
-
     std::shared_ptr<std::vector<walkPath<double> > > l_thelv1Path(new std::vector<walkPath<double> >());
     l_thelv1Path->push_back(walkPath<double>(
                 point<double>(40,60),
@@ -50,7 +49,6 @@ level()
                 point<double>(100,75),
                 point<double>(100,100),
                 point<double>(60,80)));
-
     l_thelv1Path->push_back(walkPath<double>(
                 point<double>(60,80),
                 point<double>(100,100),
@@ -71,8 +69,6 @@ level()
                 point<double>(25,100),
                 point<double>(0,100),
                 point<double>(40,80)));
-
-
     l_thelv1Path->push_back(walkPath<double>(
                 point<double>(40,80),
                 point<double>(0,100),

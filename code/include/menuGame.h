@@ -42,15 +42,6 @@ private:
     std::shared_ptr<std::vector<walkPath<double> > > m_thelv2Path;
     std::shared_ptr<std::vector<walkPath<double> > > m_thelv3Path;
 
-    /*
-       random enemy type - criteria 
-       0 - 70  --> spikers
-       71 - 96 --> tanker
-       97 - 99 --> flippers
-    */
-    std::list<std::shared_ptr<enemy> > m_enemyList;
-
-
     int m_playerStartPoint;
     MainMenuState m_mmState;
 
@@ -61,18 +52,9 @@ private:
 
     void goNextLv();
     void goBackLv();
-
-    void levelsKeyboardHandle(const unsigned char &val = 0);
-    void createEnemies(std::shared_ptr<std::vector<walkPath<double> > >& lvPathObj,const point<double>& refPoint,std::list<std::shared_ptr<enemy> >& alist);
-    EnemyType randomEnemyTp();
-    void renderEnemied();
     void setSelectedLvColorAndCondition(const MainMenuObj &aCondition,const color &deselectCol, const color &selectColr);
-    void drawWalkPath(std::shared_ptr<std::vector<walkPath<double> > >& pObj,const point<double>& refPoint,const double &scaleVal = 1.0, const bool isDrawnPlayer = false);
+    void drawWalkPath(std::shared_ptr<std::vector<walkPath<double> > >& pObj,const point<double>& refPoint,const double &scaleVal);
 
-
-    void moveNextAreaOfPlayer(std::shared_ptr<std::vector<walkPath<double> > >& obj);
-    void moveBackAreaOfPlayer(std::shared_ptr<std::vector<walkPath<double> > >& obj);
-    std::shared_ptr<std::vector<walkPath<double> > >& switchWalkPathByLv(const GameScene& val = Level1);
 
     void initState();
 public:
@@ -88,6 +70,7 @@ public:
     void clean();
     void setSDLHandler(const std::shared_ptr<SDLHandler> &obj);
     GameScene getGameState() const;
+    void setWalkPath(const GameScene& selectedLv,const std::shared_ptr<std::vector<walkPath<double> > >&obj);
 
 
 };
