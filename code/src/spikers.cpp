@@ -14,13 +14,25 @@ m_moveDirection(1)
 	m_timeToAlive = randomFn(8.0,2.0);
 	m_myType = SPIKERS;
 
-
 	// find the center point of the bottom line in the lane
     // to create a line of moving track
-	const point<double> p1 = findPointInBetweenALane(refLanes->at(m_beingLane),0.0,0.5);
-	const point<double> p2 = findPointInBetweenALane(refLanes->at(m_beingLane),m_walkTrack,0.5);
-	m_movingTrack = aLine<double>(p1,p2);
-
+    if (refLanes)
+    {
+    	if (refLanes->size() > m_beingLane)
+    	{
+			const point<double> p1 = findPointInBetweenALane(refLanes->at(m_beingLane),0.0,0.5);
+			const point<double> p2 = findPointInBetweenALane(refLanes->at(m_beingLane),m_walkTrack,0.5);
+			m_movingTrack = aLine<double>(p1,p2);
+        }
+        else
+        {
+        	// Do nothing
+        }
+    }
+    else
+    {
+    	// Do nothing
+    }
 }
 
 spikers::~spikers()
@@ -61,7 +73,7 @@ std::vector<lineWithColor> spikers::drawEnemy()
 void spikers::move()
 {
 
-    if ((m_isTimeUp) && (static_cast<int>(m_currentPosition) <= m_walkTrack) )
+    if ((m_refLanes) && (m_isTimeUp) && (static_cast<int>(m_currentPosition) <= m_walkTrack) )
     {
         m_lines.clear();
         addToLineVect(m_movingTrack[P1],m_movingTrack[P2],m_trackColor);
@@ -90,8 +102,7 @@ void spikers::move()
         addToLineWitBodyColorVect(p7,p8);
         addToLineWitBodyColorVect(p8,p9);
         addToLineWitBodyColorVect(p9,p10);
-
-        //std::cout<<" sdsfdfd ";
+        
         m_currentPosition += m_moveDirection*m_speed;
         if (m_currentPosition > m_walkTrack)
         {

@@ -21,13 +21,29 @@ m_inverseDirectionLane(1)
     	m_speed = enemy::randomFn(-0.01,-0.02);
     }
 	m_bodyColor = g_flippersColor;
-	walkPath<double> aWalkpath = m_refLanes->at(m_beingLane);
-	m_p1 = findPointInBetweenALane(aWalkpath,0.0,0.0);
-	m_p2 = findPointInBetweenALane(aWalkpath,0.1,0.0);
-	m_p3 = findPointInBetweenALane(aWalkpath,0.0,1.0);
-	m_p4 = findPointInBetweenALane(aWalkpath,0.1,1.0);
-	addToLineWitBodyColorVect(m_p1,m_p4);
-	addToLineWitBodyColorVect(m_p2,m_p3);
+	if (refLanes)
+	{
+		if (m_refLanes->size() > m_beingLane)
+		{
+			walkPath<double> aWalkpath = m_refLanes->at(m_beingLane);
+			m_p1 = findPointInBetweenALane(aWalkpath,0.0,0.0);
+			m_p2 = findPointInBetweenALane(aWalkpath,0.1,0.0);
+			m_p3 = findPointInBetweenALane(aWalkpath,0.0,1.0);
+			m_p4 = findPointInBetweenALane(aWalkpath,0.1,1.0);
+			addToLineWitBodyColorVect(m_p1,m_p4);
+			addToLineWitBodyColorVect(m_p2,m_p3);	
+		}
+		else
+		{
+			// Do nothing
+		}
+
+	}
+	else
+	{
+		// Do nothing
+	}
+
 	m_timeToMove = randomFn(0.05,0.01);
 	m_timeToAlive = randomFn(0.02,0.0);
 	m_myType = FLIPPERS;
@@ -75,24 +91,37 @@ void flippers::setCurrentPos(const double& pos)
 {
 	m_lines.clear();
 	m_currentPosition = pos;
-	walkPath<double> aWalkpath = m_refLanes->at(m_beingLane);
-	m_p1 = findPointInBetweenALane(aWalkpath,m_currentPosition,0.0);
-	m_p2 = findPointInBetweenALane(aWalkpath,m_currentPosition+ 0.1,0.0);
-	m_p3 = findPointInBetweenALane(aWalkpath,m_currentPosition,1.0);
-	m_p4 = findPointInBetweenALane(aWalkpath,m_currentPosition+0.1,1.0);
+	if (m_refLanes)
+	{
+		if (m_refLanes->size() > m_beingLane)
+		{
+			walkPath<double> aWalkpath = m_refLanes->at(m_beingLane);
+			m_p1 = findPointInBetweenALane(aWalkpath,m_currentPosition,0.0);
+			m_p2 = findPointInBetweenALane(aWalkpath,m_currentPosition+ 0.1,0.0);
+			m_p3 = findPointInBetweenALane(aWalkpath,m_currentPosition,1.0);
+			m_p4 = findPointInBetweenALane(aWalkpath,m_currentPosition+0.1,1.0);
 
-	const point<double> p5 = findPointInBetweenALane(aWalkpath,m_currentPosition+0.05,0.1);
-	const point<double> p6 = findPointInBetweenALane(aWalkpath,m_currentPosition+0.05,0.9);
-	//eulidianDis
+			const point<double> p5 = findPointInBetweenALane(aWalkpath,m_currentPosition+0.05,0.1);
+			const point<double> p6 = findPointInBetweenALane(aWalkpath,m_currentPosition+0.05,0.9);
 
+			//addToLineVect
+			addToLineWitBodyColorVect(m_p1,m_p4);
+			addToLineWitBodyColorVect(m_p2,m_p3);
+			addToLineWitBodyColorVect(m_p2,p5);
+			addToLineWitBodyColorVect(m_p1,p5);
+			addToLineWitBodyColorVect(m_p4,p6);
+			addToLineWitBodyColorVect(m_p3,p6);
+		}
+		else
+		{
+			// Do nothing
+		}
+	}
+	else
+	{
+		// Do nothing
+	}
 
-	//addToLineVect
-	addToLineWitBodyColorVect(m_p1,m_p4);
-	addToLineWitBodyColorVect(m_p2,m_p3);
-	addToLineWitBodyColorVect(m_p2,p5);
-	addToLineWitBodyColorVect(m_p1,p5);
-	addToLineWitBodyColorVect(m_p4,p6);
-	addToLineWitBodyColorVect(m_p3,p6);
 }
 
 void flippers::move()

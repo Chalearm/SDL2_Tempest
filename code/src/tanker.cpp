@@ -36,7 +36,7 @@ std::vector<lineWithColor> tanker::drawEnemy()
 void tanker::move()
 {
 
-    if (m_isAlive && (m_isTimeUp) && (static_cast<int>(m_currentPosition) <= 1))
+    if ((m_refLanes) && (m_isAlive) && (m_isTimeUp) && (static_cast<int>(m_currentPosition) <= 1))
     {
         m_lines.clear();
         //eulidianDis

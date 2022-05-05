@@ -12,7 +12,21 @@ m_timeToAlive(0),
 m_myType(ENEMY)
 {
 	//m_refLanes = refLanes;
-	m_beingLane = static_cast<int>(randomFn(refLanes->size()-1,0.0));
+	if (refLanes)
+	{
+		if (refLanes->size() > 0)
+		{
+		    m_beingLane = static_cast<int>(randomFn(refLanes->size()-1,0.0));
+		}
+		else
+		{
+			// Do nothing
+		}
+	}
+	else
+	{
+		// Do nothing
+	}
 	m_timeToAlive = randomFn(9.0,0.0);
 	motion2D::setTimeCount(m_timeToAlive);
 	m_isAlive = (m_timeToAlive == 0.0);
@@ -32,24 +46,21 @@ m_myType(obj.m_myType)
 
 enemy& enemy::operator=(const enemy& obj)
 {
-    if (this != &obj)
-    {
-
-      m_currentPosition = obj.m_currentPosition;
-      m_positionToTransform = obj.m_positionToTransform;
-      m_speed = obj.m_speed;
-      m_beingLane = obj.m_beingLane;    // which lane where enemy stays
-      m_isAlive = obj.m_isAlive;
-      m_timeToMove = obj.m_timeToMove;
-      m_myType = obj.m_myType;
-        
-       // enemy::enemy(obj);
-    }
-    else
-    {
-    	// Do nothing
-    }
-    return *this;
+	if (this != &obj)
+	{
+		m_currentPosition = obj.m_currentPosition;
+		m_positionToTransform = obj.m_positionToTransform;
+		m_speed = obj.m_speed;
+		m_beingLane = obj.m_beingLane;    // which lane where enemy stays
+		m_isAlive = obj.m_isAlive;
+		m_timeToMove = obj.m_timeToMove;
+		m_myType = obj.m_myType;
+	}
+	else
+	{
+		// Do nothing
+	}
+	return *this;
 }
 
 enemy::~enemy()
@@ -60,12 +71,7 @@ bool enemy::isHitTheBullet(const point<double> &bulletPoint)
 {
    return true;
 }
-/*
-std::vector<lineWithColor> enemy::drawEnemy()
-{
-	return m_lines;
-}
-*/
+
 bool enemy::isAlive()const
 {	
 	return m_isAlive;
