@@ -18,6 +18,7 @@
 #include "sdlObject.h"
 #include "gameDataType.h"
 #include "gameConstance.h"
+#include "ammunition.h"
 #include "walkPath.h"
 #include "lineWithColor.h"
 #include "enemy.h"
@@ -31,8 +32,8 @@ private:
 
     std::shared_ptr<SDLHandler> m_sdlSimpleLib;
     std::map<LevelObj,std::shared_ptr<SDLObject> > m_sdlObjTable;
-
     std::shared_ptr<std::vector<walkPath<double> > > m_thelvPath;
+    std::map<int,std::list<std::shared_ptr<ammunition > > > m_bullets;
 
     /*
        random enemy type - criteria 
@@ -40,7 +41,8 @@ private:
        71 - 96 --> tanker
        97 - 99 --> flippers
     */
-    std::list<std::shared_ptr<enemy> > m_enemyList;
+
+    std::map<int,std::list<std::shared_ptr<enemy > > > m_enemyList;
 
 
     int m_playerStartPoint;
@@ -53,9 +55,11 @@ protected:
     GameScene m_currentStage;
     void setWalkPathSet(const std::shared_ptr<std::vector<walkPath<double> > >& obj);
     void levelsKeyboardHandle(const unsigned char &val = 0);
-    void createEnemies(std::shared_ptr<std::vector<walkPath<double> > >& lvPathObj,const point<double>& refPoint,std::list<std::shared_ptr<enemy> >& alist);
+    void createBullet(std::shared_ptr<std::vector<walkPath<double> > >& lvPathObj,const point<double>& refPoint,std::map<int,std::list<std::shared_ptr<ammunition > > >& aBulletTable);
+    void createEnemies(std::shared_ptr<std::vector<walkPath<double> > >& lvPathObj,const point<double>& refPoint,std::map<int,std::list<std::shared_ptr<enemy > > > & anEnemyTable);
     EnemyType randomEnemyTp();
     void renderEnemied();
+    void renderBullets();
     void drawWalkPath(std::shared_ptr<std::vector<walkPath<double> > >& pObj,const point<double>& refPoint,const double &scaleVal = 1.0, const bool& isDrawnPlayer = false);
     void drawPlayerPosition(const std::vector<walkPath<double> >& obj,const point<double>& refPoint,const double& scale);
     void moveNextAreaOfPlayer(std::shared_ptr<std::vector<walkPath<double> > >& obj);

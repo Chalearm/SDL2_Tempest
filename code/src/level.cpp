@@ -4,6 +4,7 @@ level::level():
 m_sdlSimpleLib(),
 m_sdlObjTable(),
 m_thelvPath(),
+m_bullets(),
 m_lvState(LV_init),
 m_numberOfEnemy(g_numberOfEnemies_Lv1),
 m_currentStage(Level1),
@@ -14,6 +15,7 @@ level::level(const level& obj):
 m_sdlSimpleLib(obj.m_sdlSimpleLib),
 m_sdlObjTable(obj.m_sdlObjTable),
 m_thelvPath(obj.m_thelvPath),
+m_bullets(obj.m_bullets),
 m_lvState(obj.m_lvState),
 m_numberOfEnemy(obj.m_numberOfEnemy),
 m_currentStage(obj.m_currentStage),
@@ -44,6 +46,7 @@ level& level::operator=(const level& obj)
         m_sdlObjTable = obj.m_sdlObjTable;
         m_currentStage = obj.m_currentStage;
         m_thelvPath = obj.m_thelvPath;
+        m_bullets = obj.m_bullets;
         m_numberOfEnemy = obj.m_numberOfEnemy;
         m_lvState = obj.m_lvState;
         m_enemyList = obj.m_enemyList;
@@ -55,6 +58,12 @@ level& level::operator=(const level& obj)
     return *this;
 }
 
+void level::createBullet(std::shared_ptr<std::vector<walkPath<double> > >& lvPathObj,const point<double>& refPoint,std::map<int,std::list<std::shared_ptr<ammunition > > >& aBulletTable)
+{
+   const int l_playerLane = m_playerStartPoint;
+   std::shared_ptr<ammunition> aPBullet(new ammunition(lvPathObj,g_lvScale,refPoint,l_playerLane));
+   aBulletTable[l_playerLane].push_back(aPBullet); 
+}
 void level::levelsKeyboardHandle(const unsigned char &val)
 {
     switch(val)
@@ -69,14 +78,18 @@ void level::levelsKeyboardHandle(const unsigned char &val)
         case 80:  // left arrow
             moveBackAreaOfPlayer(m_thelvPath);
         break;
+        case 32: // create bullet
+            createBullet(m_thelvPath,g_refPoint*g_ratioScreen,m_bullets);
+        break;
         default:
+            // std::cout<<(int)val<<std::endl;
         break;
     }
 }
 
-void level::createEnemies(std::shared_ptr<std::vector<walkPath<double> > >& lvPathObj,const point<double>& refPoint,std::list<std::shared_ptr<enemy> >& alist)
+void level::createEnemies(std::shared_ptr<std::vector<walkPath<double> > >& lvPathObj,const point<double>& refPoint,std::map<int,std::list<std::shared_ptr<enemy > > >& anEnemyTable)
 {    
-    alist.clear();
+    anEnemyTable.clear();
     for (int i = 0; i < m_numberOfEnemy; i++)
     {
         
@@ -85,25 +98,25 @@ void level::createEnemies(std::shared_ptr<std::vector<walkPath<double> > >& lvPa
             case TANKER:
             {
                std::shared_ptr<tanker> aPTanker(new tanker(lvPathObj,g_lvScale,refPoint));
-               alist.push_back(aPTanker); 
+               anEnemyTable[aPTanker->getCurrentBeingLane()].push_back(aPTanker);
             }
             break;
             case SPIKERS:
             {
                 std::shared_ptr<spikers> aPSpikers(new spikers(lvPathObj,g_lvScale,refPoint));
-                alist.push_back(aPSpikers); 
+                anEnemyTable[aPSpikers->getCurrentBeingLane()].push_back(aPSpikers);
             }
             break;
             case FLIPPERS:
             {
                 std::shared_ptr<flippers> aPTFlippers(new flippers(lvPathObj,g_lvScale,refPoint));
-                alist.push_back(aPTFlippers); 
+                anEnemyTable[aPTFlippers->getCurrentBeingLane()].push_back(aPTFlippers);
             }
             break;
             default:
             {
                 std::shared_ptr<tanker> aPTanker(new tanker(lvPathObj,g_lvScale,refPoint));
-                alist.push_back(aPTanker); 
+                anEnemyTable[aPTanker->getCurrentBeingLane()].push_back(aPTanker);
             }
             break;
         }
@@ -137,17 +150,19 @@ EnemyType level::randomEnemyTp()
     return retVal;
 }
 
-void level::renderEnemied()
+void level::renderBullets()
 {
+    // bullet
     color col = COLORSET[NOCOLOR];
-    std::list<std::shared_ptr<enemy> >::iterator it;
-    for (it = m_enemyList.begin(); it != m_enemyList.end(); ++it)
-    {
-        if (it->get()->isAlive())
+    for (std::map<int,std::list<std::shared_ptr<ammunition > > >::iterator it = m_bullets.begin(); it != m_bullets.end(); ++it)
+    { 
+        std::list<std::shared_ptr<ammunition> >::iterator it3;
+        for (it3 = it->second.begin(); it3 != it->second.end(); ++it3 )
         {
-            std::vector<lineWithColor> lineSet = it->get()->drawEnemy();
+            std::vector<lineWithColor> lineSet = it3->get()->draw();
             for (int j = 0; j < lineSet.size(); j++)
             {
+
                 if (col != lineSet[j].getColor())
                 {
                     col = lineSet[j].getColor();
@@ -160,10 +175,37 @@ void level::renderEnemied()
                 m_sdlSimpleLib->drawLine(lineSet[j].getLine());
             }
         }
-        else
-        {
-            // Do nothing
-        }
+    }
+}
+
+void level::renderEnemied()
+{
+    color col = COLORSET[NOCOLOR];
+    for (std::map<int,std::list<std::shared_ptr<enemy > > >::iterator it = m_enemyList.begin(); it != m_enemyList.end(); ++it)
+    {
+        std::list<std::shared_ptr<enemy> >::iterator it2;
+        for (it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
+            if (it2->get()->isAlive())
+            {
+                std::vector<lineWithColor> lineSet = it2->get()->drawEnemy();
+                for (int j = 0; j < lineSet.size(); j++)
+                {
+                    if (col != lineSet[j].getColor())
+                    {
+                        col = lineSet[j].getColor();
+                        m_sdlSimpleLib->setRenderDrawColor(col);
+                    }
+                    else
+                    {
+                        // Do nothing
+                    }
+                    m_sdlSimpleLib->drawLine(lineSet[j].getLine());
+                }
+            }
+            else
+            {
+                // Do nothing
+            }
     }
 }
 
@@ -247,6 +289,7 @@ void level::init()
         case LV_running:
         {
             m_playerStartPoint = 0;
+            m_bullets.clear();
             createEnemies(m_thelvPath,g_refPoint*g_ratioScreen,m_enemyList);      
         }
         break;
@@ -294,6 +337,7 @@ void level::render()
         m_sdlSimpleLib->setRenderDrawColor(COLORSET[BLUE]);
         drawWalkPath(m_thelvPath,g_refPoint*g_ratioScreen,g_lvScale,true);
         renderEnemied();
+        renderBullets();
     }
     else
     {
@@ -304,35 +348,77 @@ void level::render()
 
 void level::update()
 {
-    std::map<LevelObj,std::shared_ptr<SDLObject> >::iterator it;
-    for(it = m_sdlObjTable.begin(); it != m_sdlObjTable.end(); it++) 
+    for(std::map<LevelObj,std::shared_ptr<SDLObject> >::iterator it = m_sdlObjTable.begin(); it != m_sdlObjTable.end(); it++) 
     {
         it->second->update();
     }
 
-    std::list<std::shared_ptr<enemy> >::iterator it2;
-    for (it2 = m_enemyList.begin(); it2 != m_enemyList.end(); ++it2)
+    bool isEnemyKilled = false;
+    for (std::map<int,std::list<std::shared_ptr<enemy > > >::iterator it = m_enemyList.begin(); it != m_enemyList.end(); ++it)
     {
 
-        if (it2->get()->transform() && (it2->get()->getMyType() == TANKER))
+        std::list<std::shared_ptr<enemy> >::iterator it2;
+        for (it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
         {
-            const double curPos = it2->get()->getCurrentPos();
+            std::map<int,std::list<std::shared_ptr<ammunition > > >::iterator it4 = m_bullets.find(it->first);
+            // check bullet - there are some bullet in the same lane
+            if (it4 != m_bullets.end())
+            {
+                if (m_bullets[it->first].size() > 0)
+                {
+                   const double bulletDist = m_bullets[it->first].front()->getCurrentPos();
+                   const double enemyDist = it2->get()->getCurrentPos();
+                   if (enemyDist >= bulletDist) // killed enemy
+                   {
+                     it2 = m_enemyList[it->first].erase(it2);
+                     m_bullets[it->first].pop_front();
+                     isEnemyKilled = true;
+                   }
+                }
+            }
+           
+            if (isEnemyKilled)
+            {
+                isEnemyKilled = false;
+            }
+            else if (it2->get()->transform() && (it2->get()->getMyType() == TANKER))
+            {
+                const double curPos = it2->get()->getCurrentPos();
 
-            std::shared_ptr<flippers> aPTFlippers(new flippers(m_thelvPath,g_lvScale,g_refPoint*g_ratioScreen));
-            std::shared_ptr<flippers> aPTFlippers2(new flippers(m_thelvPath,g_lvScale,g_refPoint*g_ratioScreen));
-            aPTFlippers->setCurrentPos(curPos+aPTFlippers->randomFn(-0.3,-0.6));
-            aPTFlippers2->setCurrentPos(curPos+aPTFlippers->randomFn(-0.3,-0.6));
-            m_enemyList.push_back(aPTFlippers);
-            m_enemyList.push_back(aPTFlippers2);
-            it2 = m_enemyList.erase(it2);
-         
+                std::shared_ptr<flippers> aPTFlippers(new flippers(m_thelvPath,g_lvScale,g_refPoint*g_ratioScreen));
+                std::shared_ptr<flippers> aPTFlippers2(new flippers(m_thelvPath,g_lvScale,g_refPoint*g_ratioScreen));
+                aPTFlippers->setCurrentPos(curPos+aPTFlippers->randomFn(-0.3,-0.6));
+                aPTFlippers2->setCurrentPos(curPos+aPTFlippers->randomFn(-0.3,-0.6));
+                m_enemyList[aPTFlippers->getCurrentBeingLane()].push_back(aPTFlippers);
+                m_enemyList[aPTFlippers2->getCurrentBeingLane()].push_back(aPTFlippers2);
+                it2 = m_enemyList[it->first].erase(it2);
+             
+            }
+            else
+            {
+                it2->get()->move();
+            }    
         }
-        else
+
+    }
+
+    // bullet
+    for (std::map<int,std::list<std::shared_ptr<ammunition > > >::iterator it = m_bullets.begin(); it != m_bullets.end(); ++it)
+    { 
+        std::list<std::shared_ptr<ammunition> >::iterator it3;
+        for (it3 = it->second.begin(); it3 != it->second.end(); ++it3 )
         {
-            it2->get()->move();
+            if (it3->get()->getCurrentPos() < 0.02)
+            {
+                it3 = m_bullets[it->first].erase(it3);
+            }
+            else
+            {
+                it3->get()->move();
+            }
+
         }
     }
-    
 }
 
 std::shared_ptr<std::vector<walkPath<double> > > level::getWalkPaht()const

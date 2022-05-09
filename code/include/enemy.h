@@ -43,6 +43,7 @@ public:
 	virtual bool transform()const;
 	virtual void setCurrentPos(const double& pos);
 	double getCurrentPos()const;
+	int getCurrentBeingLane()const;
 	EnemyType getMyType()const;
 
 	double randomFn(const double& max,const double& min);

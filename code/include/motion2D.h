@@ -48,7 +48,7 @@ protected:
     bool isTimeup();
 
 public:
-    motion2D(std::shared_ptr<std::vector<walkPath<double> > > &refLanes, const double& scale, const point<double>& refPoint);
+    motion2D(const std::shared_ptr<std::vector<walkPath<double> > > &refLanes, const double& scale, const point<double>& refPoint);
     motion2D(const motion2D& obj);
     motion2D& operator=(const motion2D& obj);
 	virtual ~motion2D();

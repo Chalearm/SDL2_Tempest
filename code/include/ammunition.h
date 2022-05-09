@@ -13,10 +13,11 @@
 #ifndef __AMMUNITION__
 #define __AMMUNITION__
 #include "gameDataType.h"
+#include "gameConstance.h"
 #include "color.h"
 #include "point.h"
 #include "walkPath.h"
-$include "motion2D.h"
+#include "motion2D.h"
 #include "lineWithColor.h"
 class ammunition : public motion2D
 {
@@ -27,16 +28,23 @@ private:
 	bool m_isHit;
 	double m_timeToMove; // in second;
 
+	// for random colors
+	double m_maxCol;
+	double m_minCol;
+	void randomScopeCol();
+
 public:
-	ammunition(std::shared_ptr<std::vector<walkPath<double> > > &refLanes, const double& scale, const point<double>& refPoint);
+	ammunition(const std::shared_ptr<std::vector<walkPath<double> > > &refLanes, const double& scale, const point<double>& refPoint, const int& laneStarted);
 	ammunition(const ammunition& obj);
 	ammunition& operator=(const ammunition& obj);
-     ~ammunition();
+	~ammunition();
 	bool isHitTheBullet(const point<double> &bulletPoint);
-     void move();
-     std::vector<lineWithColor> draw();
-     void setCurrentPos(const double& pos);
+	void move();
+	std::vector<lineWithColor> draw();
+	void setCurrentPos(const double& pos);
+	int getCurrentBeingLane()const;
 	double getCurrentPos()const;
+
 };
 
 #endif /* define (__AMMUNITION__) */

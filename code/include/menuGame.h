@@ -38,15 +38,10 @@ private:
     MainMenuObj m_lvSelectValue;
     GameScene m_currentStage;
     std::map<GameScene,std::shared_ptr<std::vector<walkPath<double> > > >m_thelvPathTable;
-
-    int m_playerStartPoint;
     MainMenuState m_mmState;
-
 
     void mainMenuDisplay();
     void levelSelectionDisplay();
-
-
     void goNextLv();
     void goBackLv();
     void setSelectedLvColorAndCondition(const MainMenuObj &aCondition,const color &deselectCol, const color &selectColr);

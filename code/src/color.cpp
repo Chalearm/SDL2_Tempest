@@ -16,6 +16,44 @@ std::map<GameColor,color> color::create_ColorMap()
 	return m;
 }
 
+GameColor color::convertIntToGameColor(const int& val)
+{
+	GameColor ret = WHITE;
+    switch (val)
+    {
+    	case 0:
+    	    ret = MAGENTA;
+    	break;
+    	case 1:
+    	    ret = BLUE;
+    	break;
+    	case 2:
+    	    ret = WHITE;
+    	break;
+    	case 3:
+    	    ret = GREEN;
+    	break;
+    	case 4:
+    	    ret = DARK_GREEN;
+    	break;
+    	case 5:
+    	    ret = YELLOW;
+    	break;
+    	case 6:
+    	    ret = ORANGE;
+    	break;
+    	case 7:
+    	    ret = LIGHT_GREY;
+    	break;
+    	case 8:
+    	    ret = RED;
+    	break;
+    	default:
+    	    ret = NOCOLOR;
+    	break;
+    }
+    return ret;
+}
 color::color(const unsigned char& r,const unsigned char& g,const unsigned char& b,const unsigned char& a):
 m_sdlColor(),
 m_gradientRed(0),

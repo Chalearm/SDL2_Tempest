@@ -33,6 +33,7 @@ private:
 
 public:
     static std::map<GameColor,color> create_ColorMap();
+    static GameColor convertIntToGameColor(const int& val);
 
 	color(const unsigned char& r = 255,const unsigned char& g = 255,const unsigned char& b = 255,const unsigned char& a = 255);
 	color(const color& obj);

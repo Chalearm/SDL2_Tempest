@@ -42,9 +42,9 @@ $(TARGETAPP): ./src/$(TARGETAPP).cpp ./obj/game.o ./obj/color.o
 ./obj/level3.o : ./src/level3.cpp ./include/level3.h ./obj/level.o
 	g++ -I ./include  -c $(GCCOBJOPT) -o ./obj/level3.o ./src/level3.cpp
 	g++ -I ./include  -L ./lib -shared -fPIC -o ./lib/liblevel3.so ./obj/level3.o -llevel -lcolor
-./obj/level.o : ./src/level.cpp ./include/level.h ./obj/gameState.o ./obj/sdlHandler.o ./obj/sdlObject.o ./obj/color.o ./obj/flippers.o ./obj/tanker.o ./obj/spikers.o ./obj/enemy.o ./obj/lineWithColor.o
+./obj/level.o : ./src/level.cpp ./include/level.h ./obj/gameState.o ./obj/sdlHandler.o ./obj/sdlObject.o ./obj/color.o ./obj/flippers.o ./obj/tanker.o ./obj/spikers.o ./obj/enemy.o ./obj/lineWithColor.o ./obj/ammunition.o
 	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/level.o ./src/level.cpp
-	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/liblevel.so ./obj/level.o -lgameState -lsdlHandler -lsdlObject -lcolor -lflippers -lenemy -lspikers -ltanker -llineWithColor
+	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/liblevel.so ./obj/level.o -lgameState -lsdlHandler -lsdlObject -lcolor -lflippers -lenemy -lspikers -ltanker -llineWithColor -lammunition
 ./obj/sdlObject.o : ./src/sdlObject.cpp ./include/sdlObject.h ./obj/gameState.o ./obj/sdlHandler.o ./obj/sdlDrawnObj.o ./obj/color.o
 	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/sdlObject.o ./src/sdlObject.cpp
 	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libsdlObject.so ./obj/sdlObject.o -lgameState -lsdlHandler -lsdlDrawnObj -lcolor
@@ -60,6 +60,9 @@ $(TARGETAPP): ./src/$(TARGETAPP).cpp ./obj/game.o ./obj/color.o
 ./obj/gameObj.o : ./src/gameObj.cpp ./include/gameObj.h
 	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/gameObj.o ./src/gameObj.cpp
 	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libgameObj.so ./obj/gameObj.o 
+./obj/ammunition.o : ./src/ammunition.cpp ./include/ammunition.h ./obj/motion2D.o ./obj/color.o ./obj/lineWithColor.o
+	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/ammunition.o ./src/ammunition.cpp
+	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libammunition.so ./obj/ammunition.o -lmotion2D -lcolor -llineWithColor
 ./obj/flippers.o : ./src/flippers.cpp ./include/flippers.h ./obj/enemy.o ./obj/color.o ./obj/lineWithColor.o
 	g++ -I ./include -c $(GCCOBJOPT) -o ./obj/flippers.o ./src/flippers.cpp
 	g++ -I ./include -L ./lib -shared -fPIC -o ./lib/libflippers.so ./obj/flippers.o -lenemy -lcolor -llineWithColor -lmotion2D

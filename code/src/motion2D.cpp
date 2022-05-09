@@ -1,6 +1,6 @@
 #include "motion2D.h"
 
-motion2D::motion2D(std::shared_ptr<std::vector<walkPath<double> > > &refLanes, const double& scale, const point<double>& refPoint):
+motion2D::motion2D(const std::shared_ptr<std::vector<walkPath<double> > > &refLanes, const double& scale, const point<double>& refPoint):
 m_lines(),
 m_refLanes(refLanes),
 m_refPoint(refPoint),

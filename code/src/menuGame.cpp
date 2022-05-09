@@ -9,7 +9,6 @@ m_oldLvSelectValue(LABEL_LV1),
 m_lvSelectValue(LABEL_LV1),
 m_currentStage(MainMenu),
 m_thelvPathTable(),
-m_playerStartPoint(0),
 m_mmState(MM_init)
 {
 
@@ -135,15 +134,8 @@ void menuGame::drawWalkPath(std::shared_ptr<std::vector<walkPath<double> > >& pO
         {
             aPieceofAPath = pObj->at(i).translate(refPoint);
         }
-
-        if ((i-1) != m_playerStartPoint)
-        {
-            m_sdlSimpleLib->drawLine(aPieceofAPath[LLEFT]);
-        }
-
+        m_sdlSimpleLib->drawLine(aPieceofAPath[LLEFT]);
         m_sdlSimpleLib->drawLine(aPieceofAPath[LEDGE]);
-
-
         m_sdlSimpleLib->drawLine(static_cast<int>(aPieceofAPath[LLEFT][P1][X]),
                                  static_cast<int>(aPieceofAPath[LLEFT][P1][Y]), 
                                  static_cast<int>(aPieceofAPath[LRIGHT][P2][X]),

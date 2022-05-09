@@ -16,7 +16,8 @@ m_myType(ENEMY)
 	{
 		if (refLanes->size() > 0)
 		{
-		    m_beingLane = static_cast<int>(randomFn(refLanes->size()-1,0.0));
+		    m_beingLane = static_cast<int>(randomFn(1000.0,0.0));
+		    m_beingLane = m_beingLane%(refLanes->size());
 		}
 		else
 		{
@@ -115,6 +116,10 @@ void enemy::move()
 
 }
 
+int enemy::getCurrentBeingLane()const
+{
+     return m_beingLane;
+}
 double enemy::randomFn(const double& max,const double& min)
 {
 	return motion2D::randomFn(max,min);
