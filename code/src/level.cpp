@@ -370,6 +370,8 @@ void level::update()
                    const double enemyDist = it2->get()->getCurrentPos();
                    if (enemyDist >= bulletDist) // killed enemy
                    {
+                    // score update
+
                      it2 = m_enemyList[it->first].erase(it2);
                      m_bullets[it->first].pop_front();
                      isEnemyKilled = true;
